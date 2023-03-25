@@ -1,8 +1,8 @@
 @extends('prod-template')
 @section('content')
-<h3 class="mt-2">Man Power</h3>
+<h3 class="mt-2">Calender Of Event</h3>
 
-<div class="card">
+<div class="card mt-2">
     <div class="card-body">
         <div class="row">
             <div class="col ">
