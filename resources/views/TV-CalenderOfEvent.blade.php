@@ -12,7 +12,52 @@
     </style>
     <div class="mt-5">&ensp;</div>
     <div class="calendar " id="calendar"></div>
+
     <script>
+        setInterval(function () {
+            $.get("/calenderEvent/apiAll", function(datasql){
+                var data = [];
+                for(i = 0; i < datasql.length; i++){
+                    var obj = {};
+                    obj['title'] = datasql[i].judul + " | " + datasql[i].pic + " | " + datasql[i].location + " | " + datasql[i].type
+                    obj['start'] = datasql[i].tanggal+ "T" + datasql[i].mulai
+                    obj['end'] = datasql[i].tanggal+ "T" + datasql[i].selesai
+                    obj['borderColor'] = "#000000",
+                    data.push(obj)
+                }
+                console.log(data)
+                    var calendarEl = document.getElementById('calendar');
+                    var calendar = new FullCalendar.Calendar(calendarEl, {
+                        initialView: 'timeGridFourDay',
+                        slotMinTime: "07:00:00",
+                        slotMaxTime: "17:00:00",
+                        contentHeight: "auto",
+                        headerToolbar: {
+                            left: 'prev,next',
+                            center: 'title',
+                            right: 'timeGridDay,timeGridFourDay'
+                        },
+                        views: {
+                            timeGridFourDay: {
+
+                                type: 'timeGrid',
+                                duration: {
+                                    days: 5,
+                                },
+                                buttonText: '5 day'
+                            }
+                        },
+                        events: data
+                    });
+
+                    calendar.render();
+            });
+        }, 10000);
+    </script>
+
+
+
+    {{-- <script>
         document.addEventListener('DOMContentLoaded', function() {
             var calendarEl = document.getElementById('calendar');
             var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -58,5 +103,5 @@
             });
             calendar.render();
         });
-    </script>
+    </script> --}}
 @endsection
