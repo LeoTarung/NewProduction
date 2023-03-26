@@ -22,6 +22,7 @@ class CreateDbCalenderOfEventTable extends Migration
             $table->string('pic')->nullable();
             $table->string('location')->nullable();
             $table->string('type')->nullable();
+            $table->string('status')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });

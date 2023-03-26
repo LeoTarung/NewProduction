@@ -11,7 +11,7 @@
     }
     </style>
     <div class="mt-5">&ensp;</div>
-    <div class="calendar " id="calendar"></div>
+    <div class="calendar" id="calendar"></div>
 
     <script>
         setInterval(function () {

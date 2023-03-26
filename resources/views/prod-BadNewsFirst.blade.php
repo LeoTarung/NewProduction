@@ -1,10 +1,21 @@
 @extends('prod-template')
 @section('content')
-<h3 class="mt-2">Calender Of Event</h3>
+<h3 class="mt-2">Bad News First</h3>
 
 <div class="card mt-2">
     <div class="card-body">
-        <div class="row">
+
+        <div class="text" id="text"></div>
+
+        {{-- <iframe src="/pdf/BadNewFirst.pdf" frameborder="0" width="100%" height="500" id="testIframe" scrolling="auto"></iframe> --}}
+        {{-- <div id="iframeContainer" style="width: 100%; height: 1500px; overflow: auto;">
+            <iframe width="100%"  src="/pdf/BadNewFirst.pdf" scrolling="no">
+            </iframe>
+         </div> --}}
+
+
+
+        {{-- <div class="row">
             <div class="col ">
                 <button class="btn btn-success mb-2 float-end" onclick="addEvent()"><i class="fa-solid fa-plus"></i> Event On Calender</button>
                 <a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/calenderEvent') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
@@ -28,10 +39,38 @@
                 </thead>
                 <tbody></tbody>
             </table>
-        </div>
+        </div> --}}
     </div>
 </div>
-<script>
+<script type="text/javascript">
+    var data = [
+        {'gambar' : 'assembling.jpg'},
+        {'gambar' : 'casting.jpg'},
+        {'gambar' : 'melting.jpg'},
+        {'gambar' : 'machining.jpg'},
+        {'gambar' : 'painting.jpg'},
+    ]
+
+    var jangka = 20000 ;
+    var inter;
+    function showdata(){
+        for (let i = 0; i < data.length; i++) {
+            setTimeout(function() {
+                console.log(data[i]);
+                // $("#text").html(data[i].gambar)
+                $("#text").html(
+                    '<img src="/UI/IMG/'+data[i].gambar+'" class="img-fluid" alt="'+data[i].gambar+'" >'
+                )
+            }, jangka * i); // mengatur jeda waktu dengan mengalikan 1000 (1 detik) dengan indeks i
+            inter = jangka * i;
+        }
+    }
+    showdata()
+    setInterval(showdata, inter+inter);
+    </script>
+
+
+{{-- <script>
     $(function () {
         var table = $('#Table_COE').DataTable({
             processing: true,
@@ -97,5 +136,5 @@
             });
         });
     }
-</script>
+</script> --}}
 @endsection

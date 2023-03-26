@@ -5,6 +5,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CastingController;
 use App\Http\Controllers\MeltingController;
+use App\Http\Controllers\BadNewsFirstController;
 use App\Http\Controllers\CalenderOfEventController;
 
 /*
@@ -89,5 +90,8 @@ Route::get('/calenderEvent/apiAll', [CalenderOfEventController::class, 'apiAll']
 Route::post('/modal/calenderEvent/save', [CalenderOfEventController::class, 'save']);
 Route::post('/modal/calenderEvent/update', [CalenderOfEventController::class, 'update']);
 
+Route::get('/BadNewsFirst', [BadNewsFirstController::class, 'index']);
+
 //==========[FOR TV MONITORING]==========\\
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
+Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);

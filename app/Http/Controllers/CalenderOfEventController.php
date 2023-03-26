@@ -12,7 +12,7 @@ class CalenderOfEventController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_CalenderOfEvent::select('id', 'judul', 'tanggal', 'mulai', 'selesai', 'pic', 'location', 'type')->get();
+            $data = DB_CalenderOfEvent::select('id', 'judul', 'tanggal', 'mulai', 'selesai', 'pic', 'location', 'type', 'status')->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editEvent(' . $data->id . ')"></a>';
@@ -38,7 +38,7 @@ class CalenderOfEventController extends Controller
 
     public function apiAll()
     {
-        $data =  DB_CalenderOfEvent::all();
+        $data =  DB_CalenderOfEvent::where('status', '=', 'running')->get();
         return $data;
     }
 
@@ -66,6 +66,7 @@ class CalenderOfEventController extends Controller
             'pic' => $request->pic,
             'location' => $request->location,
             'type' => $request->type,
+            'status' => 'running',
         ]);
         if ($insert) {
             return redirect('/calenderEvent')->with('berhasil_input', 'berhasil_input');
@@ -83,6 +84,7 @@ class CalenderOfEventController extends Controller
             'pic' => 'required',
             'location' => 'required',
             'type' => 'required',
+            'status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -97,6 +99,7 @@ class CalenderOfEventController extends Controller
             'pic' => $request->pic,
             'location' => $request->location,
             'type' => $request->type,
+            'status' => $request->status,
         ]);
         if ($insert) {
             return redirect('/calenderEvent')->with('berhasil_input', 'berhasil_input');

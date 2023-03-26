@@ -35,6 +35,20 @@
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
                     Calender Of Event
                 </a>
+
+                <hr class="sidebar-divider my-1">
+                <a class="nav-link collapsed" href="/" data-bs-toggle="collapse" data-bs-target="#collapseAsakai" aria-expanded="false" aria-controls="collapseAsakai">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-person-chalkboard"></i></div>
+                    Asakai Point
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseAsakai" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link ms-3" href="{{ url('/calenderEvent') }}"> Calender Of Event</a>
+                        <a class="nav-link ms-3" href="{{ url('/BadNewsFirst') }}"> Bad News First</a>
+                    </nav>
+                </div>
+
             </div>
         </div>
         <div class="sb-sidenav-footer">
