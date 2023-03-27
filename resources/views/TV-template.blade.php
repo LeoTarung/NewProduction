@@ -27,7 +27,7 @@
     <body class="sb-nav-fixed bg-digital">
         <nav class="sb-topnav navbar navbar-expand navbar-light" style="background-color: #E9E8E8;">
             <img src="/UI/IMG/nusametal-nobg.png" width="228" height="40">
-            <p class="d-none d-md-inline-block position-absolute top-50 start-50 translate-middle fw-bold fs-3 ">CALENDER OF EVENT</p>
+            <p class="d-none d-md-inline-block position-absolute top-50 start-50 translate-middle fw-bold fs-3 ">{{ $judul }}</p>
             <ul class="navbar-nav d-none d-lg-inline-block form-inline ms-auto me-0 me-md-3 my-2 my-md-0">
 
                 <div class="card fs-4 fw-bold p-1" id="MyClockDisplay" onload="showTime()">

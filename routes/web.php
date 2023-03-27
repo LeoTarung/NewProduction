@@ -25,9 +25,6 @@ Route::get('/dashboard', function () {
 Route::get('/prod', function () {
     return view('prod-menu-prod');
 });
-Route::get('/prod/melting', function () {
-    return view('prod-dashboard-melting');
-});
 Route::get('/lhp', function () {
     return view('lhp-template');
 });
@@ -38,7 +35,13 @@ Route::get('/lhp/{id}', function ($id) {
 
 
 Route::get('/tv', function () {
-    return view('TV-template');
+    $judul = "NANTI JUDUL AKAN ADA DISINI";
+    return view('TV-template', compact('judul'));
+});
+
+Route::get('/tv/Rmeeting', function () {
+    $judul = "RUANG MEETING";
+    return view('TV-RuangMeeting', compact('judul'));
 });
 
 Route::get('/login', [LoginController::class, 'index']);
@@ -95,3 +98,4 @@ Route::get('/BadNewsFirst', [BadNewsFirstController::class, 'index']);
 //==========[FOR TV MONITORING]==========\\
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
 Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);
+Route::get('/ftp', [BadNewsFirstController::class, 'ftp']);

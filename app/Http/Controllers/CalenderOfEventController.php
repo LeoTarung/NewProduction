@@ -109,6 +109,7 @@ class CalenderOfEventController extends Controller
     public function TV_index()
     {
         $data =  DB_CalenderOfEvent::all();
-        return view('TV-CalenderOfEvent', compact('data'));
+        $judul = "CALENDER OF EVENT";
+        return view('TV-CalenderOfEvent', compact('data', 'judul'));
     }
 }

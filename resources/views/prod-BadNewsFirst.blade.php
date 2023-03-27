@@ -4,21 +4,10 @@
 
 <div class="card mt-2">
     <div class="card-body">
-
-        <div class="text" id="text"></div>
-
-        {{-- <iframe src="/pdf/BadNewFirst.pdf" frameborder="0" width="100%" height="500" id="testIframe" scrolling="auto"></iframe> --}}
-        {{-- <div id="iframeContainer" style="width: 100%; height: 1500px; overflow: auto;">
-            <iframe width="100%"  src="/pdf/BadNewFirst.pdf" scrolling="no">
-            </iframe>
-         </div> --}}
-
-
-
-        {{-- <div class="row">
+        <div class="row">
             <div class="col ">
-                <button class="btn btn-success mb-2 float-end" onclick="addEvent()"><i class="fa-solid fa-plus"></i> Event On Calender</button>
-                <a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/calenderEvent') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
+                <button class="btn btn-success mb-2 float-end" onclick="addEvent()"><i class="fa-solid fa-plus"></i> Bad News</button>
+                <a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/BadNewsFirst') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
             </div>
         </div>
         <div class="table-responsive">
@@ -26,20 +15,31 @@
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>JUDUL</th>
                         <th>TANGGAL</th>
-                        <th>MULAI</th>
-                        <th>SELESAI</th>
+                        <th>JUDUL</th>
+                        <th>DESKRIPSI</th>
+                        <th>GAMBAR</th>
                         <th>PIC</th>
-                        <th>LOCATION</th>
-                        <th>TYPE</th>
                         <th>STATUS</th>
                         <th nowrap="nowrap" class="text-center">AKSI</th>
                     </tr>
                 </thead>
-                <tbody></tbody>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>{{ date('Y-m-d') }}</td>
+                        <td>MACAM MACAM AREA DI NM</td>
+                        <td>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Saepe eveniet molestiae unde dicta dolorum a, tempore tempora obcaecati voluptates debitis accusamus eum soluta delectus rem sequi dolores ea veniam. Maiores.</td>
+                        <td id="text"></td>
+                        <td>Andhika Nur Rohman</td>
+                        <td>Tampilkan</td>
+                        <td><a class="btn fa-solid fa-pen-to-square fa-lg text-warning"></a></td>
+                    </tr>
+                </tbody>
             </table>
-        </div> --}}
+        </div>
+        <div class="text d-none" id="text"></div> {{-- KITA HILANGKAN DLU GAIS --}}
+
     </div>
 </div>
 <script type="text/javascript">

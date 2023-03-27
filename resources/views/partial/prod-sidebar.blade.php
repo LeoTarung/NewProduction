@@ -3,7 +3,7 @@
         <div class="sb-sidenav-menu">
             <div class="nav">
                 <div class="sb-sidenav-menu-heading"></div>
-                <a class="nav-link" href="">
+                <a class="nav-link" href="{{ url('/dashboard') }}">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-house-laptop fa-lg"></i></div>
                     Dashboard
                 </a>
@@ -29,11 +29,6 @@
                 <a class="nav-link" href="{{ url('/adm/mp') }}">
                     <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group fa-lg"></i></div>
                     Man Power
-                </a>
-                <hr class="sidebar-divider my-1">
-                <a class="nav-link" href="{{ url('/calenderEvent') }}">
-                    <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
-                    Calender Of Event
                 </a>
 
                 <hr class="sidebar-divider my-1">
