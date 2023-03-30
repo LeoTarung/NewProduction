@@ -13,20 +13,17 @@
     font-family: "Raleway";
 }
 
-
-body{
-  min-height: 100vh;
+body {
+    min-height: 100vh;
 }
 
-.font-white{
-  color: #ffffff;
-
+.font-white {
+    color: #ffffff;
 }
 
-.font-yellow{
+.font-yellow {
     color: #ff6d19;
-  
-  }
+}
 
 /* APP */
 #app {
@@ -128,28 +125,33 @@ body{
 
 /* Navbar */
 
-
-nav{
-  margin: auto;
-  justify-content: center;
-  height: 70px;
-  width: 100%;
-  position: static;
-  /* background-color: #000080; */
-  background: #000080;  /* fallback for old browsers */
-  background: -webkit-linear-gradient(to bottom, #5151c2, #000080);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom, #5151c2, #000080); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+nav {
+    margin: auto;
+    justify-content: center;
+    height: 70px;
+    width: 100%;
+    position: static;
+    /* background-color: #000080; */
+    background: #000080; /* fallback for old browsers */
+    background: -webkit-linear-gradient(
+        to bottom,
+        #5151c2,
+        #000080
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to bottom,
+        #5151c2,
+        #000080
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 ul {
-  
-  list-style-type: none;
-  /* margin-left: 330px; */
-  max-width: 100%;
-  display: flex;
-  /* background-color: #2194e3; */
+    list-style-type: none;
+    /* margin-left: 330px; */
+    max-width: 100%;
+    display: flex;
+    margin-left: -12rem;
+    /* background-color: #2194e3; */
 }
-
-
 
 /* li {
     float: left;
@@ -162,48 +164,54 @@ li a {
     text-decoration: none;
 }
 
-
-
 /* li a:hover {
   background-color: rgb(81, 219, 178);
 } */
-.navbarimg{
-   margin-top: 3.6px;
-  /* margin-left: 5px; */
-  height: 57px;
-  /* width: 250px; */
+.navbarimg {
+    margin-top: 3.6px;
+    /* margin-left: 5px; */
+    height: 57px;
+    margin-bottom: 4px;
+    /* width: 250px; */
 }
-.rectangle-logo{
-  /* position: absolute; */
-  /* width: 275px; */
- 
-  /* left:20.53px;
+.rectangle-logo {
+    /* position: absolute; */
+    /* width: 275px; */
+
+    /* left:20.53px;
   top: 13.80px; */
-  background: #FFFFFF;
-  background: -webkit-linear-gradient(to bottom, #ffffff, #ebebf3);  /* Chrome 10-25, Safari 5.1-6 */
-  background: linear-gradient(to bottom,#ffffff,  #ebebf3); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-  border-radius: 10px;
-  margin: 4px 0px 0px 0px;
+    background: #ffffff;
+    background: -webkit-linear-gradient(
+        to bottom,
+        #ffffff,
+        #ebebf3
+    ); /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(
+        to bottom,
+        #ffffff,
+        #ebebf3
+    ); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+    border-radius: 10px;
+    margin: 4px 0px 5px 0px;
 }
 
-.shift{
-  /* margin-top: 30px; */
-  /* margin: 10px 0px 0px 330px; */
-  width:200px;
-  font-size:xx-large;
-  font-weight: 500;
-  letter-spacing: 6;
-  color: #FFFFFF;
-  /* border-bottom: 5px; */
+.shift {
+    /* margin-top: 30px; */
+    /* margin: 10px 0px 0px 330px; */
+    width: 200px;
+    font-size: xx-large;
+    font-weight: 500;
+    letter-spacing: 6;
+    color: #ffffff;
+    /* border-bottom: 5px; */
 }
 
+#MyClockDisplay {
+    /* position: absolute; */
+    /* height: 43px; */
+    width: 250px;
 
-#MyClockDisplay{
-  /* position: absolute; */
-  /* height: 43px; */
-  width: 250px;
- 
-  /* left: 619px;
+    /* left: 619px;
 
   top: 6px; */
 
@@ -307,23 +315,22 @@ footer {
     background-color: #000080;
 }
 
-  /* Preparation Melting */
-  .buttonssssss {
-  height: 250px;
-  width: 100%;
+/* Preparation Melting */
+.buttonssssss {
+    height: 250px;
+    width: 100%;
 }
 
-a .big-font{
-  width: 99.8%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: "-";
-  letter-spacing: 0.15em;
-  font-size: 70px;
-  font-weight: bold;
-  text-transform: uppercase;
-  line-height: 230px;
-
+a .big-font {
+    width: 99.8%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: "-";
+    letter-spacing: 0.15em;
+    font-size: 70px;
+    font-weight: bold;
+    text-transform: uppercase;
+    line-height: 230px;
 }
 
 /* LHP Melting */
@@ -730,9 +737,58 @@ a .font-forklift10 {
     margin: 0 !important;
 }
 
+/* Backgorund Part Casting */
+.bg-part {
+    /* background-image: url("/img/parts/Pipe Air Inlet ML288384.png");
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed; */
+    /* background-size: cover; */
+    width: 100%;
+    height: auto;
+}
+
+img {
+    display: block;
+    margin: auto;
+}
+
+area {
+    display: block;
+    outline: none;
+}
+
+area:hover {
+    cursor: pointer;
+    color: #11101d;
+}
+
+area:active {
+    background-color: #ccc;
+}
+
 /* SETTINGS */
 
-/* Catatan CSS
-1. TAMBAHKAN NAV KHUSUS TABLET DAN LAPTOP LARGE (complete)
-2. TAMBAHKAN FOOTER KHUSUS TABLET
-*/
+.bg-orange {
+    background-color: #f2921d;
+    border-color: #f2921d;
+    color: #f2921d;
+}
+
+.bg-ungu {
+    background-color: #be6db7;
+    border-color: #be6db7;
+    color: #be6db7;
+}
+
+.bg-merahBata {
+    background-color: #a84448;
+    border-color: #a84448;
+    color: #a84448;
+}
+
+.bg-silver {
+    background-color: #dddddd;
+    border-color: #dddddd;
+    color: #dddddd;
+}

@@ -10,24 +10,27 @@ class BadNewsFirstController extends Controller
 {
     public function index(Request $request)
     {
-        return view('prod-BadNewsFirst');
+        $title = "BNF";
+        return view('prod-BadNewsFirst', compact('title'));
     }
 
     public function TV_index()
     {
         $judul = "BAD NEW FIRST";
-        return view('TV-BadNewsFirst', compact('judul'));
+        $title = "BNF";
+        return view('TV-BadNewsFirst', compact('judul', 'title'));
     }
 
     public function ftp()
     {
         $judul = "BAD NEW FIRST";
+        $title = "TESTING AJA";
         // $ftp = Storage::disk('ftp')->allFiles();  //INI BERHASIL BUAT LIHAT ISI FOLDER
         // $ftp = Storage::disk('ftp')->get('example.txt');  //INI BERHASIL BUAT BACA ISI FILE
         // dd($ftp);
         // $ftp = Storage::disk('ftp')->put('/TXT/example1.txt', 'Ini adalah isi dari si exampletext barusan dan ini fardu ain1'); //INI BERHASIL BUAT SIMPAN
         // $ftp = Storage::disk('ftp')->put('testing.jpg', 'testing.jpg');
         // dd($file);
-        return view('TV-BadNewsFirst', compact('judul'));
+        return view('TV-BadNewsFirst', compact('judul', 'title'));
     }
 }

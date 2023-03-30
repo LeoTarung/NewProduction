@@ -376,7 +376,6 @@
                     <?php $warna = 'text-primary' ?>
                     @elseif($furnace->material == 'YH3R')
                     <?php $warna = 'text-success' ?>
-
                     @endif
                 <tr>
                     <td>{{ $loop->iteration }}</td>

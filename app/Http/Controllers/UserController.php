@@ -24,7 +24,8 @@ class UserController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('prod-Dashboard-admMP');
+        $title = "MAN POWER";
+        return view('prod-Dashboard-admMP', compact('title'));
     }
 
     public function modaladd()
@@ -40,6 +41,12 @@ class UserController extends Controller
     public function mpApi(Request $request)
     {
         $data = User::find($request->id);
+        return $data;
+    }
+
+    public function NRPApi(Request $request)
+    {
+        $data = User::where('nrp', '=', $request->nrp)->get();
         return $data;
     }
 

@@ -30,7 +30,7 @@ class AppServiceProvider extends ServiceProvider
         date_default_timezone_set('Asia/Jakarta');
 
         Blade::directive('FormatRibu', function ($expression) {
-            return "Rp. <?php echo number_format($expression,0,',','.'); ?>";
+            return "<?php echo number_format($expression,0,',','.'); ?>";
         });
     }
 }

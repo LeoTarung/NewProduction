@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
     <meta name="description" content="" />
     <meta name="author" content="" />
-    <title>NM | TV MELTING</title>
+    <title>NM | {{ $title }}</title>
     <link href="/UI/CSS/styles.css" rel="stylesheet" />
     <link href="/UI/CSS/self-style.css" rel="stylesheet" />
     <script src="/UI/JS/fontawesomeV610.js"></script>

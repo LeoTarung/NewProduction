@@ -12,9 +12,9 @@
 </style>
 <div class="mt-5 ">&ensp;</div>
 <div class="row ">
-    <div class="calendar" id="calendar"></div>
+    <div class="calendar fw-bold font-monospace" id="calendar"></div>
 </div>
-<div class="row mt-5 fw-bold fs-4 pt-2">
+<div class="row fixed-bottom fw-bold fs-4 pt-2">
     <div class="col"><i class="fa-solid fa-square" style="color: #0000FF;"></i> : Nusa 1</div>
     <div class="col"><i class="fa-solid fa-square" style="color: #00FF00;"></i> : Nusa 2</div>
     <div class="col"><i class="fa-solid fa-square" style="color: #9400D3;"></i> : Nusa 3</div>
@@ -31,7 +31,7 @@
                 } else {
                     var color = "#000000";
                 }
-                obj['title'] = datasql[i].ruangan + " | " + datasql[i].keterangan + " | " + datasql[i].nama + " | " + datasql[i].jenis_meeting
+                obj['title'] = datasql[i].keterangan + " | " + datasql[i].nama + " | " + datasql[i].jenis_meeting
                 obj['start'] = datasql[i].meeting_mulai,
                 obj['end'] = datasql[i].meeting_selesai,
                 obj['color'] = datasql[i].color,
@@ -42,7 +42,8 @@
             // console.log(data)
                 var calendarEl = document.getElementById('calendar');
                 var calendar = new FullCalendar.Calendar(calendarEl, {
-                    initialView: 'timeGridFourDay',
+                    // initialView: 'timeGridFourDay',
+                    initialView: 'timeGridDay',
                     slotMinTime: "07:00:00",
                     slotMaxTime: "17:00:00",
                     contentHeight: "auto",
@@ -68,6 +69,6 @@
         });
     }
     datacalender()
-    // setInterval(datacalender, 3000);
+    setInterval(datacalender, 10000);
 </script>
 @endsection

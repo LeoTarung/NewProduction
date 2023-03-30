@@ -13,4 +13,7 @@
 @elseif(session()->has('gagal_Login'))
 <?php toast('Account Not Found!', 'error')->autoClose(1000); ?>
 
+@elseif(session()->has('call_admin'))
+<?php toast('Please Contact Digitalization Team', 'error')->autoClose(1000); ?>
+
 @endif

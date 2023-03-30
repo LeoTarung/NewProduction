@@ -22,7 +22,8 @@ class CalenderOfEventController extends Controller
                 ->addIndexColumn()
                 ->make(true);
         }
-        return view('prod-CalenderOfEvent');
+        $title = "COE";
+        return view('prod-CalenderOfEvent', compact('title'));
     }
 
     public function modal()
@@ -108,8 +109,8 @@ class CalenderOfEventController extends Controller
 
     public function TV_index()
     {
-        $data =  DB_CalenderOfEvent::all();
         $judul = "CALENDER OF EVENT";
-        return view('TV-CalenderOfEvent', compact('data', 'judul'));
+        $title = "COE";
+        return view('TV-CalenderOfEvent', compact('judul', 'title'));
     }
 }

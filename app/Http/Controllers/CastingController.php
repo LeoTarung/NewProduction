@@ -8,6 +8,7 @@ class CastingController extends Controller
 {
     public function index()
     {
-        return view('prod-dashboard-casting');
+        $title = "CASTING";
+        return view('prod-dashboard-casting', compact('title'));
     }
 }

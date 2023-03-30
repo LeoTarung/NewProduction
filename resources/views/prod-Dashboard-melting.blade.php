@@ -1,7 +1,7 @@
 @extends('prod-template')
 @section('content')
 <h3 class="mt-2">Melting Section</h3>
-<a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
+<a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/Melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
 <div class="row">
     <div class="col">
         <button class="btn btn-primary mb-2 float-end" onclick="ButtonSetupMelting('setuplevelMolten')"><i class="fa-solid fa-whiskey-glass"></i> Lv Molten</button>

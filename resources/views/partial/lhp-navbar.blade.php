@@ -2,7 +2,7 @@
     <ul>
         {{-- LOGO NUSAMETAL KIRI --}}
         <li>
-            <a href="" class="navbar-brand">
+            <a href="{{ Route('lhpmelting.index') }}" class="">
                 <div class="rectangle-logo shadow">
                     <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
                 </div>
@@ -11,61 +11,26 @@
 
         {{-- KOLOM SHIFT --}}
         <li>
-            <a>
-                <div class="shift border-bottom">
-                    SHIFT-2
-                </div>
-            </a>
-            <div class="old-Program">
-                    {{-- LHP CASTING --}}
-                {{-- @if (Request::url() == url('/lhp-casting')) --}}
-                    {{-- <a>
+            @switch(Route::current()->getName())
+                @case('lhpmelting.input')
+                    <a onclick="resumeMelting('{{ $id }}', '{{ $area }}')">
                         <div class="shift border-bottom">
                             {{ $shift }}
                         </div>
-                    </a> --}}
-                {{-- @elseif (Request::url() == url('/lhp-casting/lhp-casting')) --}}
-                    {{-- <a>
+                    </a>
+                @break
+                @default
+                    <a>
                         <div class="shift border-bottom">
                             {{ $shift }}
                         </div>
-                    </a> --}}
-
-
-                    {{-- { LHP MELTING} --}}
-                {{-- @elseif (Request::url() == url('/lhp-melting')) --}}
-                    {{-- <a>
-                        <div class="shift border-bottom">
-                            {{ $shift }}
-                        </div>
-                    </a> --}}
-                {{-- @elseif(Request::url() == url('/lhp-melting/' . $mesin . '/' . $id . '')) --}}
-                    {{-- <a onClick="ModalResume('{{ $mesin }}', '{{ $id }}')">
-                        <div class="shift border-bottom">
-                            {{ $shift }}
-                        </div>
-                    </a> --}}
-
-                    {{-- { LHP SUPPLY} --}}
-                {{-- @elseif(Request::url() == url('/lhpforklift')) --}}
-                    {{-- <a>
-                        <div class="shift border-bottom">
-                            {{ $shift }}
-                        </div>
-                    </a> --}}
-                {{-- @elseif(Request::url() == url('/forklift/' . $mesin . '/' . $id . '')) --}}
-                    {{-- <a onClick="ModalSupply('{{ $mesin }}', '{{ $id }}')">
-                        <div class="shift border-bottom">
-                            {{ $shift }}
-                        </div>
-                    </a> --}}
-                {{-- @endif --}}
-            </div>
+                    </a>
+            @endswitch
         </li>
 
         {{-- JAM TENGAH  --}}
         <li class="ms-2">
-            <a href="" class="time shadow-lg navitems">
+            <a href="{{ Request::url() }}" class="time shadow-lg navitems">
                 <div id="MyClockDisplay" class="clock " onload="showTime()"></div>
                 <div id="date-1">
                 </div>
@@ -74,204 +39,56 @@
 
         {{-- KOLOM NRP --}}
         <li>
-            <a href="" class="navitems">
-                <div class="nrp">
-                    <div class="font-white"> NRP : </div>
-                </div>
-                <div class="nrp nrp-child border-bottom ">
-                    <div class="font-white fw-bold">3551</div>
-                </div>
-            </a>
-            {{-- <a href="{{ url('/lhp-melting') }}" class="navitems">
-                <div class="nrp border-bottom">
-                    <div class="font-white"> PILIH MESIN </div>
-                </div>
-            </a> --}}
-            {{-- <a href="{{ url('/lhpforklift') }}" class="navitems">
-                <div class="nrp border-bottom">
-                    <div class="font-white"> PILIH FORKLIFT </div>
-                </div>
-            </a>
-            <a href="{{ url('/lhp-melting') }}" class="navitems">
-                <div class="nrp border-bottom">
-                    <div class="font-white"> CASTING</div>
-                </div>
-            </a> --}}
-            {{-- <a href="{{ url('/settings') }}" class="navitems">
-                <div class="nrp border-bottom">
-                    <div class="font-white"> Admin </div>
-                </div>
-            </a> --}}
-            {{-- <a href="{{ url('/settings') }}" class="navitems">
-                <div class="nrp border-bottom">
-                    <div class="font-white"> Menu Utama </div>
-                </div>
-            </a> --}}
-            <div class="old-Program">
-                    {{-- LHP Casting --}}
-                    {{-- Preparation casting --}}
-                    {{-- @if ($nrp != 0 && Request::url() == url('/lhp-casting'))
-                        <a href="{{ url('/lhp-casting') }}" class="navitems">
-                            <div class="nrp">
-                                <div class="font-white"> NRP : </div>
-                            </div>
-                            <div class="nrp nrp-child border-bottom ">
-                                <div class="font-white fw-bold">{{ $nrp }}</div>
-                            </div>
-                        </a>
-                    @elseif (Request::url() == url('/lhp-casting'))
-                        <a href="{{ url('/lhp-casting') }}" class="navitems">
-                            <div class="nrp border-bottom">
-                                <div class="font-white"> Preparation </div>
-                            </div>
-                        </a> --}}
-                        {{-- lhp casting  --}}
-                    {{-- @elseif (Request::url() == url('/lhp-casting/lhp-casting')) --}}
-
-
-
-                    {{-- LHP MELTING --}}
-                {{-- @elseif ($nrp != 0 && Request::url() == url('/lhp-melting')) --}}
-                    {{-- <a href="{{ url('/lhp-melting') }}" class="navitems">
+            @switch(Route::current()->getName())
+                @case('lhpmelting.input')
+                    <a  class="navitems">
                         <div class="nrp">
                             <div class="font-white"> NRP : </div>
                         </div>
                         <div class="nrp nrp-child border-bottom ">
-                            <div class="font-white fw-bold">{{ $nrp }}</div>
+                            <div class="font-white fw-bold">{{ $data->nrp }}</div>
                         </div>
-                    </a> --}}
-                {{-- @elseif(Request::url() == url('/lhp-melting')) --}}
+                    </a>
+                @break
 
-                {{-- @elseif(Request::url() == url('/lhp-melting/' . $mesin . '/' . $id . '')) --}}
-                    {{-- <a href="{{ url('/lhp-melting') }}" class="navitems">
+                @default
+                    <a  class="navitems">
                         <div class="nrp">
-                            <div class="font-white"> NRP : </div>
+                            <div class="font-white"> SILAHKAN </div>
                         </div>
                         <div class="nrp nrp-child border-bottom ">
-                            <div class="font-white fw-bold">{{ $nrp }}</div>
+                            <div class="font-white fw-bold">PREPARATION</div>
                         </div>
-                    </a> --}}
-
-                    {{-- LHP FORKLIFT --}}
-                {{-- @elseif ($nrp != 0 && Request::url() == url('/lhpforklift')) --}}
-                    {{-- <a href="{{ url('/lhpforklift') }}" class="navitems">
-                        <div class="nrp">
-                            <div class="font-white"> NRP : </div>
-                        </div>
-                        <div class="nrp nrp-child border-bottom ">
-                            <div class="font-white fw-bold">{{ $nrp }}</div>
-                        </div>
-                    </a> --}}
-                {{-- @elseif($nrp == null && Request::url() == url('/lhpforklift')) --}}
-
-                {{-- @elseif(Request::url() == url('/forklift/' . $mesin . '/' . $id . '')) --}}
-                    {{-- <a href="{{ url('/lhpforklift') }}" class="navitems">
-                        <div class="nrp">
-                            <div class="font-white"> NRP : </div>
-                        </div>
-                        <div class="nrp nrp-child border-bottom ">
-                            <div class="font-white fw-bold">{{ $nrp }}</div>
-                        </div>
-                    </a> --}}
-
-                    {{-- LHP CASTING --}}
-                {{-- @elseif(Request::url() == url('/final')) --}}
-
-
-                    {{-- SETTINGS --}}
-                {{-- @elseif(Request::url() == url('/settings')) --}}
-
-                {{-- @elseif(Request::url() == url('/settings/mesincasting/' . $id . '')) --}}
-
-                {{-- @endif --}}
-            </div>
-
-
+                    </a>
+            @endswitch
         </li>
+
+        {{-- AREA --}}
         <li>
-            <a href="" class="machine shadow-lg">
-                <div class="mesin">
-                        <div class="font-white choose_machine"> MESIN </div>
-                </div>
-            </a>
+            @switch(Route::current()->getName())
+                @case('lhpmelting.index')
+                    <a href="" class="machine shadow-lg">
+                        <div class="mesin">
+                                <div class="font-white"> MELTING </div>
+                        </div>
+                    </a>
+                    @break
 
-            {{-- Preparation Casting --}}
-            {{-- @if ($mesin == 'CASTING') --}}
-                {{-- <a href="{{ url('/lhp-casting') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        <div class="font-white choose_machine"> {{ $mesin }} </div>
-                    </div>
-                </a> --}}
-                {{-- Preparation Forklift --}}
-            {{-- @elseif ($mesin == 'FORKLIFT') --}}
-                {{-- <a href="{{ url('/lhpforklift') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'FORKLIFT')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
+                @case('lhpmelting.input')
+                    <a href="{{ Route('lhpmelting.index') }}" class="machine shadow-lg">
+                        <div class="mesin">
+                                <div class="font-white"> {{ $area }} </div>
+                        </div>
+                    </a>
+                    @break
 
-
-                {{-- LHP Forklift --}}
-            {{-- @elseif($mesin == $forklift) --}}
-                {{-- <a href="{{ url('/lhpforklift') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'FINAL .INS')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
-
-                {{-- Setting --}}
-            {{-- @elseif(Request::url() == url('/settings')) --}}
-                {{-- <a href="{{ url('/settings') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'FINAL .INS')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
-            {{-- @elseif(Request::url() == url('/settings/mesincasting/' . $id . '')) --}}
-                {{-- <a href="{{ url('/settings') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'FINAL .INS')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
-
-
-                {{-- Preparation Melting --}}
-            {{-- @elseif($mesin == 'MELTING') --}}
-                {{-- <a href="{{ url('/lhp-melting') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'MELTING')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
-            {{-- @else --}}
-                {{-- <a href="{{ url('/lhp-melting') }}" class="machine shadow-lg">
-                    <div class="mesin">
-                        @if ($mesin == 'FINAL .INS')
-                            <div class="font-white "> {{ $mesin }} </div>
-                        @else
-                            <div class="font-white choose_machine"> {{ $mesin }} </div>
-                        @endif
-                    </div>
-                </a> --}}
-            {{-- @endif --}}
+                @default
+                    <a href="" class="machine shadow-lg">
+                        <div class="mesin">
+                                <div class="font-white"> AREA PROSES </div>
+                        </div>
+                    </a>
+            @endswitch
         </li>
         {{-- <li>
             <a onclick="ModalInstruksi('xx')">
