@@ -116,12 +116,22 @@ Route::get('/prod/casting', [CastingController::class, 'index']);
 Route::get('/calenderEvent', [CalenderOfEventController::class, 'index']);
 Route::get('/modal/calenderEvent', [CalenderOfEventController::class, 'modal']);
 Route::post('/calenderEvent/api', [CalenderOfEventController::class, 'api']);
-Route::get('/calenderEvent/apiAll', [CalenderOfEventController::class, 'apiAll']);
+Route::get('/calenderEvent/apiAll/{group}', [CalenderOfEventController::class, 'apiAll']);
 Route::post('/modal/calenderEvent/save', [CalenderOfEventController::class, 'save']);
 Route::post('/modal/calenderEvent/update', [CalenderOfEventController::class, 'update']);
 
-Route::get('/BadNewsFirst', [BadNewsFirstController::class, 'index']);
-
+//==========[FOR BAD NEW FIRST]==========\\
+Route::name('BadNewsFirst.')->group(function () {
+    Route::get('/BadNewsFirst', [BadNewsFirstController::class, 'index']);
+    Route::get('/BadNewsFirst/DataDeliveryTable', [BadNewsFirstController::class, 'index_datatable']);
+    Route::post('/BadNewsFirst/api', [BadNewsFirstController::class, 'apiID']);
+    Route::get('/modal/bnfQuality', [BadNewsFirstController::class, 'modal_form']);
+    Route::get('/modal/deliveryQuality', [BadNewsFirstController::class, 'modal_form']);
+    Route::post('/modal/bnfQuality/save', [BadNewsFirstController::class, 'modal_save']);
+    Route::post('/modal/bnfQuality/update', [BadNewsFirstController::class, 'modal_update']);
+    Route::post('/modal/deliveryQuality/save', [BadNewsFirstController::class, 'modal_delivery_save']);
+    Route::post('/modal/deliveryQuality/update', [BadNewsFirstController::class, 'modal_delivery_update']);
+});
 //==========[FOR TV MONITORING]==========\\
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
 Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);

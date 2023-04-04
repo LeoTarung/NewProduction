@@ -15,7 +15,8 @@
                 <thead>
                     <tr>
                         <th>NO</th>
-                        <th>JUDUL</th>
+                        <th>GROUP</th>
+                        <th>AGENDA</th>
                         <th>TANGGAL</th>
                         <th>MULAI</th>
                         <th>SELESAI</th>
@@ -39,6 +40,7 @@
             ajax: "{{ url('/calenderEvent') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                {data: 'group', name: 'group'},
                 {data: 'judul', name: 'judul'},
                 {data: 'tanggal', name: 'tanggal'},
                 {data: 'mulai', name: 'mulai'},
@@ -81,6 +83,7 @@
                     $("#pic").val(data.pic);
                     $("#location").val(data.location);
                     $("#type").val(data.type);
+                    $("#group").val(data.group);
                     $("#tambahaninputan").html(
                         '<input type="hidden" name="id_coe" value="' + data.id + '">' +
                        '<div class="col-12 mb-3">' +

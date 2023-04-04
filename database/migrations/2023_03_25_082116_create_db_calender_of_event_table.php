@@ -15,6 +15,7 @@ class CreateDbCalenderOfEventTable extends Migration
     {
         Schema::create('db_CalenderOfEvent', function (Blueprint $table) {
             $table->id();
+            $table->string('group')->nullable();
             $table->string('judul')->nullable();
             $table->date('tanggal')->nullable();
             $table->time('mulai')->nullable();

@@ -8,24 +8,110 @@
         background-color: rgba(255, 255, 255, 0.548);
         max-width: 100%;
         max-height: 77vh;
-    }
+        }
+        #calendar1 {
+        background-color: rgba(255, 255, 255, 0.548);
+        max-width: 100%;
+        max-height: 77vh;
+        }
+        #calendar2 {
+        background-color: rgba(255, 255, 255, 0.548);
+        max-width: 100%;
+        max-height: 77vh;
+        }
     </style>
     <div class="mt-5">&ensp;</div>
-    <div class="calendar fw-bold font-monospace" id="calendar"></div>
 
+    <p class="text-center fs-3 fw-bold" id="judul"></p>
+    <div id="calendar"></div>
     <script>
-        function datacalender(){
-            $.get("/calenderEvent/apiAll", function(datasql){
-                var data = [];
-                for(i = 0; i < datasql.length; i++){
-                    var obj = {};
-                    obj['title'] = datasql[i].judul + " | " + datasql[i].pic + " | " + datasql[i].location + " | " + datasql[i].type
-                    obj['start'] = datasql[i].tanggal+ "T" + datasql[i].mulai
-                    obj['end'] = datasql[i].tanggal+ "T" + datasql[i].selesai
-                    obj['borderColor'] = "#000000",
-                    data.push(obj)
+        var data;
+        var group = 'pdca';
+        function tukeran(){
+                if (group == 'pdca'){
+                    var dataa = [];
+                    $.get("/calenderEvent/apiAll/pdca", function(datasql){
+                        for(i = 0; i < datasql.length; i++){
+                            if (datasql[i].type == 'external'){
+                                var warna = "#FFFFFF";
+                                var bg = "#000000";
+                            } else {
+                                var bg = "#348cdc";
+                                var warna = "#FFFFFF";
+                            }
+                            var obj = {};
+                            obj['title'] = datasql[i].judul + " | " + datasql[i].pic + " | " + datasql[i].location
+                            obj['start'] = datasql[i].tanggal+ "T" + datasql[i].mulai
+                            obj['end'] = datasql[i].tanggal+ "T" + datasql[i].selesai
+                            obj['borderColor'] = "#000000",
+                            obj['textColor'] = warna,
+                            obj['color'] = bg,
+                            data.push(obj)
+                    }})
+
+                    data = dataa
+                    var groupn = 'quality';
+                    group = groupn
+                    $('#judul').html("PDCA AND PANDEMIC")
+
+                } else if( group == 'quality'){
+                    var dataa = []
+                    $.get("/calenderEvent/apiAll/quality", function(datasql){
+                        for(i = 0; i < datasql.length; i++){
+                            if (datasql[i].type == 'external'){
+                                var warna = "#FFFFFF";
+                                var bg = "#000000";
+                            } else {
+                                var bg = "#348cdc";
+                                var warna = "#FFFFFF";
+                            }
+                            var obj = {};
+                            obj['title'] = datasql[i].judul + " | " + datasql[i].pic + " | " + datasql[i].location
+                            obj['start'] = datasql[i].tanggal+ "T" + datasql[i].mulai
+                            obj['end'] = datasql[i].tanggal+ "T" + datasql[i].selesai
+                            obj['borderColor'] = "#000000",
+                            obj['textColor'] = warna,
+                            obj['color'] = bg,
+                            data.push(obj)
+                    }})
+
+                    data = dataa
+                    var groupn = 'plant';
+                    group = groupn
+                    $('#judul').html("QUALITY")
+
+                } else if( group == 'plant'){
+                    var dataa = []
+                    $.get("/calenderEvent/apiAll/plant", function(datasql){
+                        for(i = 0; i < datasql.length; i++){
+                            if (datasql[i].type == 'external'){
+                                var warna = "#FFFFFF";
+                                var bg = "#000000";
+                            } else {
+                                var bg = "#348cdc";
+                                var warna = "#FFFFFF";
+                            }
+                            var obj = {};
+                            obj['title'] = datasql[i].judul + " | " + datasql[i].pic + " | " + datasql[i].location
+                            obj['start'] = datasql[i].tanggal+ "T" + datasql[i].mulai
+                            obj['end'] = datasql[i].tanggal+ "T" + datasql[i].selesai
+                            obj['borderColor'] = "#000000",
+                            obj['textColor'] = warna,
+                            obj['color'] = bg,
+                            data.push(obj)
+                    }})
+
+                    data = dataa
+                    var groupn = 'pdca';
+                    group = groupn
+                    $('#judul').html("ENGGINERING PRODUCT")
                 }
-                console.log(data)
+            }
+        tukeran()
+
+        setInterval(tukeran, 10000);
+
+        function datacalender(){
                     var calendarEl = document.getElementById('calendar');
                     var calendar = new FullCalendar.Calendar(calendarEl, {
                         initialView: 'timeGridFourDay',
@@ -51,9 +137,9 @@
                     });
 
                     calendar.render();
-            });
         }
         datacalender()
-        setInterval(datacalender, 10000);
+
+        setInterval(datacalender, 1000);
     </script>
 @endsection

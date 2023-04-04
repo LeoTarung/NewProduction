@@ -12,7 +12,7 @@ class CalenderOfEventController extends Controller
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_CalenderOfEvent::select('id', 'judul', 'tanggal', 'mulai', 'selesai', 'pic', 'location', 'type', 'status')->get();
+            $data = DB_CalenderOfEvent::select('id', 'group', 'judul', 'tanggal', 'mulai', 'selesai', 'pic', 'location', 'type', 'status')->orderBy('id', 'DESC')->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editEvent(' . $data->id . ')"></a>';
@@ -37,15 +37,16 @@ class CalenderOfEventController extends Controller
         return $data;
     }
 
-    public function apiAll()
+    public function apiAll($group)
     {
-        $data =  DB_CalenderOfEvent::where('status', '=', 'running')->get();
+        $data =  DB_CalenderOfEvent::where([['status', '=', 'running'], ['group', '=', $group]])->get();
         return $data;
     }
 
     public function save(Request $request)
     {
         $validator = Validator::make($request->all(), [
+            'group' => 'required',
             'judul' => 'required',
             'tanggal' => 'required',
             'mulai' => 'required',
@@ -60,6 +61,7 @@ class CalenderOfEventController extends Controller
         }
 
         $insert = DB_CalenderOfEvent::create([
+            'group' => $request->group,
             'judul' => $request->judul,
             'tanggal' => $request->tanggal,
             'mulai' => $request->mulai,
@@ -78,6 +80,7 @@ class CalenderOfEventController extends Controller
     {
         $validator = Validator::make($request->all(), [
             'id_coe' => 'required',
+            'group' => 'required',
             'judul' => 'required',
             'tanggal' => 'required',
             'mulai' => 'required',
@@ -93,6 +96,7 @@ class CalenderOfEventController extends Controller
         }
 
         $insert = DB_CalenderOfEvent::where('id', '=', $request->id_coe)->update([
+            'group' => $request->group,
             'judul' => $request->judul,
             'tanggal' => $request->tanggal,
             'mulai' => $request->mulai,
