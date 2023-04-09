@@ -1,13 +1,24 @@
 @extends('prod-template')
 @section('content')
 <h3 class="mt-2">Melting Section</h3>
-<a class="btn btn-sm btn-primary mb-2 float-start" href="{{ url('/tv/Melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> See On TV</a>
 <div class="row">
     <div class="col">
-        <button class="btn btn-primary mb-2 float-end" onclick="ButtonSetupMelting('setuplevelMolten')"><i class="fa-solid fa-whiskey-glass"></i> Lv Molten</button>
-        <button class="btn btn-success mb-2 float-end me-2" onclick="ButtonSetupMelting('setupFurnace')"><i class="fa-solid fa-fire-burner"></i> Furnace</button>
-        <button class="btn btn-warning mb-2 float-end me-2" onclick="ButtonSetupMelting('setupKereta')"><i class="fa-solid fa-cart-shopping"></i> Kereta</button>
-        <button class="btn btn-danger mb-2 float-end me-2" onclick="ButtonSetupMelting('setupHenkaten')"><i class="fa-solid fa-screwdriver-wrench"></i> Henkaten</button>
+        <a class="btn btn-sm btn-secondary mb-2 float-start" href="{{ url('/tv/Melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring TV</a>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <button class="btn btn-primary mb-2 float-start me-2" onclick="ButtonSetupMelting('setuplevelMolten')"><i class="fa-solid fa-whiskey-glass"></i> Lv Molten</button>
+        <button class="btn btn-success mb-2 float-start me-2" onclick="ButtonSetupMelting('setupFurnace')"><i class="fa-solid fa-fire-burner"></i> Furnace</button>
+        <button class="btn btn-warning mb-2 float-start me-2" onclick="ButtonSetupMelting('setupKereta')"><i class="fa-solid fa-cart-shopping"></i> Kereta</button>
+        <button class="btn btn-danger mb-2 float-start me-2" onclick="ButtonSetupMelting('setupHenkaten')"><i class="fa-solid fa-screwdriver-wrench"></i> Henkaten</button>
+
+        <form enctype="multipart/form-data" onsubmit="addlotingot(event)">
+            <div class="input-group mb-3 float-lg-end" style="width:50%;">
+                <input type="text" name="lotingot" id="lotingot" class="form-control" placeholder="Scan Lot QR" autofocus required>
+                <button type="submit" id="submit" class="btn btn-secondary text-light btn-outline-secondary"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+            </div>
+        </form>
     </div>
 </div>
 <div class="row">
@@ -16,7 +27,7 @@
             <div class="card-header bg-warning">
             </div>
             <div class="card-body">
-                <a class="btn btn-primary float-end" href="{{ url('/production/melting/Striko-1') }}">Lihat Data</a>
+                <a class="btn btn-primary float-end" href="{{ url('/prod/melting/STRIKO-1') }}">Lihat Data</a>
                 <p class="fs-4 text-center fw-bold text-decoration-underline">STRIKO - 1</p>
                 <div class="chartdiv" id="chartdiv"></div>
             </div>
@@ -27,7 +38,7 @@
             <div class="card-header bg-warning">
             </div>
             <div class="card-body">
-                <a class="btn btn-primary float-end" href="{{ url('/production/melting/Striko-1') }}">Lihat Data</a>
+                <a class="btn btn-primary float-end" href="{{ url('/prod/melting/STRIKO-2') }}">Lihat Data</a>
                 <p class="fs-4 text-center fw-bold text-decoration-underline">STRIKO - 2</p>
                 <div class="chartdiv" id="chartdiv1"></div>
             </div>
@@ -38,7 +49,7 @@
             <div class="card-header bg-warning">
             </div>
             <div class="card-body">
-                <a class="btn btn-primary float-end" href="{{ url('/production/melting/Striko-1') }}">Lihat Data</a>
+                <a class="btn btn-primary float-end" href="{{ url('/prod/melting/STRIKO-3') }}">Lihat Data</a>
                 <p class="fs-4 text-center fw-bold text-decoration-underline">STRIKO - 3</p>
                 <div class="chartdiv" id="chartdiv2"></div>
             </div>
@@ -49,7 +60,7 @@
             <div class="card-header bg-warning">
             </div>
             <div class="card-body">
-                <a class="btn btn-primary float-end" href="{{ url('/production/melting/Striko-1') }}">Lihat Data</a>
+                <a class="btn btn-primary float-end" href="{{ url('/prod/melting/SWIF ASIA') }}">Lihat Data</a>
                 <p class="fs-4 text-center fw-bold text-decoration-underline">SWIF ASIA</p>
                 <div class="chartdiv" id="chartdiv3"></div>
             </div>
@@ -83,6 +94,38 @@
             $("#staticBackdropLabel").html(judul); //Untuk kasih judul di modal
             $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
             $("#page").html(data); //menampilkan view create di dalam id page
+        });
+    }
+
+    function addlotingot(event){
+        event.preventDefault(); // agar form tidak di eksekusi
+        var lotingot = $('#lotingot').val(); // UBPURE-ADC1200001 | ADC 12 | 1376 | HARI AGUS PURWANTO | 31011699 | PT. PINJAYA ABADI METAL | 514.5 | TERGANTUNG VENDOR | 1001 | Nusametal | 2023-04-28 04:20:13
+        const array = lotingot.split(" | "); // memecah string berdasarkan spasi
+        var dateString = array[10];
+        var date = new Date(dateString);
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        var formattedDate = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+        $.get('/modal/addLotIngot', {}, function (data, status) {
+            $("#staticBackdropLabel").html("Use Bundle Ingot"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $('#nama_vendor').val(array[5]);
+            $('#material').val(ConvertSAPINGOT(array[0]));
+            $('#penyimpanan_bundle').val(array[8]);
+            $('#berat_bundle').val(array[6]);
+            $("#tambahaninputan").html(
+                        '<input type="hidden" name="kode_sap" value="' + array[0] + '">'+
+                        '<input type="hidden" name="nrp_penimbang" value="' + array[2] + '">'+
+                        '<input type="hidden" name="nama_penimbang" value="' + array[3] + '">'+
+                        '<input type="hidden" name="id_vendor" value="' + array[4] + '">'+
+                        '<input type="datetime-local" name="kedatangan" style="display:none" value="' + formattedDate + '">' +
+                        '<input type="hidden" name="bisnis_unit" value="' + array[9] + '">'
+            );
         });
     }
 

@@ -70,6 +70,10 @@ Route::post('/modal/ChangePassword/save', [UserController::class, 'modalChangePa
 //==========[FOR MELTING]==========\\
 Route::name('melting')->group(function () {
     //==========[FOR MELTING - HENKATEN]==========\\
+    Route::get('/prod/melting/{furnace}', [MeltingController::class, 'furnace_data']);
+    Route::get('/prod/meltingHenkaten/{furnace}', [MeltingController::class, 'furnace_henkaten']);
+    Route::get('/modal/detail-lhp', [MeltingController::class, 'modal_detail_lhp']);
+    //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting', [MeltingController::class, 'index']);
     Route::get('/tv/Melting', [MeltingController::class, 'tv_index']);
     Route::get('/modal/henkatenMelting', [MeltingController::class, 'henkatenModal']);
@@ -91,12 +95,18 @@ Route::name('melting')->group(function () {
     Route::post('/prod/api/furnace', [MeltingController::class, 'furnaceApi']);
     //==========[FOR MELTING - LEVEL MOLTEN]==========\\
     Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'modalLevelMolten']);
+    //==========[FOR MELTING - BUNDLE LOT INGOT]==========\\
+    Route::get('/modal/addLotIngot', [MeltingController::class, 'modalLotingot_index']);
+    Route::post('/modal/addLotIngot/save', [MeltingController::class, 'modalLotingot_save']);
+    Route::post('/modal/addLotIngot/update', [MeltingController::class, 'modalLotingot_update']);
 });
 
 
 Route::name('lhpmelting.')->group(function () {
     //==========[FOR MELTING - LHP]==========\\
     Route::get('/lhp/melting', [MeltingController::class, 'lhp_index'])->name('index');
+    Route::post('/lhp/meltingRAW/api', [MeltingController::class, 'lhpRAW_api']);
+    Route::post('/lhp/melting/api', [MeltingController::class, 'lhp_api']);
     Route::post('/lhp/melting/check', [MeltingController::class, 'lhp_check']);
     Route::get('/lhp-modal/melting', [MeltingController::class, 'lhp_preparation'])->name('preparation');
     Route::get('/lhp/melting/{area}/{id}', [MeltingController::class, 'lhp_input'])->name('input');

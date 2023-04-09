@@ -22,7 +22,7 @@
                     <div class="col-12">
                         <div class="card text-center card_stok-molten">
                             @if ($data->material == 'AC2B')
-                            <?php $warna = 'bg-orange' ?>
+                            <?php $warna = 'bg-orange text-dark' ?>
                             @elseif($data->material == 'AC4B')
                             <?php $warna = 'bg-ungu' ?>
                             @elseif($data->material == 'AC4CH')

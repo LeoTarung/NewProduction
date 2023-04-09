@@ -7,9 +7,11 @@ use App\Models\DB_LhpMeltingRAW;
 use App\Models\DB_Furnace;
 use App\Models\DB_Kereta;
 use App\Models\DB_HenkatenMelting;
+use App\Models\DB_TransaksiIngot;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
+use Carbon\Carbon;
 
 class MeltingController extends Controller
 {
@@ -51,7 +53,51 @@ class MeltingController extends Controller
         return view('TV-Melting', compact('judul', 'title'));
     }
 
-    //==============================['Dashboard Melting']==============================//
+
+
+    //==============================['Dashboard Melting furnace']==============================//
+    public function furnace_data(Request $request, $furnace)
+    {
+        $title = $furnace;
+        if ($request->ajax()) {
+            $data = DB_LhpMelting::where('mesin', '=', $furnace)->orderBy('id', 'DESC')->get();
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatLhp(' . $data->id . ')"></a>';
+                    return $btn;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('prod-melting-detail', compact('title'));
+    }
+
+    public function furnace_henkaten(Request $request, $furnace)
+    {
+        if ($request->ajax()) {
+            $data = DB_HenkatenMelting::where('furnace', '=', $furnace)->orderBy('id', 'DESC')->get();
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatHenkaten(' . $data->id . ')"></a>';
+                    return $btn;
+                })
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+    }
+
+    public function modal_detail_lhp()
+    {
+        return view('partial.modal');
+    }
+
+    //==============================['Henkaten']==============================//
     public function henkatenModal()
     {
         $data = DB_HenkatenMelting::where('status', '=', 'open')->get();
@@ -276,6 +322,46 @@ class MeltingController extends Controller
     }
 
 
+    //==============================['Bundle Lot Ingot']==============================//
+    public function modalLotingot_index()
+    {
+        return view('partial.modal');
+    }
+
+    public function modalLotingot_save(Request $request)
+    {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'nama_vendor' => 'required',
+            'material' => 'required',
+            'berat_bundle' => 'required',
+            'lot_ingot' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
+        }
+
+        $insert = DB_TransaksiIngot::create([
+            'nama_vendor' => $request->nama_vendor,
+            'material' => $request->material,
+            'store_location' => $request->penyimpanan_bundle,
+            'berat' => $request->berat_bundle,
+            'lot_bundle' => $request->lot_ingot,
+            'kode_sap' => $request->kode_sap,
+            'nrp_penimbang' => $request->nrp_penimbang,
+            'nama_penimbang' => $request->nama_penimbang,
+            'id_vendor' => $request->id_vendor,
+            'kedatangan' => $request->kedatangan,
+            'bisnis_unit' => $request->bisnis_unit,
+            'digunakan' => Carbon::now(),
+        ]);
+        if ($insert) {
+            return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
+        }
+    }
+
+
     //=================[LHP MELTING]=================\\
 
     public function lhp_index(UsableController $useable)
@@ -474,5 +560,16 @@ class MeltingController extends Controller
     {
         $data =  DB_LhpMeltingRAW::groupBy(DB_LhpMeltingRAW::raw('hour(jam)'))->where('id_lhp', '=', $id)->selectRaw("jam, tanggal, shift, SUM(ingot) as ingots, SUM(dross) as drosss, SUM(tapping) as tappings, SUM(exgate) as exgates, SUM(reject_parts) as reject_partss, SUM(alm_treat) as alm_treats, SUM(oil_scrap) as oil_scraps, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap) as total_return_rs, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) as total_charging_rs")->get();
         return view('partial.lhp-modal', compact('data'));
+    }
+
+    public function lhp_api(Request $request)
+    {
+        $data = DB_LhpMelting::where('id', '=', $request->id)->get();
+        return $data;
+    }
+    public function lhpRAW_api(Request $request)
+    {
+        $data = DB_LhpMeltingRAW::where('id_lhp', '=', $request->id_lhp)->get();
+        return $data;
     }
 }

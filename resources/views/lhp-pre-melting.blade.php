@@ -15,7 +15,7 @@
         @elseif($mesin->material == 'HD-2')
         <?php $warna = 'bg-warning' ?>
         @elseif($mesin->material == 'HD-4')
-        <?php $warna = 'bg-primary' ?>
+        <?php $warna = 'bg-primary text-light' ?>
         @elseif($mesin->material == 'YH3R')
         <?php $warna = 'bg-success' ?>
         @endif
