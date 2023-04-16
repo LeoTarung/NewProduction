@@ -128,5 +128,32 @@
             });
         });
     }
+
+    function editdetails(xx){
+        $.get("/modal/edit-detail-lhp", {}, function (data, status) {
+            $("#staticBackdropLabel").html("Edit Details Input LHP"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/lhp/melting/api') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: xx,
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("#ingot").val(data[0].ingot)
+                    $("#exgate").val(data[0].exgate)
+                    $("#reject_parts").val(data[0].reject_parts)
+                    $("#alm_treat").val(data[0].alm_treat)
+                    $("#fluxing").val(data[0].fluxing)
+                    $("#tapping").val(data[0].tapping)
+                    $("#dross").val(data[0].dross)
+                },
+            });
+        });
+    }
 </script>
 @endsection

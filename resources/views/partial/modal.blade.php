@@ -1510,249 +1510,47 @@
 </form>
 {{-- BUNDLE LOT INGOT  --}}
 @elseif (Request::url() == url('/modal/addLotIngot'))
-<form action="{{ url('/modal/addLotIngot/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
-    @csrf
-    <div class="row">
-        <div class="col-6">
-            <div class="col-12 mb-3">
-                <label for="name">Nama Vendor <sup>*</sup></label>
-                <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" required readonly>
-            </div>
-            <div class="col-12 mb-3">
-                <label for="name">Material <sup>*</sup></label>
-                <input type="text" class="form-control" name="material" id="material" required readonly>
-            </div>
-            <div class="col-12 mb-3">
-                <label for="name">Penyimpanan Bundle <sup>*</sup></label>
-                <input type="number" class="form-control" name="penyimpanan_bundle" id="penyimpanan_bundle" required readonly>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="col-12 mb-3">
-                <label for="name">Berat Bundle <sup>*</sup></label>
-                <div class="input-group mb-3">
-                    <input type="number" class="form-control" name="berat_bundle" id="berat_bundle" required readonly>
-                    <a class="btn btn-outline-secondary fw-bold" type="button" >KG</a>
+    <form action="{{ url('/modal/addLotIngot/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
+        @csrf
+        <div class="row">
+            <div class="col-6">
+                <div class="col-12 mb-3">
+                    <label for="name">Nama Vendor <sup>*</sup></label>
+                    <input type="text" class="form-control" name="nama_vendor" id="nama_vendor" required readonly>
                 </div>
+                <div class="col-12 mb-3">
+                    <label for="name">Material <sup>*</sup></label>
+                    <input type="text" class="form-control" name="material" id="material" required readonly>
+                </div>
+                <div class="col-12 mb-3">
+                    <label for="name">Penyimpanan Bundle <sup>*</sup></label>
+                    <input type="number" class="form-control" name="penyimpanan_bundle" id="penyimpanan_bundle" required readonly>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="col-12 mb-3">
+                    <label for="name">Berat Bundle <sup>*</sup></label>
+                    <div class="input-group mb-3">
+                        <input type="number" class="form-control" name="berat_bundle" id="berat_bundle" required readonly>
+                        <a class="btn btn-outline-secondary fw-bold" type="button" >KG</a>
+                    </div>
 
-            </div>
-            <div class="col-12 mb-3">
-                <label for="name">Lot Produksi Bundle <sup>*</sup></label>
-                <input type="text" class="form-control" name="lot_ingot" id="lot_ingot" required>
-            </div>
-            <p class="text-center"> <span class=" text-danger fw-bold">!!! PERINGATAN !!!</span> <br> Harap Pastikan Semua Kolom Terisi Dan Sesuai</p>
-        </div>
-    </div>
-    {{-- <div class="row justify-content-end">
-        <div class="col-4 mb-3 align-self-end">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">Tanggal</span>
-                <input type="date" class="form-control float-end" name="tanggal" id="tanggal" aria-describedby="tanggalHelp" required>
+                </div>
+                <div class="col-12 mb-3">
+                    <label for="name">Lot Produksi Bundle <sup>*</sup></label>
+                    <input type="date" class="form-control" name="lot_ingot" id="lot_ingot" required>
+                </div>
+                <p class="text-center"> <span class=" text-danger fw-bold">!!! PERINGATAN !!!</span> <br> Harap Pastikan Semua Kolom Terisi Dan Sesuai</p>
             </div>
         </div>
-    </div>
-    <div class="row">
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">All Customer</span>
-                <input type="number" class="form-control" id="all_customer" name="all_customer" value="0">
+        <div class="row">
+            <div class="tambahaninputan" id="tambahaninputan"></div>
+            <div class="col" >
+                <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
             </div>
         </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">ADM</span>
-                <input type="number" class="form-control" id="adm" name="adm" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM P1</span>
-                <input type="number" class="form-control" id="ahm_p1" name="ahm_p1" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM P2</span>
-                <input type="number" class="form-control" id="ahm_p2" name="ahm_p2" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM P3</span>
-                <input type="number" class="form-control" id="ahm_p3" name="ahm_p3" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM P4</span>
-                <input type="number" class="form-control" id="ahm_p4" name="ahm_p4" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM P5</span>
-                <input type="number" class="form-control" id="ahm_p5" name="ahm_p5" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AHM REM</span>
-                <input type="number" class="form-control" id="ahm_rem" name="ahm_rem" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">AISIN</span>
-                <input type="number" class="form-control" id="aisin" name="aisin" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">ASPIRA</span>
-                <input type="number" class="form-control" id="aspira" name="aspira" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">CAI</span>
-                <input type="number" class="form-control" id="cai" name="cai" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">DENSO</span>
-                <input type="number" class="form-control" id="denso" name="denso" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">DNP</span>
-                <input type="number" class="form-control" id="dnp" name="dnp" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">HINO</span>
-                <input type="number" class="form-control" id="hino" name="hino" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">HPM</span>
-                <input type="number" class="form-control" id="hpm" name="hpm" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">IGP</span>
-                <input type="number" class="form-control" id="igp" name="igp" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">J-TEKT</span>
-                <input type="number" class="form-control" id="j_tekt" name="j_tekt" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">KAWASAKI</span>
-                <input type="number" class="form-control" id="kawasaki" name="kawasaki" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">KUBOTA</span>
-                <input type="number" class="form-control" id="kubota" name="kubota" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">KAYABA</span>
-                <input type="number" class="form-control" id="kayaba" name="kayaba" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">MHASK</span>
-                <input type="number" class="form-control" id="mhask" name="mhask" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">MII</span>
-                <input type="number" class="form-control" id="mii" name="mii" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">MKM</span>
-                <input type="number" class="form-control" id="mkm" name="mkm" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">NISSAN</span>
-                <input type="number" class="form-control" id="nissan" name="nissan" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">NKI</span>
-                <input type="number" class="form-control" id="nki" name="nki" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">OKAMOTO</span>
-                <input type="number" class="form-control" id="okamoto" name="okamoto" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">SUZUKI</span>
-                <input type="number" class="form-control" id="suzuki" name="suzuki" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">SKC</span>
-                <input type="number" class="form-control" id="skc" name="skc" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">TMMIN</span>
-                <input type="number" class="form-control" id="tmmin" name="tmmin" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">TOYODA GOSAI</span>
-                <input type="number" class="form-control" id="toyoda_gosai" name="toyoda_gosai" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">YAMAHA</span>
-                <input type="number" class="form-control" id="yamaha" name="yamaha" value="0">
-            </div>
-        </div>
-        <div class="col-3">
-            <div class="input-group mb-3">
-                <span class="input-group-text disabled bg-silver text-dark" id="basic-addon1" style="width:145px">YUTAKA</span>
-                <input type="number" class="form-control" id="yutaka" name="yutaka" value="0">
-            </div>
-        </div>
-    </div> --}}
-    <div class="row">
-        <div class="tambahaninputan" id="tambahaninputan"></div>
-        <div class="col" >
-            <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
-        </div>
-    </div>
 
-</form>
+    </form>
 @elseif(Request::url() == url('/modal/detail-lhp'))
     <div class="table-responsive">
         <table id="Table_detailLhp" class="table table-striped-columns table-hover table-bordered display" style="overflow-x: scroll">
@@ -1777,6 +1575,53 @@
             $("#Table_detailLhp").DataTable();
         });
     </script>
+
+
+@elseif(Request::url() == url('/modal/edit-detail-lhp'))
+    <form action="{{ url('/modal/edit-detail-lhp/update') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
+        @csrf
+        <div class="row">
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label for="ingot">INGOT <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="ingot" id="ingot" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="reject_parts">PARTS NG <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="reject_parts" id="reject_parts" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="tapping">TAPPING <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="tapping" id="tapping" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="alm_treat">ALM TREAT <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="alm_treat" id="alm_treat" required>
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="row">
+                    <div class="col-12 mb-3">
+                        <label for="fluxing">FLUXING <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="fluxing" id="fluxing" required>
+                    </div>
+                    <div class="col-12 mb-3">
+                        <label for="dross">DROSS <sup>*</sup></label>
+                        <input type="text" class="form-control" value="" name="dross" id="dross" required>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="tambahaninputan" id="tambahaninputan"></div>
+            <div class="col" >
+                <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+            </div>
+        </div>
+    </form>
 @elseif(Request::url() == url('/modal/detail-henkaten'))
 <h1>KONTOL</h1>
 @else

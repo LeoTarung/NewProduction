@@ -106,3 +106,35 @@ function ConvertSAPINGOT(data) {
     }
     return data;
 }
+
+//==============================['Convert DD.MM.YYYY to YYYY-MM-DD']==============================//
+
+function convertToYMD(tanggalan) {
+    // tanggal dalam format dd.MM.YYYY
+    var dateString = tanggalan;
+
+    // memisahkan tanggal menjadi day, month, dan year
+    var dateParts = dateString.split(".");
+
+    // membuat variabel baru dengan format YYYY-MM-DD
+    var newDate = new Date(
+        dateParts[2],
+        parseInt(dateParts[1]) - 1,
+        dateParts[0]
+    );
+    var year = newDate.getFullYear();
+    var month = newDate.getMonth() + 1;
+    var day = newDate.getDate();
+
+    // menggabungkan variabel baru menjadi format YYYY-MM-DD
+    var ymdDate =
+        year +
+        "-" +
+        (month < 10 ? "0" : "") +
+        month +
+        "-" +
+        (day < 10 ? "0" : "") +
+        day;
+
+    return ymdDate;
+}

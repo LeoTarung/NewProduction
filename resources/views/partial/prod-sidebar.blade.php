@@ -44,6 +44,18 @@
                     </nav>
                 </div>
 
+                <hr class="sidebar-divider my-1">
+                <a class="nav-link collapsed" href="/" data-bs-toggle="collapse" data-bs-target="#collapseFG" aria-expanded="false" aria-controls="collapseFG">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-truck-fast fa-lg"></i></div>
+                    Create QR
+                    <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                </a>
+                <div class="collapse" id="collapseFG" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                    <nav class="sb-sidenav-menu-nested nav">
+                        <a class="nav-link ms-3" href="{{ url('/qr/finishgood') }}">Finish Good</a>
+                        <a class="nav-link ms-3" href="{{ url('/qr/fromsubcont') }}">From Subcont</a>
+                    </nav>
+                </div>
             </div>
         </div>
         <div class="sb-sidenav-footer">

@@ -97,6 +97,11 @@ class MeltingController extends Controller
         return view('partial.modal');
     }
 
+    public function modal_detail_lhp_update(Request $request)
+    {
+        dd($request);
+    }
+
     //==============================['Henkaten']==============================//
     public function henkatenModal()
     {
@@ -323,6 +328,31 @@ class MeltingController extends Controller
 
 
     //==============================['Bundle Lot Ingot']==============================//
+    public function lotingot_data(Request $request)
+    {
+        $title = "LOT INGOT";
+        if ($request->ajax()) {
+            $data = DB_TransaksiIngot::orderByDesc('id')->get();
+            return DataTables::of($data)->addIndexColumn()
+                ->addColumn('action', function ($data) {
+                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatLhp(' . $data->id . ')"></a>';
+                    return $btn;
+                })
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
+                ->addColumn('jam', function ($row) {
+                    $jam = date("h:i:s", strtotime($row->created_at));
+                    return $jam;
+                })
+                ->rawColumns(['action'])
+                ->addIndexColumn()
+                ->make(true);
+        }
+        return view('prod-melting-lotingot', compact('title'));
+    }
+
     public function modalLotingot_index()
     {
         return view('partial.modal');
@@ -564,7 +594,7 @@ class MeltingController extends Controller
 
     public function lhp_api(Request $request)
     {
-        $data = DB_LhpMelting::where('id', '=', $request->id)->get();
+        $data = DB_LhpMeltingRAW::where('id', '=', $request->id)->get();
         return $data;
     }
     public function lhpRAW_api(Request $request)

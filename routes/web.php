@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\QRController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CastingController;
@@ -71,8 +72,11 @@ Route::post('/modal/ChangePassword/save', [UserController::class, 'modalChangePa
 Route::name('melting')->group(function () {
     //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting/{furnace}', [MeltingController::class, 'furnace_data']);
+    Route::get('/prod/melting/lot/ingot', [MeltingController::class, 'lotingot_data']);
     Route::get('/prod/meltingHenkaten/{furnace}', [MeltingController::class, 'furnace_henkaten']);
     Route::get('/modal/detail-lhp', [MeltingController::class, 'modal_detail_lhp']);
+    Route::get('/modal/edit-detail-lhp', [MeltingController::class, 'modal_detail_lhp']);
+    Route::post('/modal/edit-detail-lhp/update', [MeltingController::class, 'modal_detail_lhp_update']);
     //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting', [MeltingController::class, 'index']);
     Route::get('/tv/Melting', [MeltingController::class, 'tv_index']);
@@ -93,7 +97,7 @@ Route::name('melting')->group(function () {
     Route::post('/modal/addFurnace/save', [MeltingController::class, 'addFurnace_save']);
     Route::post('/modal/addFurnace/update', [MeltingController::class, 'addFurnace_update']);
     Route::post('/prod/api/furnace', [MeltingController::class, 'furnaceApi']);
-    //==========[FOR MELTING - LEVEL MOLTEN]==========\\
+    //==========[FOR MELTING - LEVEL MOLTEN]==========\\UBPURE-AC2B000006 | AC2B | 0275 | AGUS | 31000784 | PT ALUMINDO ALLOY ABADI | 128.5 | 1 | 1001 | Nusametal | 11.04.23 11:39:01
     Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'modalLevelMolten']);
     //==========[FOR MELTING - BUNDLE LOT INGOT]==========\\
     Route::get('/modal/addLotIngot', [MeltingController::class, 'modalLotingot_index']);
@@ -142,7 +146,21 @@ Route::name('BadNewsFirst.')->group(function () {
     Route::post('/modal/deliveryQuality/save', [BadNewsFirstController::class, 'modal_delivery_save']);
     Route::post('/modal/deliveryQuality/update', [BadNewsFirstController::class, 'modal_delivery_update']);
 });
+
+
+//==========[FOR FINISHGOOD]==========\\
+Route::name('QR.')->group(function () {
+    Route::get('/qr/finishgood', [QRController::class, 'FG_index']);
+    Route::get('/qr/modal/finishgood/abnormality', [QRController::class, 'openModalAbnormality'])->name('Abnormality');
+    Route::get('/qr/modal/finishgood', [QRController::class, 'openModal1'])->name('addQRFG');
+    Route::post('/qr/modal/finishgood/save', [QRController::class, 'FG_save']);
+    Route::get('/qr/printQR/{id}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
+    Route::get('/qr/fromsubcont', [QRController::class, 'FS_index']);
+});
+
 //==========[FOR TV MONITORING]==========\\
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
 Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);
 Route::get('/ftp', [BadNewsFirstController::class, 'ftp']);
+
+Route::post('/namapart/api', [QRController::class, 'APINamapart']);
