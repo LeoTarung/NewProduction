@@ -59,9 +59,9 @@
     function PrintQRFG(id){
         // console.log(id)
         let newWin = window.open("{{ url('/qr/printQR') }}"+"/"+id+"/normal", "hello", "width=400,height=600");
-        setTimeout(() => {
-            newWin.close()
-        }, 2000);
+        // setTimeout(() => {
+        //     newWin.close()
+        // }, 2000);
     }
 
     function EditQty(xx){
