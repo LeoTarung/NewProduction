@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\DB_Timbangan;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -16,4 +17,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
+});
+
+Route::post('/timbangan/{id}', function ($id, Request $request) {
+    DB_Timbangan::where('id', $id)->update(['berat' => $request->berat]);
+    $berhasil =  DB_Timbangan::find($id);
+    return $berhasil;
 });
