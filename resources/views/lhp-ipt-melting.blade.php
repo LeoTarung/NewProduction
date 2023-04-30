@@ -120,10 +120,18 @@
 </div>
 <script>
     function isitimbangan(){
-        angka = Math.floor(Math.random() * 10000);
-        $("#berat").val(angka);
-        $("#stok_molten").html(angka.toLocaleString('de-DE') +" KG");
-        setTimeout(isitimbangan, 3000);
+        $.ajax({
+            method: "GET",
+            dataType: "json",
+            url: "{{ url('/api/timbangan/1') }}",
+            success: function (data) {
+                $("#berat").val(data.berat);
+            },
+            error: function(status) {
+                $("#berat").val("ON LOADING...");
+            }
+        });
+        setTimeout(isitimbangan, 1000);
     }
     isitimbangan()
 
@@ -133,7 +141,7 @@
         var id_lhp = {{ $id }};
         var furnace = "{{ $area }}";
         $.get('/lhp-modal/melting/kereta/{{ $data->material }}', {}, function (data, status) {
-                $("#staticBackdropLabel").html('Pilih nomor kereta yang anda timbang'); //Untuk kasih judul di modal
+                $("#staticBackdropLabel").html('Pilih Berat Kereta'); //Untuk kasih judul di modal
                 $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
                 $("#page").html(data); //menampilkan view create di dalam id page
                 $("#form-tambahan").html(
@@ -156,14 +164,15 @@
 
 
 </script>
-{{-- <script>
+<script>
     $(function(){
     let ip_node = location.hostname;
     let socket_port = '1553';
     let socket = io(ip_node + ':' + socket_port);
-    let lokasi = "Kiri"+'{{ $mesin }}';
+    let lokasi = "Kiri" + "{{ $area }}";
     socket.on('connection');
     socket.on(lokasi, (data) => {
+        console.log(data)
             if(data.length == 0){
             document.getElementById("stok_molten").innerHTML = "HUB DIGITAL";
             } else {
@@ -171,5 +180,5 @@
             }
         })
     });
-</script> --}}
+</script>
 @endsection

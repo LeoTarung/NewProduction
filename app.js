@@ -85,124 +85,124 @@ io.on("connection", (socket) => {
         //     socket.emit("levelMolten_settings", res);
         // });
 
-        //==========[' SELECT DATA LHPStriko-1 ']==========//
+        //==========[' SELECT DATA LHPSTRIKO-1 ']==========//
         connection.query(
-            "SELECT * FROM db_lhpmelting WHERE mesin='Striko-1' AND shift='" +
+            "SELECT * FROM db_lhpmelting WHERE mesin='STRIKO-1' AND shift='" +
                 shift +
                 "' AND tanggal='" +
                 tanggal +
                 "' ORDER BY id DESC",
             (err, res) => {
-                socket.emit("KiriStriko-1", res);
+                socket.emit("KiriSTRIKO-1", res);
             }
         );
 
-        //==========[' SELECT DATA LHPStriko-2 ']==========//
+        //==========[' SELECT DATA LHPSTRIKO-2 ']==========//
         connection.query(
-            "SELECT * FROM db_lhpmelting WHERE mesin='Striko-2' AND shift='" +
+            "SELECT * FROM db_lhpmelting WHERE mesin='STRIKO-2' AND shift='" +
                 shift +
                 "' AND tanggal='" +
                 tanggal +
                 "' ORDER BY id DESC",
             (err, res) => {
-                socket.emit("KiriStriko-2", res);
+                socket.emit("KiriSTRIKO-2", res);
             }
         );
 
-        //==========[' SELECT DATA LHPStriko-3 ']==========//
+        //==========[' SELECT DATA LHPSTRIKO-3 ']==========//
         connection.query(
-            "SELECT * FROM db_lhpmelting WHERE mesin='Striko-3' AND shift='" +
+            "SELECT * FROM db_lhpmelting WHERE mesin='STRIKO-3' AND shift='" +
                 shift +
                 "' AND tanggal='" +
                 tanggal +
                 "' ORDER BY id DESC",
             (err, res) => {
-                socket.emit("KiriStriko-3", res);
+                socket.emit("KiriSTRIKO-3", res);
             }
         );
 
-        //==========[' SELECT DATA LHPSwift_Asia ']==========//
+        //==========[' SELECT DATA LHPSWIF ASIA ']==========//
         connection.query(
-            "SELECT * FROM db_lhpmelting WHERE mesin='Swift_Asia' AND shift='" +
+            "SELECT * FROM db_lhpmelting WHERE mesin='SWIF ASIA' AND shift='" +
                 shift +
                 "' AND tanggal='" +
                 tanggal +
                 "' ORDER BY id DESC",
             (err, res) => {
-                socket.emit("KiriSwift_Asia", res);
+                socket.emit("KiriSWIF ASIA", res);
             }
         );
 
-        //==========[' SELECT DATA TahunanStriko-1 ']==========//
+        //==========[' SELECT DATA TahunanSTRIKO-1 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'Striko-1' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'STRIKO-1' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("TahunanStriko-1", res);
+                socket.emit("TahunanSTRIKO-1", res);
             }
         );
 
-        //==========[' SELECT DATA TahunanStriko-2 ']==========//
+        //==========[' SELECT DATA TahunanSTRIKO-2 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'Striko-2' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'STRIKO-2' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("TahunanStriko-2", res);
+                socket.emit("TahunanSTRIKO-2", res);
             }
         );
 
-        //==========[' SELECT DATA TahunanStriko-3 ']==========//
+        //==========[' SELECT DATA TahunanSTRIKO-3 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'Striko-3' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'STRIKO-3' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("TahunanStriko-3", res);
+                socket.emit("TahunanSTRIKO-3", res);
             }
         );
 
-        //==========[' SELECT DATA TahunanSwift_Asia ']==========//
+        //==========[' SELECT DATA TahunanSWIF ASIA ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'Swift_Asia' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting where mesin = 'SWIF ASIA' AND YEAR(tanggal) = YEAR(now()) GROUP BY MONTH(tanggal)",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("TahunanSwift_Asia", res);
+                socket.emit("TahunanSWIF ASIA", res);
             }
         );
 
-        //==========[' SELECT DATA bulananStriko-1 ']==========//
+        //==========[' SELECT DATA bulananSTRIKO-1 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'Striko-1' GROUP BY tanggal;",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'STRIKO-1' GROUP BY tanggal;",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-1' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("bulananStriko-1", res);
+                socket.emit("bulananSTRIKO-1", res);
             }
         );
 
-        //==========[' SELECT DATA bulananStriko-2 ']==========//
+        //==========[' SELECT DATA bulananSTRIKO-2 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'Striko-2' GROUP BY tanggal;",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-2' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'STRIKO-2' GROUP BY tanggal;",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-2' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
 
             (err, res) => {
-                socket.emit("bulananStriko-2", res);
+                socket.emit("bulananSTRIKO-2", res);
             }
         );
 
-        //==========[' SELECT DATA bulananStriko-3 ']==========//
+        //==========[' SELECT DATA bulananSTRIKO-3 ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'Striko-3' GROUP BY tanggal;",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Striko-3' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'STRIKO-3' GROUP BY tanggal;",
+            // "SELECT * FROM db_lhpmelting where mesin = 'STRIKO-3' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("bulananStriko-3", res);
+                socket.emit("bulananSTRIKO-3", res);
             }
         );
 
-        //==========[' SELECT DATA bulananSwift_Asia ']==========//
+        //==========[' SELECT DATA bulananSWIF ASIA ']==========//
         connection.query(
-            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'Swift_Asia' GROUP BY tanggal;",
-            // "SELECT * FROM db_lhpmelting where mesin = 'Swift_Asia' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
+            "SELECT tanggal, SUM(total_charging) AS total_chargings, SUM(ingot) as ingots, IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing)* 100, 0 ) as persen_loss, IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 0) as persen_ingots FROM db_lhpmelting WHERE tanggal BETWEEN DATE_SUB(CURDATE(), INTERVAL 15 DAY) AND CURDATE() AND mesin = 'SWIF ASIA' GROUP BY tanggal;",
+            // "SELECT * FROM db_lhpmelting where mesin = 'SWIF ASIA' AND MONTH(tanggal) = MONTH(now()) AND YEAR(tanggal) = YEAR(now())",
             (err, res) => {
-                socket.emit("bulananSwift_Asia", res);
+                socket.emit("bulananSWIF ASIA", res);
             }
         );
 

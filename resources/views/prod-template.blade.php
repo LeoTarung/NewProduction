@@ -37,6 +37,8 @@
                     <div class="container-fluid px-4">
                         @include('partial/sweetallert')
                         @yield('content')
+                        {{-- <h1 class="mt-4">{{ $data->DB_Namapart->nama_part }}</h1> --}}
+
                         {{-- <h1 class="mt-4">Dashboard</h1>
                         <ol class="breadcrumb mb-4">
                             <li class="breadcrumb-item active">Dashboard</li>

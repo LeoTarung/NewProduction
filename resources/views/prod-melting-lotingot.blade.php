@@ -15,7 +15,7 @@
                                 <th class="text-center">JAM</th>
                                 <th class="text-center">MATERIAL</th>
                                 <th class="text-center">LOT BUNDLE</th>
-                                <th class="text-center">AKSI</th>
+                                {{-- <th class="text-center">AKSI</th> --}}
                             </tr>
                         </thead>
                     </table>
@@ -36,7 +36,7 @@
                 {data: 'jam', name: 'jam'},
                 {data: 'material', name: 'material'},
                 {data: 'lot_bundle', name: 'lot_bundle'},
-                {data: 'action', name: 'action', orderable: false, searchable: false},
+                // {data: 'action', name: 'action', orderable: false, searchable: false},
             ]
         });
     });

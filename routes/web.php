@@ -1,13 +1,17 @@
 <?php
 
+use App\Models\DB_Mesincasting;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QRController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CastingController;
 use App\Http\Controllers\MeltingController;
+use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\BadNewsFirstController;
 use App\Http\Controllers\CalenderOfEventController;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -22,8 +26,11 @@ use App\Http\Controllers\CalenderOfEventController;
 
 Route::get('/dashboard', function () {
     $title = "DASHBOARD";
-    return view('prod-template', compact('title'));
+    $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
+    // dd($data->DB_Namapart->nama_part);
+    return view('prod-template', compact('title', 'data'));
 });
+
 Route::get('/prod', function () {
     $title = "DASHBOARD";
     return view('prod-menu-prod', compact('title'));
@@ -105,7 +112,6 @@ Route::name('melting')->group(function () {
     Route::post('/modal/addLotIngot/update', [MeltingController::class, 'modalLotingot_update']);
 });
 
-
 Route::name('lhpmelting.')->group(function () {
     //==========[FOR MELTING - LHP]==========\\
     Route::get('/lhp/melting', [MeltingController::class, 'lhp_index'])->name('index');
@@ -120,19 +126,32 @@ Route::name('lhpmelting.')->group(function () {
     Route::get('/lhp-modal/resume-melting/{id}', [MeltingController::class, 'resume_lhp'])->name('resume');
 });
 
-
-
-
 //==========[FOR CASTING]==========\\
-Route::get('/prod/casting', [CastingController::class, 'index']);
+Route::name('casting.')->group(function () {
+    Route::get('/prod/casting', [CastingController::class, 'index']);
+});
+
+//==========[FOR SHIPPING]==========\\
+Route::name('shipping.')->group(function () {
+    Route::get('/prod/shipping', [ShippingController::class, 'index_dashboard']);
+    Route::get('/prod/shipping/history', [ShippingController::class, 'history_dashboard']);
+    Route::get('/prod/shipping/scan', [ShippingController::class, 'index_scanQR']);
+    Route::get('/prod/shipping/scan/notrans', [ShippingController::class, 'scanQR_notrans']);
+    Route::get('/prod/shipping/scan/notrans/hapus/{id}', [ShippingController::class, 'scanQR_delete']);
+    Route::post('/prod/shipping/scan/save', [ShippingController::class, 'scanQR_save']);
+    Route::post('/prod/shipping/scan/delete', [ShippingController::class, 'scanQR_delete']);
+    Route::post('/prod/shipping/scan/update', [ShippingController::class, 'scanQR_update']);
+});
 
 //==========[FOR CALENDER OF EVENT]==========\\
-Route::get('/calenderEvent', [CalenderOfEventController::class, 'index']);
-Route::get('/modal/calenderEvent', [CalenderOfEventController::class, 'modal']);
-Route::post('/calenderEvent/api', [CalenderOfEventController::class, 'api']);
-Route::get('/calenderEvent/apiAll/{group}', [CalenderOfEventController::class, 'apiAll']);
-Route::post('/modal/calenderEvent/save', [CalenderOfEventController::class, 'save']);
-Route::post('/modal/calenderEvent/update', [CalenderOfEventController::class, 'update']);
+Route::name('CalenderOfEvent.')->group(function () {
+    Route::get('/calenderEvent', [CalenderOfEventController::class, 'index']);
+    Route::get('/modal/calenderEvent', [CalenderOfEventController::class, 'modal']);
+    Route::post('/calenderEvent/api', [CalenderOfEventController::class, 'api']);
+    Route::get('/calenderEvent/apiAll/{group}', [CalenderOfEventController::class, 'apiAll']);
+    Route::post('/modal/calenderEvent/save', [CalenderOfEventController::class, 'save']);
+    Route::post('/modal/calenderEvent/update', [CalenderOfEventController::class, 'update']);
+});
 
 //==========[FOR BAD NEW FIRST]==========\\
 Route::name('BadNewsFirst.')->group(function () {
@@ -146,7 +165,6 @@ Route::name('BadNewsFirst.')->group(function () {
     Route::post('/modal/deliveryQuality/save', [BadNewsFirstController::class, 'modal_delivery_save']);
     Route::post('/modal/deliveryQuality/update', [BadNewsFirstController::class, 'modal_delivery_update']);
 });
-
 
 //==========[FOR FINISHGOOD]==========\\
 Route::name('QR.')->group(function () {

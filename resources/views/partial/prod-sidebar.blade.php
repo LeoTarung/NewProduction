@@ -22,7 +22,7 @@
                         <a class="nav-link ms-3" href="">Painting</a>
                         <a class="nav-link ms-3" href="">Assembling</a>
                         <a class="nav-link ms-3" href="">Final Inspection</a>
-                        <a class="nav-link ms-3" href="">Shipping</a>
+                        <a class="nav-link ms-3" href="{{ url('/prod/shipping') }}">Shipping</a>
                     </nav>
                 </div>
                 <hr class="sidebar-divider my-1">

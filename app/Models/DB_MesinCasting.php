@@ -10,4 +10,9 @@ class DB_MesinCasting extends Model
     use HasFactory;
     protected $table = "db_mesincasting";
     protected $guarded = [];
+
+    public function DB_Namapart()
+    {
+        return $this->belongsTo(DB_Namapart::class, 'db_namapart_id', 'id');
+    }
 }

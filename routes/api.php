@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\DB_Timbangan;
+use App\Models\DB_LhpMelting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -22,5 +23,14 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 Route::post('/timbangan/{id}', function ($id, Request $request) {
     DB_Timbangan::where('id', $id)->update(['berat' => $request->berat]);
     $berhasil =  DB_Timbangan::find($id);
+    return $berhasil;
+});
+
+Route::get('/timbangan/{id}', function ($id) {
+    $berhasil =  DB_Timbangan::find($id);
+    return $berhasil;
+});
+Route::get('/lhpmelting/{id}', function ($id) {
+    $berhasil = DB_LhpMelting::find($id);
     return $berhasil;
 });

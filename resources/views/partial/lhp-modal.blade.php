@@ -52,7 +52,6 @@
             });
         </script>
     @break
-
     @case('lhpmelting.buttonkereta')
         <form action="{{ url('/lhp-modal/melting/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
             @csrf
@@ -76,7 +75,7 @@
                         <?php $warna = 'bg-success' ?>
                         @endif
                         <div class="col-2 m-2">
-                            <button type="Submit" class="btn btn-lg {{ $warna }} fw-bold fs-3" id="submit" style="width:100%; height:100%;" name="berat_kereta" value="{{ $kereta->berat }}">{{ $kereta->no_kereta }}</button>
+                            <button type="Submit" class="btn btn-lg {{ $warna }} fw-bold fs-3" id="submit" style="width:100%; height:100%;" name="berat_kereta" value="{{ $kereta->berat }}">{{ $kereta->berat }}</button>
                         </div>
                     @endforeach
                 </div>
@@ -84,56 +83,38 @@
         </form>
     @break
     @case('lhpmelting.resume')
-
-    <div class="table-responsive">
-        <table id="Table_MP" class="table table-striped-columns table-hover table-bordered nowrap display" style="overflow-x: scroll">
-            <thead class="table-dark text-center fw-bold">
-                <tr>
-                    <th nowrap class="fs-5">JAM</th>
-                    <th  class="fs-5">TOTAL CHARGING</th>
-                    <th nowrap class="fs-5">INGOT</th>
-                    <th nowrap class="fs-5">EX GATE</th>
-                    <th nowrap class="fs-5">PARTS NG</th>
-                    <th nowrap class="fs-5">ALM TREAT</th>
-                    <th nowrap class="fs-5">OIL SCRAP</th>
-                    <th nowrap class="fs-5">TAPPING</th>
-                    <th nowrap class="fs-5">DROSS</th>
-                </tr>
-            </thead>
-            <tbody class="text-center fs-5">
-                @foreach ($data as $a)
-                <tr>
-                    <td>{{date('H', strtotime($a->jam))}}:00</td>
-                    <td>{{ $a->total_charging_rs }}</td>
-                    <td>{{ $a->ingots }}</td>
-                    <td>{{ $a->exgates }}</td>
-                    <td>{{ $a->reject_partss }}</td>
-                    <td>{{ $a->alm_treats }}</td>
-                    <td>{{ $a->oil_scraps }}</td>
-                    <td>{{ $a->tappings }}</td>
-                    <td>{{ $a->drosss }}</td>
-                </tr>
-            @endforeach
-            </tbody>
-        </table>
-    </div>
-        {{-- <table class="table table-success table-striped">
-            <thead class="table-dark text-center fw-bold">
-                <tr>
-                    <td class="fs-5">JAM</td>
-                    <td class="fs-5">TOTAL CHARGING</td>
-                    <td class="fs-5">INGOT</td>
-                    <td class="fs-5">EX GATE</td>
-                    <td class="fs-5">PARTS NG</td>
-                    <td class="fs-5">ALM TREAT</td>
-                    <td class="fs-5">OIL SCRAP</td>
-                    <td class="fs-5">TAPPING</td>
-                    <td class="fs-5">DROSS</td>
-                </tr>
-            </thead>
-            <tbody class="fs-5">
-
-        </table> --}}
+        <div class="table-responsive">
+            <table id="Table_MP" class="table table-striped-columns table-hover table-bordered nowrap display" style="overflow-x: scroll">
+                <thead class="table-dark text-center fw-bold">
+                    <tr>
+                        <th nowrap class="fs-5">JAM</th>
+                        <th  class="fs-5">TOTAL CHARGING</th>
+                        <th nowrap class="fs-5">INGOT</th>
+                        <th nowrap class="fs-5">EX GATE</th>
+                        <th nowrap class="fs-5">PARTS NG</th>
+                        <th nowrap class="fs-5">ALM TREAT</th>
+                        <th nowrap class="fs-5">OIL SCRAP</th>
+                        <th nowrap class="fs-5">TAPPING</th>
+                        <th nowrap class="fs-5">DROSS</th>
+                    </tr>
+                </thead>
+                <tbody class="text-center fs-5">
+                    @foreach ($data as $a)
+                    <tr>
+                        <td>{{date('H', strtotime($a->jam))}}:00</td>
+                        <td>{{ $a->total_charging_rs }}</td>
+                        <td>{{ $a->ingots }}</td>
+                        <td>{{ $a->exgates }}</td>
+                        <td>{{ $a->reject_partss }}</td>
+                        <td>{{ $a->alm_treats }}</td>
+                        <td>{{ $a->oil_scraps }}</td>
+                        <td>{{ $a->tappings }}</td>
+                        <td>{{ $a->drosss }}</td>
+                    </tr>
+                @endforeach
+                </tbody>
+            </table>
+        </div>
     @break
 @default
     <h1>INI DEFAULTNYA</h1>
