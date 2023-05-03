@@ -172,7 +172,8 @@ Route::name('QR.')->group(function () {
     Route::get('/qr/modal/finishgood/abnormality', [QRController::class, 'openModalAbnormality'])->name('Abnormality');
     Route::get('/qr/modal/finishgood', [QRController::class, 'openModal1'])->name('addQRFG');
     Route::post('/qr/modal/finishgood/save', [QRController::class, 'FG_save']);
-    Route::get('/qr/printQR/{id}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
+    Route::get('/qr/printQR/{id}/{copies}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
+    // Route::get('/qr/printQR/{id}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
     Route::get('/qr/fromsubcont', [QRController::class, 'FS_index']);
 });
 

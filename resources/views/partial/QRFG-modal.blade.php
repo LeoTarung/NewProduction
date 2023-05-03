@@ -82,18 +82,16 @@
         </script>
         <style>
             .KertasPrint{
-                margin-left: 1px;
-                width: 320px;
-                height: 200px;
-                background-color: aqua;
+            margin-left: 1px;
+            width: 320px;
+            height: 200px;
+            background-color: aqua;
+            margin-top: 80px;
+            font-weight: 700;
 
             }
-            .KertasPrint > .printarea{
-                margin-top: 80px;
-                font-weight: 700;
-            }
             p {
-                font-size: 10px;
+            font-size: 10px;
 
             }
             .nopadding {
@@ -101,12 +99,13 @@
             margin: 0 !important;
             }
         </style>
-        <div class="KertasPrint">
-            <div class="printarea">
-                <div class="row border border-dark" style=" width: 320px; margin-left: -0.4px;">
+        <div class="row">
+            @for($i=0; $i < $copies; $i++)
+                <div class="col-12">
+                    <div class="KertasPrint ">
+                    <div class="row border border-dark" style=" width: 320px; margin-left: -0.4px;">
                     <div class="col-8  nopadding">
                         <img src="/UI/IMG/nusametal-nobg.png" width="140" height="20" style="margin: 2px 10px 0px 10px;">
-
                     </div>
                     <div class="col-4 nopadding">
                         <p style="font-size: 8.8px; margin-bottom: -20px; margin-top: 10px">FO/PPC/PPC/001 Rev:0 &ensp;</p>
@@ -127,7 +126,12 @@
                     <div class="col-4 nopadding pe-1 text-center">
                         <div class="row">
                             <div class="col-12 nopadding">
+                                @if ($status == 'normal')
+                                {!! QrCode::errorCorrection('L')->size(95)->generate($gabungan_array[$i]); !!}
+                                @else
                                 {!! QrCode::errorCorrection('L')->size(95)->generate($gabungan); !!}
+                                @endif
+
                             </div>
                         </div>
                     </div>
@@ -143,16 +147,23 @@
                     </div>
                     <div class="col-6 nopadding">
                         <div class="row " style="font-size: 11px; width: 172px;">
-                            <div class="col-12 text-end" style="font-size: 8px;" > NM1301{{ date('dmY') }} </div>
+                            @if ($status == 'normal')
+                                <div class="col-12 text-end" style="font-size: 8px;" > {{ $kode_array[$i] }} </div>
+                            @else
+                            <div class="col-12 text-end" style="font-size: 8px;" > {{ $data->qrtag }} </div>
+                            @endif
                             <div class="col-6 nopadding border border-dark text-center">PRODUCTION</div>
                             <div class="col-6 nopadding border border-dark text-center">QC</div>
                             <div class="col-6 nopadding border border-dark" style="height: 50px;"> </div>
                             <div class="col-6 nopadding border border-dark"> </div>
                         </div>
                     </div>
+                    </div>
+                    </div>
                 </div>
-            </div>
+            @endfor
         </div>
+    @break
     @default
     {{-- <h1>KOSONG</h1> --}}
 @endswitch

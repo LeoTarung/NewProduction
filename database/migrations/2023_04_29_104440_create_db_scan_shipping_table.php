@@ -15,7 +15,7 @@ class CreateDbScanShippingTable extends Migration
     {
         Schema::create('db_scanshipping', function (Blueprint $table) {
             $table->id();
-            $table->string('isiqr')->nullable();
+            $table->string('isiqr')->unique();
             $table->string('customer')->nullable();
             $table->string('plant')->nullable();
             $table->string('nama_part')->nullable();

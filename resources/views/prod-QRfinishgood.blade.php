@@ -57,8 +57,12 @@
     }
 
     function PrintQRFG(id){
-        // console.log(id)
-        let newWin = window.open("{{ url('/qr/printQR') }}"+"/"+id+"/normal", "hello", "width=400,height=600");
+        let input = prompt("Print Copies : ", 1);
+        if(!/^\d+$/.test(input)){
+            alert('Gagal, Hanya angka yang diizinkan .')
+        }else{
+            let newWin = window.open("{{ url('/qr/printQR') }}"+"/"+id+"/"+input+"/normal", "hello", "width=400,height=600");
+        }
         // setTimeout(() => {
         //     newWin.close()
         // }, 2000);
@@ -84,7 +88,12 @@
                     $('#pn_customer').val(data.customer_material);
                     $('#qty').val(data.std_packaging);
                     $("#tambahaninputan").html(
-                        '<input type="hidden" name="kode_customer" value="' + data.kode_customer + '">'
+                    //    ' <div class="col-12 mb-3">' +
+                    //         '<label for="copies">PRINT COPIES <sup>*</sup></label>' +
+                    //         '<input type="number" class="form-control" name="copies" id="copies" value="1" min="1" aria-describedby="copiesHelp">' +
+                    //     '</div>' +
+                        '<input type="hidden" name="kode_customer" value="' + data.kode_customer + '">' +
+                        '<input type="hidden" name="id_edit" value="' + xx + '">'
                     );
                 }
             })

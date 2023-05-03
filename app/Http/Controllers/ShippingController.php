@@ -52,29 +52,38 @@ class ShippingController extends Controller
     {
         $request->hasilscan; //1136B-K1Z -N000-IN|1100002|25|NM130127042023|
         $pieces = explode("|", $request->hasilscan);
+        $pcs = explode(" - ", $request->customer);
         $tanggal = substr($pieces[3], 6, 2);
         $bulan = substr($pieces[3], 8, 2);
         $tahun = substr($pieces[3], 10, 4);
         $gabung = $tahun . "-" . $bulan . "-" . $tanggal;
         $getnama = DB_NamaPart::where('customer_material', $pieces[0])->first();
-        if ($getnama == null) {
-            $insert = DB_ScanShipping::create([
-                'isiqr' =>  $request->hasilscan,
-                'customer_material' =>  $pieces[0],
-                'qty' =>  $pieces[2],
-                'lot' =>  $gabung,
-                'status' =>  1,
-            ]);
-        } else {
-            $insert = DB_ScanShipping::create([
-                'isiqr' =>  $request->hasilscan,
-                'nama_part' =>   $getnama->nama_part,
-                'material' =>  $getnama->material,
-                'customer_material' =>  $pieces[0],
-                'qty' =>  $pieces[2],
-                'lot' =>  $gabung,
-                'status' =>  1,
-            ]);
+
+        if ($getnama->customer == $pcs[0]) {
+            if ($getnama == null) {
+                $insert = DB_ScanShipping::create([
+                    'isiqr' =>  $request->hasilscan,
+                    'nama_part' =>   $getnama->nama_part,
+                    'customer' => $pcs[0],
+                    'plant' => $pcs[1],
+                    'customer_material' =>  $pieces[0],
+                    'qty' =>  $pieces[2],
+                    'lot' =>  $gabung,
+                    'status' =>  1,
+                ]);
+            } else {
+                $insert = DB_ScanShipping::create([
+                    'isiqr' =>  $request->hasilscan,
+                    'nama_part' =>   $getnama->nama_part,
+                    'customer' => $pcs[0],
+                    'plant' => $pcs[1],
+                    'material' =>  $getnama->material,
+                    'customer_material' =>  $pieces[0],
+                    'qty' =>  $pieces[2],
+                    'lot' =>  $gabung,
+                    'status' =>  1,
+                ]);
+            }
         }
     }
 
@@ -86,6 +95,7 @@ class ShippingController extends Controller
 
     public function scanQR_update(Request $request)
     {
+        // dd($request);
         $pieces = explode(" - ", $request->customer);
         for ($i = 0; $i < count($request->qty); $i++) {
 

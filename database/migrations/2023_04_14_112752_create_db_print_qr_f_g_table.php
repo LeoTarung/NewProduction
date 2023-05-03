@@ -21,6 +21,8 @@ class CreateDbPrintQrFGTable extends Migration
             $table->string('kode_customer')->nullable();
             $table->string('customer_material')->nullable();
             $table->integer('std_packaging')->default('0');
+            $table->string('qrtag')->nullable();
+            $table->string('status')->nullable();
             $table->string('location')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();

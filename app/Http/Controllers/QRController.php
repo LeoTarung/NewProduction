@@ -25,20 +25,51 @@ class QRController extends Controller
 
     public function openModalAbnormality(Request $request)
     {
-        $data = DB_PrintQRFG::orderBy('id', 'desc')->get();
+        $data = DB_PrintQRFG::where('status', 'abnormality')->orderBy('id', 'desc')->get();
         return view('partial.QRFG-modal', compact('data'));
     }
 
-    public function openModal($id, $status)
+    public function openModal($id, $copies, $status)
     {
+        // KODEAUTO QRTAG
+        $last_kodeauto = null;
+        $a = date('Y-m-d');
+        $max = DB_PrintQRFG::selectRaw('max(qrtag) AS ed')->whereDate('created_at', '>=', $a)->get()->first();;
+        $kode = substr($max->ed, 15);
+        $ed = 'NM1301';
+        $date = date("dmY") . "A";
+
+        $kode_array = array();
+        $gabungan_array = array();
+        $id_array = array();
+
         if ($status == 'normal') {
             $data = DB_NamaPart::find($id);
-            $gabungan = $data->customer_material . "|" . $data->kode_customer . "|" . $data->std_packaging . "|" . 'NM1301' . date('dmY') . "|";
+            for ($i = 1; $i <= $copies; $i++) {
+                $kode++;
+                $kodeauto = $ed . $date . sprintf("%04s", $kode);
+                $last_kodeauto = $kodeauto;
+                array_push($kode_array, $kodeauto);
+                $gabungan = $data->customer_material . "|" . $data->kode_customer . "|" . $data->std_packaging . "|" . $kodeauto . "|";
+                array_push($gabungan_array, $gabungan);
+                $insert = DB_PrintQRFG::create([
+                    'tanggal' => Carbon::now(),
+                    'nama_part' => $data->nama_part,
+                    'material' => $data->material,
+                    'customer_material' => $data->customer_material,
+                    'kode_customer' => $data->kode_customer,
+                    'std_packaging' => $data->std_packaging,
+                    'location' => 'FSCM',
+                    'status' => 'normal',
+                    'qrtag' => $last_kodeauto,
+                ]);
+                array_push($id_array, $insert);
+            }
         } else if ($status == 'EditQty') {
             $data = DB_PrintQRFG::find($id);
-            $gabungan = $data->customer_material . "|" . $data->kode_customer . "|" . $data->std_packaging . "|" . 'NM1301' . date('dmY') . "|";
+            $gabungan = $data->customer_material . "|" . $data->kode_customer . "|" . $data->std_packaging . "|" . $data->qrtag . "|";
         }
-        return view('partial.QRFG-modal', compact('data', 'gabungan'));
+        return view('partial.QRFG-modal', compact('data', 'gabungan', 'gabungan_array', 'kode_array',  'copies', 'id_array', 'status'));
     }
 
     public function FG_index(Request $request)
@@ -60,7 +91,17 @@ class QRController extends Controller
 
     public function FG_save(Request $request)
     {
-        // dd($request);
+        // KODEAUTO QRTAG
+        $a = date('Y-m-d');
+        $max = DB_PrintQRFG::selectRaw('max(qrtag) AS ed')->whereDate('created_at', '>=', $a)->get()->first();;
+        $kode = substr($max->ed, 15);
+        $ed = 'NM1301';
+        $date = date("dmY") . "A";
+
+        $kode++;
+
+        $kodeauto = $ed . $date . sprintf("%04s", $kode);
+
         $validator = Validator::make($request->all(), [
             'nama_part' => 'required',
             'material' => 'required',
@@ -81,13 +122,14 @@ class QRController extends Controller
             'kode_customer' => $request->kode_customer,
             'std_packaging' => $request->qty,
             'location' => 'FSCM',
+            'status' => 'abnormality',
+            'qrtag' => $kodeauto,
         ]);
+
         if ($insert) {
-            return redirect("/qr/printQR/$insert->id/EditQty");
+            return redirect("/qr/printQR/$insert->id/1/EditQty");
             return redirect('/qr/finishgood')->with('berhasil_input', 'berhasil_input');
         }
-
-        // $gabungan = $request->customer_material . "|" . $request->kode_customer . "|" . $request->std_packaging . "|" . 'NM1301' . date('dmY') . "|";
     }
 
     public function FS_index()
