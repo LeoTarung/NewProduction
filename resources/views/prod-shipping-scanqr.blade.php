@@ -130,18 +130,19 @@
                     if(data.length == 0){
                         $("#customer").removeAttr("disabled", true);
                         $("#customer").removeClass("is-invalid");
-                        $("#customer").val(data[0].customer + " - "+ data[0].plant);
+                        
                     } else {
                         $("#customer").attr("disabled", true);
                         $("#customer").addClass("is-invalid");
-                        $("#customer").val(data[0].customer + " - "+ data[0].plant);
+                        $("#customer").val(data[0].customer + " - "+ data[0].plant).attr("selected", true);
+                        $("#customer");
                     }
                     var  myHTML = '';
                     for (var i = 0; i < data.length; i++) {
                         let pieces = data[i].isiqr.split("|");
                         let fiveDigits = pieces[3].substring(pieces[3].length - 5);
                         myHTML +=   '<tr>' +
-                                        '<td ><input type="text" class="form-control" name="nama_part[]" value="'+ fiveDigits +'" readonly></td>'+
+                                        '<td ><input type="text" class="form-control" name="No_tag[]" value="'+ fiveDigits +'" readonly></td>'+
                                         '<td ><input type="text" class="form-control" name="nama_part[]" value="'+ data[i].nama_part +'" readonly></td>'+
                                         '<td ><input type="text" class="form-control" id="customer_material" name="customer_material[]" value="'+ data[i].customer_material +'" readonly></td>'+
                                         '<td ><input type="text" class="form-control" id="qty" name="qty[]" value="'+ data[i].qty +'" readonly></td>'+
@@ -155,6 +156,7 @@
         });
     }
     upTable()
+
 
     function addScanQr(){
         event.preventDefault();
@@ -175,7 +177,6 @@
                alert("Part sudah pernah di scan, Atau tidak sesuai dengan customer. Silahkan cek kembali");
             }
         });
-        upTable()
         $("#customer").attr("disabled", true);
         $("#customer").addClass("is-invalid");
         $('#hasilScan').val("");

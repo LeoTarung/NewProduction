@@ -97,7 +97,7 @@ class ShippingController extends Controller
     {
         // dd($request);
         $pieces = explode(" - ", $request->customer);
-        for ($i = 0; $i < count($request->qty); $i++) {
+        for ($i = 0; $i < count($request->id); $i++) {
 
             $validator = Validator::make($request->all(), [
                 'customer' => 'required',
