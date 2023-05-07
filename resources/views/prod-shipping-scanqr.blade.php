@@ -101,11 +101,12 @@
                                     <table class="table">
                                         <thead>
                                             <tr class="text-center">
-                                                <th style="width: 50%">NAMA PART</th>
-                                                <th style="width: 25%">MATERIAL</th>
-                                                <th style="width: 10%">QTY</th>
-                                                <th style="width: 15%">LOT</th>
-                                                <th style="width: 15%">AKSI</th>
+                                                <th >NO TAG</th>
+                                                <th >NAMA PART</th>
+                                                <th >MATERIAL</th>
+                                                <th >QTY</th>
+                                                <th >LOT</th>
+                                                <th >AKSI</th>
                                             </tr>
                                         </thead>
                                         @csrf
@@ -129,6 +130,7 @@
                     if(data.length == 0){
                         $("#customer").removeAttr("disabled", true);
                         $("#customer").removeClass("is-invalid");
+                        $("#customer").val(data[0].customer + " - "+ data[0].plant);
                     } else {
                         $("#customer").attr("disabled", true);
                         $("#customer").addClass("is-invalid");
@@ -136,12 +138,15 @@
                     }
                     var  myHTML = '';
                     for (var i = 0; i < data.length; i++) {
+                        let pieces = data[i].isiqr.split("|");
+                        let fiveDigits = pieces[3].substring(pieces[3].length - 5);
                         myHTML +=   '<tr>' +
-                                        '<td style="width: 50%"><input type="text" class="form-control" name="nama_part[]" value="'+ data[i].nama_part +'" readonly></td>'+
-                                        '<td style="width: 25%"><input type="text" class="form-control" id="customer_material" name="customer_material[]" value="'+ data[i].customer_material +'" readonly></td>'+
-                                        '<td style="width: 10%"><input type="text" class="form-control" id="qty" name="qty[]" value="'+ data[i].qty +'" readonly></td>'+
-                                        '<td style="width: 15%"><input type="text" class="form-control" id="lot" name="lot[]" value="'+ data[i].lot +'" readonly></td>'+
-                                        '<td style="width: 15%"><a class="btn fa-solid fa-trash fa-lg text-warning" onclick="hapusData('+ data[i].id +')" readonly></a></td>' +
+                                        '<td ><input type="text" class="form-control" name="nama_part[]" value="'+ fiveDigits +'" readonly></td>'+
+                                        '<td ><input type="text" class="form-control" name="nama_part[]" value="'+ data[i].nama_part +'" readonly></td>'+
+                                        '<td ><input type="text" class="form-control" id="customer_material" name="customer_material[]" value="'+ data[i].customer_material +'" readonly></td>'+
+                                        '<td ><input type="text" class="form-control" id="qty" name="qty[]" value="'+ data[i].qty +'" readonly></td>'+
+                                        '<td ><input type="text" class="form-control" id="lot" name="lot[]" value="'+ data[i].lot +'" readonly></td>'+
+                                        '<td ><a class="btn fa-solid fa-trash fa-lg text-warning" onclick="hapusData('+ data[i].id +')" readonly></a></td>' +
                                         '<input type="hidden" class="form-control" id="id" name="id[]" value="'+ data[i].id +'">' +
                                     '</tr>'
                     }
@@ -174,6 +179,7 @@
         $("#customer").attr("disabled", true);
         $("#customer").addClass("is-invalid");
         $('#hasilScan').val("");
+        upTable()
     }
 
     function hapusData(xx){
@@ -194,6 +200,7 @@
     function simpan(){
         document.getElementById("customer").disabled = false;
         document.getElementById("submitan").disabled = true;
+        upTable()
     }
 
 </script>
