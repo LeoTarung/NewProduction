@@ -16,8 +16,12 @@
             <div class="col-12 col-lg-4">
                 <div class="card">
                     <div class="card-body">
+                        {{-- <div class="col-12 mb-5">
+                            <label for="exampleFormControlInput1" class="form-label">Email address</label>
+                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+
+                        </div> --}}
                         <div class="col-12 mb-3">
-                            <div class="input-group has-validation">
                                 <label class="fw-bold" for="customer" class="">Customer <sup>*</sup></label>
                                 <select class="form-select fw-bold " id="customer" name="customer" required>
                                     <option disabled selected>-- Pilih Customer dan Plant --</option>
@@ -66,10 +70,9 @@
                                     <option value="YAMAHA - YAMAHA">YAMAHA</option>
                                     <option value="YUTAKA - YUTAKA">YUTAKA</option>
                                 </select>
-                                <div class="invalid-feedback">
+                                <div class="text-danger invalid-notif d-none" style="font-size: 85%;">
                                     *Jika salah input customer dan plant, Silahkan Hapus hasilScan dan refresh kembali.
                                 </div>
-                            </div>
                             <script>
                                 $(document).ready(function() {
                                     $("#customer").select2({
@@ -129,11 +132,13 @@
                 success: function (data) {
                     if(data.length == 0){
                         $("#customer").removeAttr("disabled", true);
-                        $("#customer").removeClass("is-invalid");
-                        
+                        $(".invalid-notif").removeClass("d-block");
+                        $(".invalid-notif").addClass("d-none");
+
                     } else {
                         $("#customer").attr("disabled", true);
-                        $("#customer").addClass("is-invalid");
+                        $(".invalid-notif").removeClass("d-none");
+                        $(".invalid-notif").addClass("d-block");
                         $("#customer").val(data[0].customer + " - "+ data[0].plant).attr("selected", true);
                         $("#customer");
                     }
@@ -178,7 +183,8 @@
             }
         });
         $("#customer").attr("disabled", true);
-        $("#customer").addClass("is-invalid");
+        $(".invalid-notif").removeClass("d-none");
+        $(".invalid-notif").addClass("d-block");
         $('#hasilScan').val("");
         upTable()
     }
