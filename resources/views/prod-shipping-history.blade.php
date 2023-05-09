@@ -12,6 +12,7 @@
                         <thead>
                             <tr>
                                 <th nowrap="nowrap" class="text-center">NO</th>
+                                <th nowrap="nowrap" class="text-center">SAP CODE</th>
                                 <th nowrap="nowrap" class="text-center">TANGGAL PENGIRIMAN</th>
                                 <th nowrap="nowrap" class="text-center">JAM</th>
                                 <th nowrap="nowrap" class="text-center">CUSTOMER</th>
@@ -38,6 +39,7 @@
             ajax: "{{ url('/prod/shipping/history') }}",
             columns: [
                 {data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                {data: 'sap_code', name: 'sap_code'},
                 {data: 'tanggal_pengiriman', name: 'tanggal_pengiriman'},
                 {data: 'jam', name: 'jam'},
                 {data: 'customer', name: 'customer'},

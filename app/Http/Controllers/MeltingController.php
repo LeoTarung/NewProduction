@@ -17,7 +17,6 @@ class MeltingController extends Controller
 {
     public function index(Request $request)
     {
-
         // $curl = curl_init();
         // curl_setopt_array($curl, array(
         //     CURLOPT_URL => 'https://api.fonnte.com/send',
@@ -53,7 +52,10 @@ class MeltingController extends Controller
         return view('TV-Melting', compact('judul', 'title'));
     }
 
-
+    public function OpenModal()
+    {
+        return view('partial.melting-modal');
+    }
 
     //==============================['Dashboard Melting furnace']==============================//
     public function furnace_data(Request $request, $furnace)
@@ -79,7 +81,7 @@ class MeltingController extends Controller
             $data = DB_HenkatenMelting::where('furnace', '=', $furnace)->orderBy('id', 'DESC')->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatHenkaten(' . $data->id . ')"></a>';
+                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="DetailsHenkaten(' . $data->id . ')"></a>';
                     return $btn;
                 })
                 ->addColumn('tanggal', function ($row) {
@@ -92,26 +94,105 @@ class MeltingController extends Controller
         }
     }
 
-    public function modal_detail_lhp()
-    {
-        return view('partial.modal');
-    }
-
     public function modal_detail_lhp_update(Request $request)
     {
-        dd($request);
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'ingot' => 'required',
+            'reject_parts' => 'required',
+            'tapping' => 'required',
+            'alm_treat' => 'required',
+            'fluxing' => 'required',
+            'dross' => 'required',
+            'id_raw_lhp' => 'required',
+            'mesin' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/prod/melting/' . $request->mesin)->with('gagal_validasi', 'gagal_validasi');
+        }
+
+        DB_LhpMeltingRAW::where('id', $request->id_raw_lhp)
+            ->update([
+                'ingot' => $request->ingot,
+                'exgate' => $request->exgate,
+                'reject_parts' => $request->reject_parts,
+                'tapping' => $request->tapping,
+                'alm_treat' => $request->alm_treat,
+                'fluxing' => $request->fluxing,
+                'dross' => $request->dross
+            ]);
+        //INI UNTUK AMBIL ID LHP dri LHPRAW
+        $rawr = DB_LhpMeltingRAW::where('id', '=', $request->id_raw_lhp)->get('id_lhp');
+
+        //JUMLAHKAN SEMUA COLOUMS DI TABEL
+        $update = DB_LhpMeltingRAW::where('id_lhp', '=', $rawr[0]->id_lhp)
+            ->selectRaw(
+                "id_lhp,
+                SUM(ingot) as ingots,
+                SUM(exgate) as exgates,
+                SUM(reject_parts) as reject_partss,
+                SUM(alm_treat) as alm_treats,
+                SUM(basemetal) as basemetals,
+                SUM(oil_scrap) as oil_scraps,
+                SUM(fluxing) as fluxings,
+                SUM(tapping) as tappings,
+                SUM(dross) as drosss,
+                SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap) as total_return_rs,
+                SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) as total_charging_rs,
+                SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing) as total_charging,
+                IFNULL(SUM(fluxing) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 100) as persen_fluxing,
+                IFNULL(SUM(ingot) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 100) as persen_ingot,
+                IFNULL(SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 100) as persen_rs,
+                IFNULL(SUM(dross) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing) * 100, 100) as persen_losdros_material,
+                IFNULL(SUM(alm_treat) / SUM(dross) * 100, 100) as persen_alm_treat,
+                IFNULL(SUM(tapping) / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) * 100, 100) as machine_performance,
+                SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) / 18250 * 100 as machine_utilization,
+                IFNULL(gas_akhir / SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot + fluxing) * 100, 100) as gas_consum"
+            )
+            ->get();
+
+        //LAKUKAN UPDATE SESUAI RUMUS DARI EXCEL
+        DB_LhpMelting::where([['id', '=', $rawr[0]->id_lhp]])->update([
+            'ingot' => $update[0]->ingots,
+            'exgate' => $update[0]->exgates,
+            'reject_parts' => $update[0]->reject_partss,
+            'alm_treat' => $update[0]->alm_treats,
+            'basemetal' => $update[0]->basemetals,
+            'oil_scrap' => $update[0]->oil_scraps,
+            'fluxing' => $update[0]->fluxings,
+            'tapping' => $update[0]->tappings,
+            'dross' => $update[0]->drosss,
+            'total_return_rs' => $update[0]->total_return_rs,
+            'total_charging_rs' => $update[0]->total_charging_rs,
+            'total_charging' => $update[0]->total_charging,
+            'persen_fluxing' => $update[0]->persen_fluxing,
+            'persen_ingot' => $update[0]->persen_ingot,
+            'persen_rs' => $update[0]->persen_rs,
+            'total_loss' => $update[0]->drosss,
+            'persen_losdros_material' => $update[0]->persen_losdros_material,
+            'persen_alm_treat' => $update[0]->persen_alm_treat,
+            'machine_performance' => $update[0]->machine_performance,
+            'machine_utilization' => $update[0]->machine_utilization,
+            'gas_consum' => $update[0]->gas_consum,
+            // 'melting_rate' => $update[0]->melting_rate
+        ]);
+
+        // GET LHP LAGI
+        $nih = DB_LhpMelting::find($rawr[0]->id_lhp);
+        // HITUNG MELTING RATE
+        $melting_rate =  $nih->total_charging_rs / $nih->jam_kerja; // H / X1
+        // UPDATE LAGI
+        DB_LhpMelting::where([['id', '=', $rawr[0]->id_lhp]])->update(['melting_rate' => $melting_rate]);
+
+        return redirect('/prod/melting/' . $request->mesin)->with('berhasil_input', 'berhasil_input');
     }
 
     //==============================['Henkaten']==============================//
     public function henkatenModal()
     {
         $data = DB_HenkatenMelting::where('status', '=', 'open')->get();
-        return view('partial.modal', compact('data'));
-    }
-
-    public function AddhenkatenModal()
-    {
-        return view('partial.modal');
+        return view('partial.melting-modal', compact('data'));
     }
 
     public function henkatenAPI(Request $request)
@@ -205,12 +286,7 @@ class MeltingController extends Controller
     public function keretaModal()
     {
         $data = DB_Kereta::all();
-        return view('partial.modal', compact('data'));
-    }
-
-    public function addkereta()
-    {
-        return view('partial.modal');
+        return view('partial.melting-modal', compact('data'));
     }
 
     public function keretaAPI(Request $request)
@@ -264,28 +340,20 @@ class MeltingController extends Controller
     }
 
     //==============================['Level Molten']==============================//
-    public function modalLevelMolten()
-    {
-        return view('partial.modal');
-    }
-
-
 
     //==============================['Furnace']==============================//
     public function modalFurnaceMelting()
     {
         $data = DB_Furnace::all();
-        return view('partial.modal', compact('data'));
+        return view('partial.melting-modal', compact('data'));
     }
-    public function addFurnace()
-    {
-        return view('partial.modal');
-    }
+
     public function furnaceApi(Request $request)
     {
         $data = DB_Furnace::find($request->id);
         return $data;
     }
+
     public function addFurnace_save(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -351,11 +419,6 @@ class MeltingController extends Controller
                 ->make(true);
         }
         return view('prod-melting-lotingot', compact('title'));
-    }
-
-    public function modalLotingot_index()
-    {
-        return view('partial.modal');
     }
 
     public function modalLotingot_save(Request $request)

@@ -24,6 +24,10 @@ use App\Http\Controllers\CalenderOfEventController;
 |
 */
 
+Route::get('/', function () {
+    return redirect('/dashboard');
+});
+
 Route::get('/dashboard', function () {
     $title = "DASHBOARD";
     $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
@@ -64,50 +68,52 @@ Route::get('/login', [LoginController::class, 'index']);
 Route::post('/login', [LoginController::class, 'cek']);
 
 // Route::group(['middleware' => ['auth']], function () {
-Route::get('/login/des', [LoginController::class, 'destroy']);
-Route::get('/adm/mp', [UserController::class, 'index']);
-Route::get('/modal/mpadd', [UserController::class, 'modaladd']);
-Route::get('/modal/ChangePassword', [UserController::class, 'modalChangePassword']);
-Route::post('/adm/api/mp', [UserController::class, 'mpApi']);
-Route::get('/adm/api/{nrp}', [UserController::class, 'NRPApi']);
-Route::post('/modal/mpadd/save', [UserController::class, 'save']);
-Route::post('/modal/mpadd/update', [UserController::class, 'update']);
-Route::post('/modal/ChangePassword/save', [UserController::class, 'modalChangePassword_save']);
+Route::name('MP.')->group(function () {
+    Route::get('/login/des', [LoginController::class, 'destroy']);
+    Route::get('/adm/mp', [UserController::class, 'index'])->name('Index');
+    Route::get('/modal/mpadd', [UserController::class, 'OpenModal'])->name('AddMP');
+    Route::get('/modal/ChangePassword', [UserController::class, 'OpenModal'])->name('ChangePassword');
+    Route::post('/adm/api/mp', [UserController::class, 'mpApi']);
+    Route::get('/adm/api/{nrp}', [UserController::class, 'NRPApi']);
+    Route::post('/modal/mpadd/save', [UserController::class, 'save']);
+    Route::post('/modal/mpadd/update', [UserController::class, 'update']);
+    Route::post('/modal/ChangePassword/save', [UserController::class, 'modalChangePassword_save']);
+});
 // });
 
 //==========[FOR MELTING]==========\\
-Route::name('melting')->group(function () {
-    //==========[FOR MELTING - HENKATEN]==========\\
+Route::name('Melting.')->group(function () {
+    //==========[FOR MELTING - PRODUCTION]==========\\
     Route::get('/prod/melting/{furnace}', [MeltingController::class, 'furnace_data']);
     Route::get('/prod/melting/lot/ingot', [MeltingController::class, 'lotingot_data']);
     Route::get('/prod/meltingHenkaten/{furnace}', [MeltingController::class, 'furnace_henkaten']);
-    Route::get('/modal/detail-lhp', [MeltingController::class, 'modal_detail_lhp']);
-    Route::get('/modal/edit-detail-lhp', [MeltingController::class, 'modal_detail_lhp']);
+    Route::get('/modal/detail-lhp', [MeltingController::class, 'OpenModal'])->name('DataLhpMeltingRAW');
+    Route::get('/modal/edit-detail-lhp', [MeltingController::class, 'OpenModal'])->name('EditLhpMeltingRAW');
     Route::post('/modal/edit-detail-lhp/update', [MeltingController::class, 'modal_detail_lhp_update']);
     //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting', [MeltingController::class, 'index']);
     Route::get('/tv/Melting', [MeltingController::class, 'tv_index']);
-    Route::get('/modal/henkatenMelting', [MeltingController::class, 'henkatenModal']);
-    Route::get('/modal/addhenkatenMelting', [MeltingController::class, 'AddhenkatenModal']);
+    Route::get('/modal/henkatenMelting', [MeltingController::class, 'henkatenModal'])->name('DataHenkaten');
+    Route::get('/modal/addhenkatenMelting', [MeltingController::class, 'OpenModal'])->name('ModalAddHenkaten');
     Route::post('/modal/henkatenMelting/save', [MeltingController::class, 'henkaten_save']);
     Route::post('/modal/henkatenMelting/update', [MeltingController::class, 'henkaten_update']);
     Route::post('/prod/api/henkaten', [MeltingController::class, 'henkatenAPI']);
     //==========[FOR MELTING - KERETA]==========\\
-    Route::get('/modal/keretaMelting', [MeltingController::class, 'keretaModal']);
-    Route::get('/modal/addKereta', [MeltingController::class, 'addkereta']);
+    Route::get('/modal/keretaMelting', [MeltingController::class, 'keretaModal'])->name('DataKereta');
+    Route::get('/modal/addKereta', [MeltingController::class, 'OpenModal'])->name('ModalAddKereta');
     Route::post('/modal/addKereta/save', [MeltingController::class, 'addkereta_save']);
     Route::post('/modal/addKereta/update', [MeltingController::class, 'addkereta_update']);
     Route::post('/prod/api/kereta', [MeltingController::class, 'keretaApi']);
     //==========[FOR MELTING - FURNACE]==========\\
-    Route::get('/modal/furnaceMelting', [MeltingController::class, 'modalFurnaceMelting']);
-    Route::get('/modal/addFurnace', [MeltingController::class, 'addFurnace']);
+    Route::get('/modal/furnaceMelting', [MeltingController::class, 'modalFurnaceMelting'])->name('DataFurnace');
+    Route::get('/modal/addFurnace', [MeltingController::class, 'OpenModal'])->name('ModalAddFurnace');
     Route::post('/modal/addFurnace/save', [MeltingController::class, 'addFurnace_save']);
     Route::post('/modal/addFurnace/update', [MeltingController::class, 'addFurnace_update']);
     Route::post('/prod/api/furnace', [MeltingController::class, 'furnaceApi']);
     //==========[FOR MELTING - LEVEL MOLTEN]==========\\UBPURE-AC2B000006 | AC2B | 0275 | AGUS | 31000784 | PT ALUMINDO ALLOY ABADI | 128.5 | 1 | 1001 | Nusametal | 11.04.23 11:39:01
-    Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'modalLevelMolten']);
+    Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'OpenModal'])->name('ModalLevelMolten');
     //==========[FOR MELTING - BUNDLE LOT INGOT]==========\\
-    Route::get('/modal/addLotIngot', [MeltingController::class, 'modalLotingot_index']);
+    Route::get('/modal/addLotIngot', [MeltingController::class, 'OpenModal'])->name('AddLotIngot');
     Route::post('/modal/addLotIngot/save', [MeltingController::class, 'modalLotingot_save']);
     Route::post('/modal/addLotIngot/update', [MeltingController::class, 'modalLotingot_update']);
 });

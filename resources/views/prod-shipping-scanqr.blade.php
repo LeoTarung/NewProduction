@@ -1,6 +1,6 @@
 @extends('prod-template')
 @section('content')
-<h3 class="mt-2 text-center">SHIPPING DELIVERY</h3>
+<h3 class="mt-2 text-center">SHIPPING DELIVERY <br> <span id="TujuanCustomer" class="fw-bold"></span></h3>
     <div class="row justify-content-end">
         <div class="col-12 col-lg-6 ">
             <form enctype="multipart/form-data" onsubmit="addScanQr(event)">
@@ -18,67 +18,20 @@
                     <div class="card-body">
                         {{-- <div class="col-12 mb-5">
                             <label for="exampleFormControlInput1" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+                            <input type="text" class="form-control" id="customer" name="customer" required>
 
                         </div> --}}
                         <div class="col-12 mb-3">
                                 <label class="fw-bold" for="customer" class="">Customer <sup>*</sup></label>
-                                <select class="form-select fw-bold " id="customer" name="customer" required>
-                                    <option disabled selected>-- Pilih Customer dan Plant --</option>
-                                    <option value="AHM - NSI/CBA1">AHM - NSI/CBA1</option>
-                                    <option value="AHM - NSI/CEA1">AHM - NSI/CEA1</option>
-                                    <option value="AHM - P1E1">AHM - P1E1</option>
-                                    <option value="AHM - P1E2">AHM - P1E2</option>
-                                    <option value="AHM - P1P1">AHM - P1P1</option>
-                                    <option value="AHM - P1P2">AHM - P1P2</option>
-                                    <option value="AHM - P2E3">AHM - P2E3</option>
-                                    <option value="AHM - P2P2">AHM - P2P2</option>
-                                    <option value="AHM - P2P3">AHM - P2P3</option>
-                                    <option value="AHM - P3E1">AHM - P3E1</option>
-                                    <option value="AHM - P3E3">AHM - P3E3</option>
-                                    <option value="AHM - P3P1">AHM - P3P1</option>
-                                    <option value="AHM - P3P3">AHM - P3P3</option>
-                                    <option value="AHM - P3P6">AHM - P3P6</option>
-                                    <option value="AHM - P7P1">AHM - P7P1</option>
-                                    <option value="AHM - P7P2">AHM - P7P2</option>
-                                    <option value="AHM - P8A1">AHM - P8A1</option>
-                                    <option value="AHM - P8P1">AHM - P8P1</option>
-                                    <option value="AHM - P8P2">AHM - P8P2</option>
-                                    <option value="AHM - P8P4">AHM - P8P4</option>
-                                    <option value="AHM - P8P5">AHM - P8P5</option>
-                                    <option value="ADM - ADM">ADM</option>
-                                    <option value="AISIN - AISIN">AISIN</option>
-                                    <option value="ASK - ASK">ASK</option> {{-- ini gaada --}}
-                                    <option value="ASPIRA - ASPIRA">ASPIRA</option> {{-- ini gaada --}}
-                                    <option value="CAI - CAI">CAI</option>
-                                    <option value="DENSO - DENSO">DENSO</option>
-                                    <option value="DNP - DNP">DNP</option>
-                                    <option value="EMI - EMI">EMI</option> {{-- ini gaada --}}
-                                    <option value="HINO - HINO">HINO</option>
-                                    <option value="HPM - HPM">HPM</option>
-                                    <option value="HPM - HPM-AP2">HPM-AP2</option>
-                                    <option value="KUBOTA INDONESIA - KUBOTA INDONESIA">KUBOTA INDONESIA</option>
-                                    <option value="KMI - KMI">KMI</option> {{-- ini gaada --}}
-                                    <option value="KTB - KTB">KTB</option>
-                                    <option value="KAYABA - KAYABA">KAYABA</option>
-                                    <option value="MII - MII">MII</option> {{-- ini gaada --}}
-                                    <option value="MITSUBISHI - MITSUBISHI">MITSUBISHI</option>
-                                    <option value="NKI - NKI">NKI</option>
-                                    <option value="SUZUKI - SUZUKI">SUZUKI</option>
-                                    <option value="TOYODA GOSEI - TOYODA GOSEI">TOYODA GOSEI</option>
-                                    <option value="TOYOTA - TOYOTA">TOYOTA</option>
-                                    <option value="YAMAHA - YAMAHA">YAMAHA</option>
-                                    <option value="YUTAKA - YUTAKA">YUTAKA</option>
-                                </select>
+                                <div id="Form-Customer">
+
+                                </div>
                                 <div class="text-danger invalid-notif d-none" style="font-size: 85%;">
                                     *Jika salah input customer dan plant, Silahkan Hapus hasilScan dan refresh kembali.
                                 </div>
-                            <script>
-                                $(document).ready(function() {
-                                    $("#customer").select2({
-                                    });
-                                });
-                            </script>
+                                <script>
+
+                                </script>
                         </div>
                         <div class="col-12 mb-3">
                             <label for="ritase" class="fw-bold">Ritase <sup>*</sup></label>
@@ -125,6 +78,63 @@
         </div>
     </form>
 <script>
+    function SelectOption(){
+        var plant = ['AHM - NSI/CBA1',
+                    'AHM - NSI/CEA1',
+                    'AHM - P1E1',
+                    'AHM - P1E2',
+                    'AHM - P1P1',
+                    'AHM - P1P2',
+                    'AHM - P2E3',
+                    'AHM - P2P2',
+                    'AHM - P2P3',
+                    'AHM - P3E1',
+                    'AHM - P3E3',
+                    'AHM - P3P1',
+                    'AHM - P3P3',
+                    'AHM - P3P6',
+                    'AHM - P7P1',
+                    'AHM - P7P2',
+                    'AHM - P8A1',
+                    'AHM - P8P1',
+                    'AHM - P8P2',
+                    'AHM - P8P4',
+                    'AHM - P8P5',
+                    'ADM - ADM',
+                    'AISIN - AISIN',
+                    'ASK - ASK',
+                    'ASPIRA - ASPIRA',
+                    'CAI - CAI',
+                    'DENSO - DENSO',
+                    'DNP - DNP',
+                    'EMI - EMI',
+                    'HINO - HINO',
+                    'HPM - HPM',
+                    'HPM - HPM-AP2',
+                    'KUBOTA INDONESIA - KUBOTA INDONESIA',
+                    'KMI - KMI',
+                    'KTB - KTB',
+                    'KAYABA - KAYABA',
+                    'MII - MII',
+                    'MITSUBISHI - MITSUBISHI',
+                    'NKI - NKI',
+                    'SUZUKI - SUZUKI',
+                    'TOYODA GOSEI - TOYODA GOSEI',
+                    'TOYOTA - TOYOTA',
+                    'YAMAHA - YAMAHA',
+                    'YUTAKA - YUTAKA',];
+        console.log(plant);
+        var  myHTML = '';
+        for (var i = 0; i < plant.length; i++) {
+            myHTML +=  ' <option value="'+ plant[i] +'">'+ plant[i] +'</option>'
+        }
+        $("#Form-Customer").html('<select class="form-select fw-bold " id="customer" name="customer" required>' + myHTML);
+        $(document).ready(function() {
+            $("#customer").select2({});
+        });
+    }
+    SelectOption()
+
     function upTable(){
         $.ajax({
                 method: "GET",
@@ -134,6 +144,7 @@
                         $("#customer").removeAttr("disabled", true);
                         $(".invalid-notif").removeClass("d-block");
                         $(".invalid-notif").addClass("d-none");
+                        $("#TujuanCustomer").html("");
 
                     } else {
                         $("#customer").attr("disabled", true);
@@ -141,6 +152,7 @@
                         $(".invalid-notif").addClass("d-block");
                         $("#customer").val(data[0].customer + " - "+ data[0].plant).attr("selected", true);
                         $("#customer");
+                        $("#TujuanCustomer").html("To " + data[0].customer + " - "+ data[0].plant);
                     }
                     var  myHTML = '';
                     for (var i = 0; i < data.length; i++) {
@@ -182,7 +194,6 @@
                alert("Part sudah pernah di scan, Atau tidak sesuai dengan customer. Silahkan cek kembali");
             }
         });
-        $("#customer").attr("disabled", true);
         $(".invalid-notif").removeClass("d-none");
         $(".invalid-notif").addClass("d-block");
         $('#hasilScan').val("");

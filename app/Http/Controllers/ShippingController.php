@@ -41,6 +41,10 @@ class ShippingController extends Controller
                     $date = date("H:i:s", strtotime($row->created_at));
                     return $date;
                 })
+                ->addColumn('sap_code', function ($row) {
+                    $pieces = explode("|", $row->isiqr);
+                    return $pieces[3];
+                })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
@@ -50,7 +54,7 @@ class ShippingController extends Controller
 
     public function scanQR_save(Request $request)
     {
-        $request->hasilscan; //1136B-K1Z -N000-IN|1100002|25|NM130127042023|
+        $request->hasilscan; //1230A-K1Z -N200-DL|1100002|20|NM13012804202307404|
         $pieces = explode("|", $request->hasilscan);
         $pcs = explode(" - ", $request->customer);
         $tanggal = substr($pieces[3], 6, 2);

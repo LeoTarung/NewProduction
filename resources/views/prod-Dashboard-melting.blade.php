@@ -125,7 +125,7 @@
                         '<input type="hidden" name="nrp_penimbang" value="' + array[2] + '">'+
                         '<input type="hidden" name="nama_penimbang" value="' + array[3] + '">'+
                         '<input type="hidden" name="id_vendor" value="' + array[4] + '">'+
-                        '<input type="datetime-local" name="kedatangan"  value="' + formattedDate + '">' +
+                        '<input type="datetime-local" class="d-none" name="kedatangan"  value="' + formattedDate + '">' +
                         '<input type="hidden" name="bisnis_unit" value="' + array[9] + '">'
             );
         });

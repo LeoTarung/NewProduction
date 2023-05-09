@@ -28,14 +28,9 @@ class UserController extends Controller
         return view('prod-Dashboard-admMP', compact('title'));
     }
 
-    public function modaladd()
+    public function OpenModal()
     {
-        return view('partial.modal');
-    }
-
-    public function modalChangePassword()
-    {
-        return view('partial.modal');
+        return view('partial.admMP-modal');
     }
 
     public function mpApi(Request $request)
@@ -109,8 +104,6 @@ class UserController extends Controller
         }
         return redirect('/adm/mp')->with('gagal_validasi', 'gagal_validasi');
     }
-
-
 
     public function modalChangePassword_save(Request $request)
     {
