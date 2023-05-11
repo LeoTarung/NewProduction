@@ -162,3 +162,19 @@ sup {
 .switch-field label:last-of-type {
     border-radius: 0 4px 4px 0;
 }
+
+.blinker {
+    animation: blinker 1s step-start infinite;
+}
+
+@keyframes blinker {
+    0% {
+        opacity: 0;
+    }
+    50% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}

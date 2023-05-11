@@ -41,8 +41,9 @@ class MeltingController extends Controller
 
         // curl_close($curl);
         // echo $response;
+        $data = DB_Furnace::all();
         $title = "MELTING";
-        return view('prod-dashboard-melting', compact('title'));
+        return view('prod-dashboard-melting', compact('title', 'data'));
     }
 
     public function tv_index()
@@ -356,9 +357,11 @@ class MeltingController extends Controller
 
     public function addFurnace_save(Request $request)
     {
+        // dd($request);
         $validator = Validator::make($request->all(), [
             'furnace' => 'required',
             'material' => 'required',
+            'kode_status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -368,6 +371,7 @@ class MeltingController extends Controller
         $insert = DB_Furnace::create([
             'furnace' => $request->furnace,
             'material' => $request->material,
+            'kode_status' => $request->kode_status,
         ]);
         if ($insert) {
             return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
@@ -379,6 +383,7 @@ class MeltingController extends Controller
             'id' => 'required',
             'furnace' => 'required',
             'material' => 'required',
+            'kode_status' => 'required',
         ]);
 
         if ($validator->fails()) {
@@ -388,6 +393,7 @@ class MeltingController extends Controller
         $insert = DB_Furnace::find($request->id)->update([
             'furnace' => $request->furnace,
             'material' => $request->material,
+            'kode_status' => $request->kode_status,
         ]);
         if ($insert) {
             return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');

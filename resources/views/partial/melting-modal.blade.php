@@ -29,10 +29,18 @@
 
                         </select>
                     </div>
+                    <div class="col-6 mb-3">
+                        <label for="kode_status" class="">STATUS <sup>*</sup></label>
+                        <select class="form-select fw-bold" id="kode_status" name="kode_status" required>
+                            <option value="0" selected disabled>Open this select menu</option>
+                            <option value="0">RUNNING</option>
+                            <option value="1">LAYOFF</option>
+                        </select>
+                    </div>
                     <div class="tambahaninputan" id="tambahaninputan"></div>
                 </div>
                 <div class="row">
-                    <div class="col" >
+                    <div class="col">
                         <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
                     </div>
                 </div>
@@ -52,6 +60,7 @@
                             <th>FURNACE</th>
                             <th>MATERIAL</th>
                             <th>COLOR</th>
+                            <th>STATUS</th>
                             <th nowrap="nowrap" class="text-center">AKSI</th>
                         </tr>
                     </thead>
@@ -74,11 +83,17 @@
                             @elseif($furnace->material == 'YH3R')
                             <?php $warna = 'text-success' ?>
                             @endif
+                            @if ($furnace->kode_status == 0)
+                            <?php $status = 'RUNNING' ?>
+                            @else
+                            <?php $status = 'LAYOFF' ?>
+                            @endif
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $furnace->furnace }}</td>
                             <td>{{ $furnace->material }}</td>
                             <td class="text-center"><i class="fa-solid fa-square fa-2x {{ $warna }}"></i></td>
+                            <td>{{ $status }}</td>
                             <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editFurnace('{{ $furnace->id }}')"></a></td>
                         </tr>
                         @endforeach

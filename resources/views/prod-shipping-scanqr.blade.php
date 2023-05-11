@@ -138,8 +138,9 @@
     function upTable(){
         $.ajax({
                 method: "GET",
-                url: "{{ url('/prod/shipping/scan/notrans') }}",
+                url: "{{ url('/prod/shipping/scan/notrans')."/".$area }}",
                 success: function (data) {
+                    console.log(data);
                     if(data.length == 0){
                         $("#customer").removeAttr("disabled", true);
                         $(".invalid-notif").removeClass("d-block");
@@ -166,6 +167,7 @@
                                         '<td ><input type="text" class="form-control" id="lot" name="lot[]" value="'+ data[i].lot +'" readonly></td>'+
                                         '<td ><a class="btn fa-solid fa-trash fa-lg text-warning" onclick="hapusData('+ data[i].id +')" readonly></a></td>' +
                                         '<input type="hidden" class="form-control" id="id" name="id[]" value="'+ data[i].id +'">' +
+                                        '<input type="hidden" class="form-control" id="area" name="area[]" value="'+ data[i].docking +'">' +
                                     '</tr>'
                     }
                     $("#tbody-table").html(myHTML);
@@ -179,6 +181,7 @@
         event.preventDefault();
         var hasilscan = $('#hasilScan').val();
         var customer = $('#customer').val();
+        var area = "{{ $area }}";
         $.ajax({
             method: "POST",
             url: "{{ url('/prod/shipping/scan/save') }}",
@@ -186,6 +189,7 @@
                 _token: "{{ csrf_token() }}",
                 hasilscan: hasilscan,
                 customer: customer,
+                area: area,
             },
             success: function (data) {
                 console.log("Berhasil Input Data");

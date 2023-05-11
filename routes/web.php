@@ -138,11 +138,13 @@ Route::name('casting.')->group(function () {
 });
 
 //==========[FOR SHIPPING]==========\\
-Route::name('shipping.')->group(function () {
+Route::name('Shipping.')->group(function () {
     Route::get('/prod/shipping', [ShippingController::class, 'index_dashboard']);
     Route::get('/prod/shipping/history', [ShippingController::class, 'history_dashboard']);
-    Route::get('/prod/shipping/scan', [ShippingController::class, 'index_scanQR']);
-    Route::get('/prod/shipping/scan/notrans', [ShippingController::class, 'scanQR_notrans']);
+    // Route::get('/prod/shipping/scan', [ShippingController::class, 'index_scanQR']);
+    Route::get('/prod/shipping/scan/from/{docking}', [ShippingController::class, 'index_scanQR']);
+    Route::get('/modal/toscan', [ShippingController::class, 'OpenModal'])->name('PilihDocking');
+    Route::get('/prod/shipping/scan/notrans/{docking}', [ShippingController::class, 'scanQR_notrans']);
     Route::get('/prod/shipping/scan/notrans/hapus/{id}', [ShippingController::class, 'scanQR_delete']);
     Route::post('/prod/shipping/scan/save', [ShippingController::class, 'scanQR_save']);
     Route::post('/prod/shipping/scan/delete', [ShippingController::class, 'scanQR_delete']);

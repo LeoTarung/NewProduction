@@ -11,16 +11,22 @@ use Illuminate\Support\Facades\Validator;
 
 class ShippingController extends Controller
 {
+    public function OpenModal()
+    {
+        return view('partial.shipping-modal');
+    }
+
     public function index_dashboard()
     {
         $title = "SHIPPING";
+
         return view('prod-Dashboard-shipping', compact('title'));
     }
 
-    public function index_scanQR()
+    public function index_scanQR($area)
     {
         $title = "SHIPPING";
-        return view('prod-shipping-scanqr', compact('title'));
+        return view('prod-shipping-scanqr', compact('title', 'area'));
     }
 
     public function history_dashboard(Request $request)
@@ -73,6 +79,7 @@ class ShippingController extends Controller
                     'customer_material' =>  $pieces[0],
                     'qty' =>  $pieces[2],
                     'lot' =>  $gabung,
+                    'docking' => $request->area,
                     'status' =>  1,
                 ]);
             } else {
@@ -85,15 +92,16 @@ class ShippingController extends Controller
                     'customer_material' =>  $pieces[0],
                     'qty' =>  $pieces[2],
                     'lot' =>  $gabung,
+                    'docking' => $request->area,
                     'status' =>  1,
                 ]);
             }
         }
     }
 
-    public function scanQR_notrans()
+    public function scanQR_notrans($docking)
     {
-        $data = DB_ScanShipping::where('status', 1)->orderByDesc('id')->get();
+        $data = DB_ScanShipping::where('status', 1)->where('docking', $docking)->orderByDesc('id')->get();
         return $data;
     }
 
@@ -110,7 +118,7 @@ class ShippingController extends Controller
             ]);
 
             if ($validator->fails()) {
-                return redirect('/prod/shipping/scan')->with('gagal_validasi', 'gagal_validasi');
+                return redirect('/prod/shipping/scan/from' . "/" . $request->area[0])->with('gagal_validasi', 'gagal_validasi');
             }
 
             $update =  DB_ScanShipping::where('id', $request->id[$i])->update([
@@ -121,11 +129,12 @@ class ShippingController extends Controller
                 'customer' => $pieces[0],
                 'plant' => $pieces[1],
                 'ritase' => $request->ritase,
+                'docking' => $request->area[$i],
                 'status' => 2,
             ]);
         }
         if ($update) {
-            return redirect('/prod/shipping/scan')->with('berhasil_input', 'berhasil_input');
+            return redirect('/prod/shipping/scan/from' . "/" . $request->area[0])->with('berhasil_input', 'berhasil_input');
         }
     }
 

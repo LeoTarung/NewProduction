@@ -25,6 +25,7 @@ class CreateDbScanShippingTable extends Migration
             $table->date('lot')->nullable();
             $table->integer('ritase')->nullable();
             $table->integer('status')->nullable();
+            $table->string('docking')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });
