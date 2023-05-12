@@ -186,6 +186,7 @@ Route::name('QR.')->group(function () {
 });
 
 //==========[FOR TV MONITORING]==========\\
+Route::get('/tv/shipping', [ShippingController::class, 'TV_index']);
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
 Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);
 Route::get('/ftp', [BadNewsFirstController::class, 'ftp']);

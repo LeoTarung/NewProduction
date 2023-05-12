@@ -24,7 +24,7 @@
     {{-- <link href="/UI/CSS/performa_melting.css" rel="stylesheet" /> --}}
   </head>
 
-    <body class="sb-nav-fixed bg-digital">
+    <body class="sb-nav-fixed bg-digital pt-5">
         <nav class="sb-topnav navbar navbar-expand navbar-light" style="background-color: #E9E8E8;">
             <img src="/UI/IMG/nusametal-nobg.png" width="228" height="40">
             <p class="d-none d-md-inline-block position-absolute top-50 start-50 translate-middle fw-bold fs-3 ">{{ $judul }}</p>
@@ -36,7 +36,7 @@
         </nav>
         <div id="layoutSidenav_content">
                 <main>
-                    <div class="container-fluid px-4">
+                    <div class="container-fluid px-4 pt-3">
                         @include('partial/sweetallert')
 
                         @yield('content')

@@ -206,6 +206,44 @@ io.on("connection", (socket) => {
             }
         );
 
+        //==========[' SELECT DATA CHART TV SHIPPING ']==========//
+
+        // FOR COUNT
+        connection.query(
+            "SELECT DATE(updated_at) AS tanggal, COUNT(*) AS jumlah_scan, docking FROM db_scanshipping WHERE docking = 'SHIPPING' AND status = 2 AND DATE(updated_at) = CURDATE() GROUP BY tanggal;",
+            (err, res) => {
+                socket.emit("CountScanSHIPPING", res);
+            }
+        );
+
+        connection.query(
+            "SELECT DATE(updated_at) AS tanggal, COUNT(*) AS jumlah_scan, docking FROM db_scanshipping WHERE docking = 'FSCM' AND status = 2 AND DATE(updated_at) = CURDATE() GROUP BY tanggal;",
+            (err, res) => {
+                socket.emit("CountScanFSCM", res);
+            }
+        );
+
+        connection.query(
+            "SELECT DATE(updated_at) AS tanggal, COUNT(*) AS jumlah_scan, docking FROM db_scanshipping WHERE docking = 'DELSI' AND status = 2 AND DATE(updated_at) = CURDATE() GROUP BY tanggal;",
+            (err, res) => {
+                socket.emit("CountScanDELSI", res);
+            }
+        );
+
+        connection.query(
+            "SELECT DATE(updated_at) AS tanggal, COUNT(*) AS jumlah_scan, docking FROM db_scanshipping WHERE docking = 'NUSAMETAL' AND status = 2 AND DATE(updated_at) = CURDATE() GROUP BY tanggal;",
+            (err, res) => {
+                socket.emit("CountScanNUSAMETAL", res);
+            }
+        );
+
+        // FOR CHART
+        connection.query(
+            'SELECT DATE(updated_at) AS tanggal, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="SHIPPING" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2 ) AS Shipping, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="NUSAMETAL" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS NM, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="FSCM" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS FSCM, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="DELSI" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS Delsi FROM db_scanshipping a GROUP BY DATE(updated_at)',
+            (err, res) => {
+                socket.emit("DataChartSHIPPING", res);
+            }
+        );
         //==========[' UPDATE AKTUAL PRODUCTION CASTING ']==========//
         // connection.query(
         //     "SELECT * FROM input_kv8000 WHERE area='CA'",

@@ -19,8 +19,14 @@ class ShippingController extends Controller
     public function index_dashboard()
     {
         $title = "SHIPPING";
-
         return view('prod-Dashboard-shipping', compact('title'));
+    }
+
+    public function TV_index()
+    {
+        $title = "SHIPPING";
+        $judul = "MONITORING SCAN DELIVERY";
+        return view('TV-ShippingScan', compact('title', 'judul'));
     }
 
     public function index_scanQR($area)
