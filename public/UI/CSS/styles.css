@@ -11699,3 +11699,122 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.bg-birutosca {
+    background-color: #095256;
+    color: white;
+}
+
+/*=============== lEVEL MOLTEN===============*/
+.forklift-card {
+    min-width: 100%;
+    margin: -2px -2px -2px -2px;
+    padding: -2px -2px -2px -2px;
+}
+
+.battery {
+    height: 150px;
+    width: 100%;
+    display: grid;
+    /* place-items: center; */
+    margin: 1.1rem 0rem 0 0;
+}
+
+.battery__percentage {
+    font-size: var(--biggest-font-size);
+}
+
+.battery__pill {
+    position: relative;
+    width: 100%;
+    height: 150px;
+    background-color: var(--container-color);
+    box-shadow: inset 0px 0 48px hsla(0, 0%, 33%, 0.658),
+        inset -4px 12px 48px hsl(0, 0%, 100%);
+    /* box-shadow: inset 20px 0 48px hsl(214, 25%, 60%),
+               inset  -4px 12px 48px hsl(198, 100%, 93%); */
+    border-radius: 1rem;
+}
+
+.battery__level {
+    position: absolute;
+    inset: 2px;
+    border-radius: 1rem;
+    overflow: hidden;
+}
+
+.battery__liquid {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    /* background: var(--gradient-color-red); */
+    background-color: red;
+    box-shadow: inset -10px 0 12px hsl(0, 0%, 0%, 0.1),
+        inset 12px 0px 12px hsl(0, 0%, 56%, 0.15);
+    border-radius: 0.1rem;
+    animation: charger-on 3s infinite;
+}
+
+/* Full battery icon color */
+.green-color {
+    background: var(--gradient-color-green);
+}
+
+/* Battery charging animation */
+.animated-green {
+    background: var(--gradient-color-green);
+    animation: animated-chargin-batterry 1.2s infinite alternate;
+}
+
+/* Low battery animation */
+.animated-red {
+    background: var(--gradient-color-red);
+    animation: animated-low-batterry 1.2s infinite alternate;
+}
+
+.animated-green,
+.animated-red,
+.green-color {
+    -webkit-background-clip: text;
+    color: transparent;
+}
+
+@keyframes animated-chargin-battery {
+    0% {
+        text-shadow: none;
+    }
+    100% {
+        text-shadow: 0 0 6px hsl(92, 90%, 68%);
+    }
+}
+
+@keyframes animated-low-battery {
+    0% {
+        text-shadow: none;
+    }
+    100% {
+        text-shadow: 0 0 8px hsl(7, 89%, 46%);
+    }
+}
+
+/* Liquid battery with gradient color */
+.gradient-color-red,
+.gradient-color-red::after {
+    background: var(--gradient-color-red);
+}
+
+.gradient-color-orange,
+.gradient-color-orange::after {
+    background: var(--gradient-color-orange);
+}
+
+.gradient-color-yellow,
+.gradient-color-yellow::after {
+    background: var(--gradient-color-yellow);
+}
+.gradient-color-green,
+.gradient-color-green::after {
+    background: var(--gradient-color-green);
+}

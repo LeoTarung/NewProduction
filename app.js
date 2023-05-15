@@ -81,9 +81,9 @@ io.on("connection", (socket) => {
         // );
 
         //==========[' SELECT ALL  FROM MESIN CASTING ']==========//
-        // connection.query("SELECT * FROM mesin_casting", (err, res) => {
-        //     socket.emit("levelMolten_settings", res);
-        // });
+        connection.query("SELECT * FROM db_mesincasting", (err, res) => {
+            socket.emit("AllMesinCasting", res);
+        });
 
         //==========[' SELECT DATA LHPSTRIKO-1 ']==========//
         connection.query(
@@ -239,7 +239,7 @@ io.on("connection", (socket) => {
 
         // FOR CHART
         connection.query(
-            'SELECT DATE(updated_at) AS tanggal, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="SHIPPING" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2 ) AS Shipping, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="NUSAMETAL" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS NM, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="FSCM" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS FSCM, (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="DELSI" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS Delsi FROM db_scanshipping a GROUP BY DATE(updated_at)',
+            'SELECT DATE(updated_at) AS tanggal,  (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="SHIPPING" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2 ) AS Shipping,  (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="NUSAMETAL" AND DATE(x.updated_at)=DATE(a.updated_at) AND status = 2) AS NM,  (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="FSCM" AND DATE(x.updated_at)=DATE(a.updated_at) AND  status = 2) AS FSCM,  (SELECT COUNT(*) FROM db_scanshipping x WHERE docking="DELSI" AND DATE(x.updated_at)=DATE(a.updated_at) AND status  = 2) AS Delsi  FROM db_scanshipping a WHERE DATE(updated_at) BETWEEN DATE_SUB(CURDATE(), INTERVAL 6 DAY) AND CURDATE() GROUP BY DATE(updated_at)',
             (err, res) => {
                 socket.emit("DataChartSHIPPING", res);
             }

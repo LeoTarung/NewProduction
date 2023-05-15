@@ -8,6 +8,7 @@ use App\Models\DB_Furnace;
 use App\Models\DB_Kereta;
 use App\Models\DB_HenkatenMelting;
 use App\Models\DB_TransaksiIngot;
+use App\Models\DB_MesinCasting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -50,7 +51,15 @@ class MeltingController extends Controller
     {
         $judul = "MELTING SECTION";
         $title = "TV MELTING";
-        return view('TV-Melting', compact('judul', 'title'));
+        $data = DB_Furnace::all();
+        return view('TV-Melting', compact('judul', 'title', 'data'));
+    }
+
+    public function tv_molten()
+    {
+        $judul = "MONITORING LEVEL MOLTEN";
+        $title = "TV MOLTEN";
+        return view('TV-LevelMolten', compact('judul', 'title'));
     }
 
     public function OpenModal()
@@ -341,6 +350,41 @@ class MeltingController extends Controller
     }
 
     //==============================['Level Molten']==============================//
+    public function LevelMolten_index()
+    {
+        $data = DB_MesinCasting::all();
+        return view('partial.melting-modal', compact('data'));
+    }
+
+    public function LevelMoltenApi(Request $request)
+    {
+        $data = DB_MesinCasting::where('mc', $request->mc)->get();
+        return $data;
+    }
+
+    public function LevelMoltenupdate(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'mc' => 'required',
+            'aktual_molten' => 'required',
+            'min_level_molten' => 'required',
+            'max_level_molten' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
+        }
+
+        $insert = DB_MesinCasting::where('mc', $request->mc)->update([
+            'aktual_molten' => $request->aktual_molten,
+            'min_level_molten' => $request->min_level_molten,
+            'max_level_molten' => $request->max_level_molten,
+        ]);
+        if ($insert) {
+            return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
+        }
+    }
+
 
     //==============================['Furnace']==============================//
     public function modalFurnaceMelting()

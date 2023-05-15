@@ -3,8 +3,8 @@
 <h3 class="mt-2">Melting Section</h3>
 <div class="row">
     <div class="col">
-        <a class="btn btn-sm btn-secondary mb-2 float-start" href="{{ url('/tv/Melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring TV Charging</a>
-        <a class="btn btn-sm btn-dark mb-2 ms-2 float-start" href="{{ url('/tv/Melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Lv Molten</a>
+        <a class="btn btn-sm btn-secondary mb-2 float-start" href="{{ url('/tv/melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring TV Charging</a>
+        <a class="btn btn-sm btn-dark mb-2 ms-2 float-start" href="{{ url('/tv/levelmolten') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Lv Molten</a>
         <a class="btn btn-sm btn-info mb-2 ms-2 float-start" href="{{ url('/prod/melting/lot/ingot') }}"><i class="fa-solid fa-cubes-stacked"></i> Bundle Ingot</a>
     </div>
 </div>
@@ -967,6 +967,34 @@
                         $("#trial_proses_"+data.trial_proses).attr("checked", "checked");
                         $("#cycle_time_"+data.cycle_time).attr("checked", "checked");
                     }
+                },
+            });
+        });
+    }
+
+    function editLevelMolten(xx){
+        $.get('/modal/levelmoltenMelting/edit', {}, function (data, status) {
+            $("#staticBackdropLabel").html("Edit Level Molten"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/prod/api/levelmolten') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    mc: xx,
+                },
+                success: function (data) {
+                    console.log(data)
+                    $("form").attr("action", "{{ url('/modal/levelmolten/update') }}");
+                    $("#mc").html(data[0].mc);
+                    $("#aktual_molten").val(data[0].aktual_molten);
+                    $("#min_level_molten").val(data[0].min_level_molten);
+                    $("#max_level_molten").val(data[0].max_level_molten);
+                    $("#tambahaninputan").html(
+                        '<input type="hidden" name="mc" value="' + data[0].mc + '">'
+                    );
                 },
             });
         });

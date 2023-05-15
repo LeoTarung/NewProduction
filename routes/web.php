@@ -92,7 +92,7 @@ Route::name('Melting.')->group(function () {
     Route::post('/modal/edit-detail-lhp/update', [MeltingController::class, 'modal_detail_lhp_update']);
     //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting', [MeltingController::class, 'index']);
-    Route::get('/tv/Melting', [MeltingController::class, 'tv_index']);
+    Route::get('/tv/melting', [MeltingController::class, 'tv_index']);
     Route::get('/modal/henkatenMelting', [MeltingController::class, 'henkatenModal'])->name('DataHenkaten');
     Route::get('/modal/addhenkatenMelting', [MeltingController::class, 'OpenModal'])->name('ModalAddHenkaten');
     Route::post('/modal/henkatenMelting/save', [MeltingController::class, 'henkaten_save']);
@@ -111,7 +111,11 @@ Route::name('Melting.')->group(function () {
     Route::post('/modal/addFurnace/update', [MeltingController::class, 'addFurnace_update']);
     Route::post('/prod/api/furnace', [MeltingController::class, 'furnaceApi']);
     //==========[FOR MELTING - LEVEL MOLTEN]==========\\UBPURE-AC2B000006 | AC2B | 0275 | AGUS | 31000784 | PT ALUMINDO ALLOY ABADI | 128.5 | 1 | 1001 | Nusametal | 11.04.23 11:39:01
-    Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'OpenModal'])->name('ModalLevelMolten');
+    Route::get('/tv/levelmolten', [MeltingController::class, 'tv_molten']);
+    Route::get('/modal/levelmoltenMelting', [MeltingController::class, 'LevelMolten_index'])->name('ModalLevelMolten');
+    Route::get('/modal/levelmoltenMelting/edit', [MeltingController::class, 'OpenModal'])->name('ModalAddLevelMolten');
+    Route::post('/prod/api/levelmolten', [MeltingController::class, 'LevelMoltenApi']);
+    Route::post('/modal/levelmolten/update', [MeltingController::class, 'LevelMoltenupdate']);
     //==========[FOR MELTING - BUNDLE LOT INGOT]==========\\
     Route::get('/modal/addLotIngot', [MeltingController::class, 'OpenModal'])->name('AddLotIngot');
     Route::post('/modal/addLotIngot/save', [MeltingController::class, 'modalLotingot_save']);

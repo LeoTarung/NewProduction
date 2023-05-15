@@ -21,7 +21,6 @@
     <script src="/UI/JS/amchart/LossesChart-Melting/core.js"></script>
     <script src="/UI/JS/amchart/LossesChart-Melting/charts.js"></script>
     <script src="/UI/JS/amchart/LossesChart-Melting/Animated.js"></script>
-    {{-- <link href="/UI/CSS/performa_melting.css" rel="stylesheet" /> --}}
   </head>
 
     <body class="sb-nav-fixed bg-digital pt-5">

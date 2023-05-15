@@ -1,8 +1,76 @@
 @switch(Route::current()->getName())
         {{-- SETUP LEVEL MOLTEN --}}
     @case('Melting.ModalLevelMolten')
-            <h1>THIS IS MODAL FOR LEVEL MOLTEN</h1>
+            <div class="table-responsive">
+                <table id="Table_LevelMolten" class="table table-striped-columns table-hover table-bordered nowrap display" style="overflow-x: scroll">
+                    <thead>
+                        <tr>
+                            <th>MC</th>
+                            <th>MATERIAL</th>
+                            <th>ACTUAL</th>
+                            <th>MINIMAL</th>
+                            <th>MAXIMAL</th>
+                            <th nowrap="nowrap" class="text-center">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                        <tr>
+                            <td>{{ $item->mc }}</td>
+                            <td>{{ $item->material }}</td>
+                            <td>{{ $item->aktual_molten }}</td>
+                            <td>{{ $item->min_level_molten }}</td>
+                            <td>{{ $item->max_level_molten }}</td>
+                            <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editLevelMolten('{{ $item->mc }}')"></a></td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <script>
+                    $(document).ready(function () {
+                    $("#Table_LevelMolten").DataTable();
+                    });
+                </script>
+            </div>
         @break
+
+    @case('Melting.ModalAddLevelMolten')
+            <form action="{{ url('/modal/levelmolten/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
+                @csrf
+                <div class="row">
+                    <div class="col-6 text-center fw-bold align-self-center">
+                        <div class="card bg-body w-50 mx-auto my-auto">
+                            <div class="card-header ">
+                              CASTING MACHINE
+                            </div>
+                            <div class="card-body">
+                                <div class="fs-1 " id="mc"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="col-12 mb-3">
+                            <label for="aktual_molten">ACTUAL LEVEL <sup>*</sup></label>
+                            <input type="number" class="form-control" name="aktual_molten" id="aktual_molten" aria-describedby="MCHelp">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="min_level_molten">MINIMAL LEVEL <sup>*</sup></label>
+                            <input type="number" class="form-control" name="min_level_molten" id="min_level_molten" aria-describedby="MCHelp">
+                        </div>
+                        <div class="col-12 mb-3">
+                            <label for="max_level_molten">MAXIMAL LEVEL <sup>*</sup></label>
+                            <input type="number" class="form-control" name="max_level_molten" id="max_level_molten" aria-describedby="MCHelp">
+                        </div>
+                    </div>
+                    <div class="tambahaninputan" id="tambahaninputan"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+                    </div>
+                </div>
+            </form>
+    @break
 
         {{-- SETUP FURNACE --}}
     @case('Melting.ModalAddFurnace')
