@@ -3,14 +3,15 @@
 <h3 class="mt-2">Shipping Section</h3>
 <div class="row">
     <div class="col">
-        <a class="btn btn-sm btn-success mb-2 float-start" href=""><i class="fa-solid fa-calendar-week"></i> Schedule Delivery</a>
-        <a class="btn btn-sm btn-primary ms-2 mb-2 float-start" href="{{'/prod/shipping/history'}}"><i class="fa-solid fa-book-open"></i> History Delivery</a>
-        <a class="btn btn-sm btn-secondary ms-2 mb-2 float-start" href="{{ url('/tv/shipping') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Delivery</a>
+        <a class="btn btn-sm btn-secondary  mb-2 float-start" href="{{ url('/tv/shipping') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Delivery</a>
+        {{-- <a class="btn btn-sm btn-success ms-2 mb-2 float-start" href=""><i class="fa-solid fa-calendar-week"></i> Schedule Delivery</a> --}}
+
     </div>
 </div>
 <div class="row">
     <div class="col">
-        <a class="btn btn-sm btn-warning mb-2 float-start" onclick="ToScanWeb()"><i class="fa-solid fa-qrcode"></i> Scan QR Delivery</a>
+        <a class="btn btn-warning mb-2 float-start" onclick="ToScanWeb()"><i class="fa-solid fa-qrcode"></i> Scan QR Delivery</a>
+        <a class="btn btn-primary ms-2 mb-2 float-start" href="{{'/prod/shipping/history'}}"><i class="fa-solid fa-book-open"></i> History Delivery</a>
         {{-- <a class="btn btn-sm btn-warning mb-2 float-start" href="{{'/prod/shipping/scan'}}"><i class="fa-solid fa-qrcode"></i> Scan QR Delivery</a> --}}
     </div>
 </div>

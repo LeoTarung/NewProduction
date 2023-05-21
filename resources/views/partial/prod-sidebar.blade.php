@@ -56,6 +56,11 @@
                         <a class="nav-link ms-3" href="{{ url('/qr/fromsubcont') }}">From Subcont</a>
                     </nav>
                 </div>
+                <hr class="sidebar-divider my-1">
+                <a class="nav-link" href="{{ url('/sto') }}">
+                    <div class="sb-nav-link-icon"><i class="fa-solid fa-list-check fa-lg"></i></div>
+                    Stock Opname
+                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">

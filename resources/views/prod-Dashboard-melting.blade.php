@@ -5,7 +5,6 @@
     <div class="col">
         <a class="btn btn-sm btn-secondary mb-2 float-start" href="{{ url('/tv/melting') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring TV Charging</a>
         <a class="btn btn-sm btn-dark mb-2 ms-2 float-start" href="{{ url('/tv/levelmolten') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Lv Molten</a>
-        <a class="btn btn-sm btn-info mb-2 ms-2 float-start" href="{{ url('/prod/melting/lot/ingot') }}"><i class="fa-solid fa-cubes-stacked"></i> Bundle Ingot</a>
     </div>
 </div>
 <div class="row">
@@ -16,11 +15,17 @@
         <button class="btn btn-danger mb-2 float-start me-2" onclick="ButtonSetupMelting('setupHenkaten')"><i class="fa-solid fa-screwdriver-wrench"></i> Henkaten</button>
 
         <form enctype="multipart/form-data" onsubmit="addlotingot(event)">
-            <div class="input-group mb-3 float-lg-end" style="width:50%;">
+            <div class="input-group mb-2 float-lg-end" style="width:50%;">
                 <input type="text" name="lotingot" id="lotingot" class="form-control" placeholder="Scan Lot QR" autofocus required>
                 <button type="submit" id="submit" class="btn btn-secondary text-light btn-outline-secondary"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
             </div>
         </form>
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        <a class="btn btn-info mb-2 float-start" href="{{ url('/prod/melting/lot/ingot') }}"><i class="fa-solid fa-cubes-stacked"></i> Bundle Ingot</a>
+        <a class="btn btn-secondary mb-2 ms-2 float-start" onclick="ButtonSetupMelting('setupForklift')"><i class="fa-solid fa-industry"></i> Forklift</a>
     </div>
 </div>
 <div class="row">
@@ -354,6 +359,9 @@
             } else if(dataa == 'setupKereta'){
                 link = '/modal/keretaMelting';
                 judul = 'Kereta Charging';
+            } else if(dataa == 'setupForklift'){
+                link = '/modal/Forklift';
+                judul = 'Forklift Melting';
             }
         $.get(link, {}, function (data, status) {
             $("#staticBackdropLabel").html(judul); //Untuk kasih judul di modal
@@ -994,6 +1002,40 @@
                     $("#max_level_molten").val(data[0].max_level_molten);
                     $("#tambahaninputan").html(
                         '<input type="hidden" name="mc" value="' + data[0].mc + '">'
+                    );
+                },
+            });
+        });
+    }
+
+    function addForklift(){
+        $.get('/modal/addForklift', {}, function (data, status) {
+            $("#staticBackdropLabel").html("New Forklift"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+        });
+    }
+
+    function editForklift(xx){
+        $.get('/modal/addForklift', {}, function (data, status) {
+            $("#staticBackdropLabel").html("Edit forklift"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/prod/api/forklift') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: xx,
+                },
+                success: function (data) {
+                    $("form").attr("action", "{{ url('/modal/addforklift/update') }}");
+                    $("#forklift").val(data.forklift);
+                    $("#material").val(data.material);
+                    $("#kode_status").val(data.kode_status);
+                    $("#tambahaninputan").html(
+                        '<input type="hidden" name="id" value="' + data.id + '">'
                     );
                 },
             });

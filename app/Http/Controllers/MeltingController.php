@@ -4,11 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Models\DB_LhpMelting;
 use App\Models\DB_LhpMeltingRAW;
+use App\Models\DB_LhpMeltingSupply;
+use App\Models\DB_LhpMeltingSupplyRAW;
 use App\Models\DB_Furnace;
 use App\Models\DB_Kereta;
 use App\Models\DB_HenkatenMelting;
 use App\Models\DB_TransaksiIngot;
 use App\Models\DB_MesinCasting;
+use App\Models\DB_ForkliftMelting;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -65,6 +68,64 @@ class MeltingController extends Controller
     public function OpenModal()
     {
         return view('partial.melting-modal');
+    }
+
+    //==============================['Dashboard Melting furnace']==============================//
+    public function ForkliftModal()
+    {
+        $data = DB_ForkliftMelting::all();
+        return view('partial.melting-modal',compact('data'));
+    }
+
+        public function forkliftApi(Request $request)
+    {
+        $data = DB_ForkliftMelting::find($request->id);
+        return $data;
+    }
+
+    public function addForklift_save(Request $request)
+    {
+        // dd($request);
+        $validator = Validator::make($request->all(), [
+            'forklift' => 'required',
+            'material' => 'required',
+            'kode_status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
+        }
+
+        $insert = DB_ForkliftMelting::create([
+            'forklift' => $request->forklift,
+            'material' => $request->material,
+            'kode_status' => $request->kode_status,
+        ]);
+        if ($insert) {
+            return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
+        }
+    }
+    public function addForklift_update(Request $request)
+    {
+        $validator = Validator::make($request->all(), [
+            'id' => 'required',
+            'forklift' => 'required',
+            'material' => 'required',
+            'kode_status' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
+        }
+
+        $insert = DB_ForkliftMelting::find($request->id)->update([
+            'forklift' => $request->forklift,
+            'material' => $request->material,
+            'kode_status' => $request->kode_status,
+        ]);
+        if ($insert) {
+            return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
+        }
     }
 
     //==============================['Dashboard Melting furnace']==============================//
@@ -505,6 +566,139 @@ class MeltingController extends Controller
     }
 
 
+    //=================[LHP MELTING SUPLLY]=================\\lhp-pre-meltingsupply.blade
+    public function lhp_supply_index(UsableController $useable)
+    {
+        $shift = $useable->Shift();
+        $title = "SUPPLY MELTING";
+        $data = DB_ForkliftMelting::all();
+        return view('lhp-pre-meltingsupply', compact('shift', 'title', 'data'));
+    }
+
+    public function lhp_supply_resume(UsableController $useable, $id)
+    {
+        $date = $useable->date();
+        $a = DB_LhpMeltingSupply::find($id);
+        $data = DB_LhpMeltingSupplyRAW::groupBy(DB_LhpMeltingSupplyRAW::raw('furnace'))->groupBy(DB_LhpMeltingSupplyRAW::raw('Mesin_Casting'))->groupBy(DB_LhpMeltingSupplyRAW::raw('hour(jam)'))->where([['tanggal', '=', $date], ['forklift', '=',  $a->forklift]])->selectRaw("tanggal, jam, furnace, no_mc as Mesin_Casting, jumlah_tapping, COUNT(jumlah_tapping) as frekuensi, SUM(jumlah_tapping) as total_tapping")->get();
+        // dd($data);
+        return view('partial.lhp-modal', compact('data'));
+    }
+
+    public function lhp_supply_check(UsableController $useable, Request $request)
+    {
+        $shift = $useable->Shift();
+        $date = $useable->date();
+        $data = DB_LhpMeltingSupply::where([['tanggal', '=', $date], ['forklift', '=', $request->forklift], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
+        return $data;
+    }
+
+    public function lhp_presupply_save(UsableController $useable, Request $request)
+    {
+        $shift = $useable->Shift();
+        $date = $useable->date();
+        $jam_kerja = $useable->Jam_kerja();
+        $validator = Validator::make($request->all(), [
+            'nrp' => 'required',
+            'nama' => 'required',
+            'forklift' => 'required',
+            'material' => 'required',
+        ]);
+        if ($validator->fails()) {
+            return redirect('/lhp/meltingsupply')->with('gagal_validasi', 'gagal_validasi');
+        }
+            $insert = DB_LhpMeltingSupply::create([
+                'tanggal' => $date,
+                'nrp' => $request->nrp,
+                'nama' => $request->nama,
+                'shift' => $shift,
+                'jam_kerja' => $jam_kerja,
+                'forklift' => $request->forklift,
+                'material' => $request->material,
+            ]);
+            if ($insert) {
+                return redirect("/lhp/meltingsupply/$request->forklift/$insert->id")->with('berhasil_input', 'berhasil_input');
+            }
+            return redirect('/lhp/melting')->with('gagal_validasi', 'gagal_validasi');
+    }
+
+    public function lhp_supply_button_input( $forklift, $id)
+    {
+        $data = DB_LhpMeltingSupply::find($id);
+        return view('partial.lhp-modal', compact('forklift','id','data'));
+    }
+
+    public function lhp_supply_input(UsableController $useable, $forklift, $id)
+    {
+        $title = "MELTING";
+        $shift = $useable->Shift();
+        $date = $useable->date();
+        $area = $forklift;
+        // $data = DB_LhpMeltingSupply::find($id);
+        $data = DB_LhpMeltingSupply::where([['tanggal', '=', $date], ['forklift', '=', $forklift], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
+        if($data != null){
+            return view('lhp-ipt-meltingsupply', compact('forklift','title','shift','date','area','id','data'));
+        }else{
+            return redirect('/lhp/meltingsupply')->with('preulang', 'preulang');
+        }
+    }
+
+    public function lhp_modal_input($id)
+    {
+        $data = DB_LhpMeltingSupply::find($id);
+        return view('partial.lhp-modal', compact('id','data'));
+    }
+
+    public function lhp_supply_save(UsableController $useable, Request $request)
+    {
+        $shift = $useable->Shift();
+        $date = $useable->date();
+        $hour = $useable->hour();
+        $jam_kerja = $useable->Jam_kerja();
+        $validator = Validator::make($request->all(), [
+            'forklift' => 'required',
+            'material' => 'required',
+            'berat' => 'required',
+            'furnace' => 'required',
+            'mesin_casting' => 'required',
+            'id_lhp' => 'required',
+        ]);
+
+        if ($validator->fails()) {
+            return redirect("/lhp/meltingsupply/$request->forklift/$request->id_lhp")->with('gagal_validasi', 'gagal_validasi');
+        }
+        $validate =  DB_LhpMeltingSupply::where([['tanggal', '=', $date], ['forklift', '=', $request->forklift], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
+        if ($validate != null){
+                $insert = DB_LhpMeltingSupplyRAW::create([
+                    'id_lhp' => $request->id_lhp,
+                    'tanggal' => $date,
+                    'jam' => $hour,
+                    'shift' => $shift,
+                    'forklift' => $request->forklift,
+                    'no_mc' => $request->mesin_casting,
+                    'furnace' => $request->furnace,
+                    'jumlah_tapping' => $request->berat,
+                ]);
+            $total_tapping = DB_LhpMeltingSupplyRAW::where('id_lhp', $request->id_lhp)->selectRaw('SUM(jumlah_tapping) as tappings, COUNT(*) as jumlah_ritase')->get();
+            $update = DB_LhpMeltingSupply::find($request->id_lhp)->update([
+                'ritase_tapping' => $total_tapping[0]->jumlah_ritase,
+                'jumlah_tapping' => $total_tapping[0]->tappings,
+            ]);
+
+            // update stock molten
+            $lhpmelting = DB_LhpMelting::where('mesin', '=', $request->furnace)->orderBy('id', 'DESC')->first();
+            $sisa_molten = $lhpmelting->stok_molten - $request->berat;
+            $update_1 = DB_LhpMelting::find($lhpmelting->id)->update([
+                'stok_molten' =>  $sisa_molten,
+            ]);
+            if ($update) {
+                return redirect("/lhp/meltingsupply/$request->forklift/$request->id_lhp")->with('berhasil_input', 'berhasil_input');
+            }
+        }else{
+            return redirect("/lhp/meltingsupply/")->with('preulang', 'preulang');
+        }
+
+        return redirect("/lhp/meltingsupply/$request->forklift/$request->id_lhp")->with('gagal_validasi', 'gagal_validasi');
+    }
     //=================[LHP MELTING]=================\\
 
     public function lhp_index(UsableController $useable)
@@ -533,9 +727,12 @@ class MeltingController extends Controller
         $title = "MELTING";
         $shift = $useable->Shift();
         $date = $useable->date();
-        $data = DB_LhpMelting::find($id);
-
-        return view('lhp-ipt-melting', compact('area', 'shift', 'id', 'title', 'data'));
+        $data = DB_LhpMelting::where([['tanggal', '=', $date], ['mesin', '=', $area], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
+        if($data != null ){
+            return view('lhp-ipt-melting', compact('area', 'shift', 'id', 'title', 'data'));
+        }else{
+            return redirect('/lhp/melting')->with('preulang', 'preulang');
+        }
     }
 
     public function lhp_buttonkereta($material)
@@ -605,7 +802,7 @@ class MeltingController extends Controller
             return redirect('/lhp/melting')->with('gagal_validasi', 'gagal_validasi');
         }
         $netto = $request->berat - $request->berat_kereta;
-        $data = DB_LhpMelting::find($request->id_lhp);
+        $data = DB_LhpMelting::where([['tanggal', '=', $date], ['mesin', '=', $request->furnace], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
         $material = $request->material;
         if ($data != null) {
             DB_LhpMeltingRAW::create([
@@ -642,9 +839,6 @@ class MeltingController extends Controller
             } else {
                 $persen_rs = ($total_return_rs /  $total_charging_rs) * 100; // (G / H ) x 100%
             }
-
-
-
             if ($material == 'gas_akhir' ||  $material == 'fluxing') {
                 $stok_molten = $data1->stok_molten;
             } else if ($material == 'tapping') {
@@ -654,9 +848,6 @@ class MeltingController extends Controller
             } else {
                 $stok_molten = $data1->stok_molten + $netto; // H - ( N + Q )
             }
-
-
-
             // $total_loss = $data1->dross - $data1->alm_treat; // ( Q - E )
             $total_loss = $data1->dross; // UPDATED PER 2023
             if ($total_charging == 0) {
@@ -695,13 +886,17 @@ class MeltingController extends Controller
                 'gas_consum' =>  $gas_consum,
                 'melting_rate' =>  $melting_rate,
             ]);
+        }else {
+            return redirect()->route('lhpmelting.index')->with('preulang', 'preulang');
         }
         return redirect()->route('lhpmelting.index')->with('berhasil_input', 'berhasil_input');
     }
 
-    public function resume_lhp($id)
+    public function resume_lhp(UsableController $useable, $id)
     {
-        $data =  DB_LhpMeltingRAW::groupBy(DB_LhpMeltingRAW::raw('hour(jam)'))->where('id_lhp', '=', $id)->selectRaw("jam, tanggal, shift, SUM(ingot) as ingots, SUM(dross) as drosss, SUM(tapping) as tappings, SUM(exgate) as exgates, SUM(reject_parts) as reject_partss, SUM(alm_treat) as alm_treats, SUM(oil_scrap) as oil_scraps, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap) as total_return_rs, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) as total_charging_rs")->get();
+        $date = $useable->date();
+        $a = DB_LhpMelting::find($id);
+        $data =  DB_LhpMeltingRAW::groupBy(DB_LhpMeltingRAW::raw('hour(jam)'))->where([['tanggal', $date], ['mesin', $a->mesin]])->selectRaw("jam, tanggal, shift, SUM(ingot) as ingots, SUM(dross) as drosss, SUM(tapping) as tappings, SUM(exgate) as exgates, SUM(reject_parts) as reject_partss, SUM(alm_treat) as alm_treats, SUM(oil_scrap) as oil_scraps, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap) as total_return_rs, SUM(exgate + reject_parts + alm_treat + basemetal + oil_scrap + ingot) as total_charging_rs")->get();
         return view('partial.lhp-modal', compact('data'));
     }
 

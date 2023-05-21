@@ -3,15 +3,19 @@
 use App\Models\DB_Mesincasting;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\QRController;
+use App\Http\Controllers\STOController;
+use Illuminate\Support\Facades\Storage;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CastingController;
 use App\Http\Controllers\MeltingController;
 use App\Http\Controllers\ShippingController;
+
+
+// TESTING FS
 use App\Http\Controllers\BadNewsFirstController;
 use App\Http\Controllers\CalenderOfEventController;
-
-
+// TESTING FS
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +36,10 @@ Route::get('/dashboard', function () {
     $title = "DASHBOARD";
     $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
     // dd($data->DB_Namapart->nama_part);
+    $config = Storage::disk('diskZ')->put('testing2.txt', 'Gatau, Testing aja');  //untuk save file beranama testing1.txt dengan isi
+    $content = Storage::disk('diskZ')->files(); //Untuk cek ada nama file apa aja didalem direktori Z
+    $content1 = Storage::disk('diskZ')->get('testing1.txt'); // Untuk Lihat isi dari file testing1.txt
+    // dd($config);
     return view('prod-template', compact('title', 'data'));
 });
 
@@ -55,7 +63,8 @@ Route::get('/lhp', function () {
 
 Route::get('/tv', function () {
     $judul = "NANTI JUDUL AKAN ADA DISINI";
-    return view('TV-template', compact('judul'));
+    $title = "TEMPLATE";
+    return view('TV-template', compact('judul','title'));
 });
 
 Route::get('/tv/Rmeeting', function () {
@@ -90,6 +99,13 @@ Route::name('Melting.')->group(function () {
     Route::get('/modal/detail-lhp', [MeltingController::class, 'OpenModal'])->name('DataLhpMeltingRAW');
     Route::get('/modal/edit-detail-lhp', [MeltingController::class, 'OpenModal'])->name('EditLhpMeltingRAW');
     Route::post('/modal/edit-detail-lhp/update', [MeltingController::class, 'modal_detail_lhp_update']);
+    //==========[FOR MELTING - FORKLIFT]==========\\
+    Route::get('/modal/Forklift', [MeltingController::class, 'ForkliftModal'])->name('DataForklift');
+    Route::get('/modal/addForklift', [MeltingController::class, 'OpenModal'])->name('ModalAddForklift');
+    Route::post('/modal/addforklift/save', [MeltingController::class, 'addForklift_save']);
+    Route::post('/modal/addforklift/update', [MeltingController::class, 'addForklift_update']);
+    Route::post('/prod/api/forklift', [MeltingController::class, 'forkliftApi']);
+
     //==========[FOR MELTING - HENKATEN]==========\\
     Route::get('/prod/melting', [MeltingController::class, 'index']);
     Route::get('/tv/melting', [MeltingController::class, 'tv_index']);
@@ -134,6 +150,16 @@ Route::name('lhpmelting.')->group(function () {
     Route::post('/lhp-modal/pre-melting/save', [MeltingController::class, 'Pre_lhp_save']);
     Route::post('/lhp-modal/melting/save', [MeltingController::class, 'lhp_save']);
     Route::get('/lhp-modal/resume-melting/{id}', [MeltingController::class, 'resume_lhp'])->name('resume');
+
+    Route::get('/lhp/meltingsupply', [MeltingController::class, 'lhp_supply_index'])->name('Supplyindex');
+    Route::post('/lhp/meltingsupply/check', [MeltingController::class, 'lhp_supply_check']);
+    Route::get('/lhp-modal/meltingsupply', [MeltingController::class, 'lhp_preparation'])->name('SupplyPreparation');
+    Route::post('/lhp-modal/pre-meltingsupply/save', [MeltingController::class, 'lhp_presupply_save']);
+    Route::get('/lhp/meltingsupply/{forklift}/{id}', [MeltingController::class, 'lhp_supply_input'])->name('Supplyinput');
+    Route::get('/lhp-modal/meltingsupply/cek/{forklift}/{id}', [MeltingController::class, 'lhp_supply_button_input'])->name('SupplyButton');
+    Route::get('/lhp-modal/resume-meltingsupply/{id}', [MeltingController::class, 'lhp_supply_resume'])->name('Supplyresume');
+    Route::get('/lhp/modal-meltingsupply/{id}', [MeltingController::class, 'lhp_modal_input'])->name('SupplyInput');
+    Route::post('/lhp/modal-meltingsupply/save', [MeltingController::class, 'lhp_supply_save']);
 });
 
 //==========[FOR CASTING]==========\\
@@ -187,6 +213,20 @@ Route::name('QR.')->group(function () {
     Route::get('/qr/printQR/{id}/{copies}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
     // Route::get('/qr/printQR/{id}/{status}', [QRController::class, 'openModal'])->name('PrintTag');
     Route::get('/qr/fromsubcont', [QRController::class, 'FS_index']);
+});
+
+
+
+Route::name('STO.')->group(function () {
+    Route::get('/sto', [STOController::class, 'dashboard'])->name('index');
+    Route::get('/sto/menu', [STOController::class, 'menu'])->name('Menu');
+    Route::get('/sto/modal/preparation', [STOController::class, 'openModal'])->name('preparation');
+    Route::post('/sto/modal/save', [STOController::class, 'preparation_save']);
+    Route::get('/sto/counter/{id}', [STOController::class, 'inputSTO'])->name('counter');
+    Route::get('/sto/verificator/{id}', [STOController::class, 'inputSTO'])->name('verificator');
+    Route::get('/sto/modal-verificator/{tag}', [STOController::class, 'openModalWithID'])->name('Input_verificator');
+    Route::post('/sto/modal-input/save', [STOController::class, 'Counter_Save']);
+    Route::post('/sto/modal-input/update', [STOController::class, 'Counter_Update']);
 });
 
 //==========[FOR TV MONITORING]==========\\

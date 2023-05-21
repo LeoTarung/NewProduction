@@ -9,6 +9,7 @@ use App\Models\DB_MesinCasting;
 use App\Models\DB_NamaPart;
 use App\Models\DB_Timbangan;
 use App\Models\DB_Kereta;
+use App\Models\DB_ForkliftMelting;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 
@@ -33,6 +34,39 @@ class UserSeeder extends Seeder
                 'email' => "admin.digital@aop.component.astra.co.id",
                 'password' => Hash::make("Komponen1!"),
                 'status' => "ENABLED",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+        ];
+
+        $InputForklift = [
+            [
+                'forklift' => "FORKLIFT-3",
+                'material' => "HD-2",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'forklift' => "FORKLIFT-5",
+                'material' => "HD-4",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'forklift' => "FORKLIFT-8",
+                'material' => "HD-2",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'forklift' => "FORKLIFT-9",
+                'material' => "ADC12",
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
+            ],
+            [
+                'forklift' => "FORKLIFT-10",
+                'material' => "HD-2",
                 'created_at' => Carbon::now(),
                 'updated_at' => Carbon::now(),
             ],
@@ -9667,6 +9701,7 @@ class UserSeeder extends Seeder
 
 
         User::insert($inputUser);
+        DB_ForkliftMelting::insert($InputForklift);
         DB_Kereta::insert($InputKereta);
         DB_Furnace::insert($InputFurnace);
         DB_Timbangan::insert($InputTimbangan);

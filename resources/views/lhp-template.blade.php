@@ -17,6 +17,7 @@
     {{-- //============[ JS IN HERE ]============// --}}
     <script src="/UI/JS/jquery363.js"></script>
     <script src="/UI/JS/jquerydatatables.js"></script>
+    <script src="/UI/JS/Socketio454.js"></script>
 </head>
 
 <body>
@@ -49,7 +50,6 @@
     @include('sweetalert::alert')
     <script src="/UI/JS/bootstrap523.js"></script>
     <script src="/UI/JS/JSforLHP.js"></script>
-    <script src="/UI/JS/Socketio454.js"></script>
 </body>
 
 </html>

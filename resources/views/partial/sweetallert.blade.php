@@ -16,4 +16,7 @@
 @elseif(session()->has('call_admin'))
 <?php toast('Please Contact Digitalization Team', 'error')->autoClose(1000); ?>
 
+@elseif(session()->has('preulang'))
+<?php toast('Preparation Not Valid, Please. Try Again! .', 'error')->autoClose(1000); ?>
+
 @endif

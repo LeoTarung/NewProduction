@@ -1,4 +1,107 @@
 @switch(Route::current()->getName())
+        {{-- SETUP FORKLIFT --}}
+    @case('Melting.DataForklift')
+            <div class="row">
+                <div class="col ">
+                <button class="btn btn-success mb-2 float-end" onclick="addForklift()"><i class="fa-solid fa-plus"></i> Forklift</button>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table id="Table_Forklift" class="table table-striped-columns table-hover table-bordered nowrap display" style="overflow-x: scroll">
+                    <thead>
+                        <tr>
+                            {{-- <th>NO</th> --}}
+                            <th>FORKLIFT</th>
+                            <th>MATERIAL</th>
+                            <th>MATERIAL COLOR</th>
+                            <th>STATUS</th>
+                            <th nowrap="nowrap" class="text-center">AKSI</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($data as $item)
+                             @if ($item->material == 'AC2B')
+                            <?php $warna = 'bg-orange' ?>
+                            @elseif($item->material == 'AC4B')
+                            <?php $warna = 'bg-ungu' ?>
+                            @elseif($item->material == 'AC4CH')
+                            <?php $warna = 'text-dark' ?>
+                            @elseif($item->material == 'AC2BF')
+                            <?php $warna = 'bg-merahBata' ?>
+                            @elseif($item->material == 'ADC12')
+                            <?php $warna = 'bg-silver' ?>
+                            @elseif($item->material == 'HD-2')
+                            <?php $warna = 'text-warning' ?>
+                            @elseif($item->material == 'HD-4')
+                            <?php $warna = 'text-primary' ?>
+                            @elseif($item->material == 'YH3R')
+                            <?php $warna = 'text-success' ?>
+                            @endif
+                            @if ($item->kode_status == 0)
+                            <?php $status = 'RUNNING' ?>
+                            @else
+                            <?php $status = 'LAYOFF' ?>
+                            @endif
+                            <tr>
+                                {{-- <td>{{ $loop->iteration }}</td> --}}
+                                <td>{{ $item->forklift }}</td>
+                                <td>{{ $item->material }}</td>
+                                <td class="text-center"><i class="fa-solid fa-square fa-2x {{ $warna }}"></i></td>
+                                <td>{{ $status }}</td>
+                                <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editForklift('{{ $item->id }}')"></a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <script>
+                    $(document).ready(function () {
+                    $("#Table_Forklift").DataTable();
+                    });
+                </script>
+            </div>
+        @break
+
+    @case('Melting.ModalAddForklift')
+            <form action="{{ url('/modal/addforklift/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
+                @csrf
+                <div class="row">
+                    <div class="col-6 mb-3">
+                        <label for="name">FORKLIFT <sup>*</sup></label>
+                        <input type="text" class="form-control" name="forklift" id="forklift" aria-describedby="forkliftHelp" placeholder="FORKLIFT-xx">
+                        <div id="forkliftHelp" class="form-text">* Harap Menggunakan Huruf Kapital</div>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="material" class="">MATERIAL <sup>*</sup></label>
+                        <select class="form-select fw-bold" id="material" name="material" required>
+                            <option value="" selected disabled>Open this select menu</option>
+                            <option value="AC2B">AC2B</option>
+                            <option value="AC4B">AC4B</option>
+                            <option value="AC4CH">AC4CH</option>
+                            <option value="AC2BF">AC2BF</option>
+                            <option value="ADC12">ADC12</option>
+                            <option value="HD-2">HD-2</option>
+                            <option value="HD-4">HD-4</option>
+                            <option value="YH3R">YH3R</option>
+
+                        </select>
+                    </div>
+                    <div class="col-6 mb-3">
+                        <label for="kode_status" class="">STATUS <sup>*</sup></label>
+                        <select class="form-select fw-bold" id="kode_status" name="kode_status" required>
+                            <option selected disabled>Open this select menu</option>
+                            <option value="0">RUNNING</option>
+                            <option value="1">LAYOFF</option>
+                        </select>
+                    </div>
+                    <div class="tambahaninputan" id="tambahaninputan"></div>
+                </div>
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" id="submit" class="btn btn-primary float-end"><i class="fa-regular fa-floppy-disk"></i> Save</button>
+                    </div>
+                </div>
+            </form>
+        @break
         {{-- SETUP LEVEL MOLTEN --}}
     @case('Melting.ModalLevelMolten')
             <div class="table-responsive">
@@ -100,7 +203,7 @@
                     <div class="col-6 mb-3">
                         <label for="kode_status" class="">STATUS <sup>*</sup></label>
                         <select class="form-select fw-bold" id="kode_status" name="kode_status" required>
-                            <option value="0" selected disabled>Open this select menu</option>
+                            <option selected disabled>Open this select menu</option>
                             <option value="0">RUNNING</option>
                             <option value="1">LAYOFF</option>
                         </select>

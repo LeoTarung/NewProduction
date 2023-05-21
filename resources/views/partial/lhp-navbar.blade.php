@@ -2,11 +2,28 @@
     <ul>
         {{-- LOGO NUSAMETAL KIRI --}}
         <li>
-            <a href="{{ Route('lhpmelting.index') }}" class="">
-                <div class="rectangle-logo shadow">
-                    <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
-                </div>
-            </a>
+            @switch(Route::current()->getName())
+            @case('lhpmelting.input')
+                <a href="{{ Route('lhpmelting.index') }}" class="">
+                    <div class="rectangle-logo shadow">
+                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                    </div>
+                </a>
+            @break
+            @case('lhpmelting.Supplyinput')
+                <a href="{{ Route('lhpmelting.Supplyindex') }}" class="">
+                    <div class="rectangle-logo shadow">
+                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                    </div>
+                </a>
+            @break
+            @default
+                <a href="{{ Request::url() }}" class="">
+                    <div class="rectangle-logo shadow">
+                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                    </div>
+                </a>
+            @endswitch
         </li>
 
         {{-- KOLOM SHIFT --}}
@@ -14,6 +31,13 @@
             @switch(Route::current()->getName())
                 @case('lhpmelting.input')
                     <a onclick="resumeMelting('{{ $id }}', '{{ $area }}')">
+                        <div class="shift border-bottom">
+                            {{ $shift }}
+                        </div>
+                    </a>
+                @break
+                @case('lhpmelting.Supplyinput')
+                    <a onclick="resumeMeltingSupply('{{ $id }}', '{{ $area }}')">
                         <div class="shift border-bottom">
                             {{ $shift }}
                         </div>
@@ -50,7 +74,16 @@
                         </div>
                     </a>
                 @break
-
+                @case('lhpmelting.Supplyinput')
+                <a  class="navitems">
+                    <div class="nrp">
+                        <div class="font-white"> NRP : </div>
+                    </div>
+                    <div class="nrp nrp-child border-bottom ">
+                        <div class="font-white fw-bold">{{ $data->nrp }}</div>
+                    </div>
+                </a>
+                @break
                 @default
                     <a  class="navitems">
                         <div class="nrp">
@@ -66,22 +99,20 @@
         {{-- AREA --}}
         <li>
             @switch(Route::current()->getName())
-                @case('lhpmelting.index')
-                    <a href="" class="machine shadow-lg">
+                @case('lhpmelting.Supplyinput')
+                    <a href="{{ Route('lhpmelting.Supplyindex') }}" class="machine shadow-lg">
                         <div class="mesin">
-                                <div class="font-white"> MELTING </div>
+                                <div class="font-white"> {{ $area }} </div>
                         </div>
                     </a>
-                    @break
-
+                @break
                 @case('lhpmelting.input')
                     <a href="{{ Route('lhpmelting.index') }}" class="machine shadow-lg">
                         <div class="mesin">
                                 <div class="font-white"> {{ $area }} </div>
                         </div>
                     </a>
-                    @break
-
+                @break
                 @default
                     <a href="" class="machine shadow-lg">
                         <div class="mesin">

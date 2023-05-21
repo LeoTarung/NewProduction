@@ -39,6 +39,11 @@ return [
             'root' => '/',
         ],
 
+        'diskZ' => [
+            'driver' => 'local',
+            'root' => 'Z:', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
+        ],
+
         'local' => [
             'driver' => 'local',
             'root' => storage_path('app'),
