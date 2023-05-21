@@ -14,10 +14,12 @@
     <link rel="stylesheet" type="text/css" href="/UI/CSS/font.css">
     <script src="/UI/JS/fontawesomeV610.js"></script>
     <link href="/UI/CSS/datatables.css" rel="stylesheet" />
+    <link href="/UI/CSS/select2.css" rel="stylesheet" />
     {{-- //============[ JS IN HERE ]============// --}}
     <script src="/UI/JS/jquery363.js"></script>
     <script src="/UI/JS/jquerydatatables.js"></script>
     <script src="/UI/JS/Socketio454.js"></script>
+    <script src="/UI/JS/select2.js"></script>
 </head>
 
 <body>

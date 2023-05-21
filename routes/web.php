@@ -227,6 +227,7 @@ Route::name('STO.')->group(function () {
     Route::get('/sto/modal-verificator/{tag}', [STOController::class, 'openModalWithID'])->name('Input_verificator');
     Route::post('/sto/modal-input/save', [STOController::class, 'Counter_Save']);
     Route::post('/sto/modal-input/update', [STOController::class, 'Counter_Update']);
+    Route::post('/sto/api/{from}', [STOController::class, 'api_from']);
 });
 
 //==========[FOR TV MONITORING]==========\\

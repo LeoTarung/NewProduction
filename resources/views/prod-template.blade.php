@@ -21,8 +21,8 @@
         <script src="/UI/JS/amchart/LossesChart-Melting/core.js"></script>
         <script src="/UI/JS/amchart/LossesChart-Melting/charts.js"></script>
         <script src="/UI/JS/amchart/LossesChart-Melting/Animated.js"></script>
-        <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-        <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+        <link href="/UI/CSS/select2.css" rel="stylesheet" />
+        <script src="/UI/JS/select2.js"></script>
     </head>
     <body class="sb-nav-fixed bg-digital">
         @include('partial/prod-navbar')

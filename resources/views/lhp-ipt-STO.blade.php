@@ -41,12 +41,15 @@
                                             <label for="sloc">S.LOCATION <sup>*</sup></label>
                                             <select class="form-control fw-bold" name="sloc" id="sloc" required>
                                                 <option class="dropdown-item form-control" >--Pilih--</option>
+                                                <option class="dropdown-item form-control" name="sloc" value="0">0</option>
                                                 <option class="dropdown-item form-control" name="sloc" value="1011">1011</option>
                                                 <option class="dropdown-item form-control" name="sloc" value="1012">1012</option>
                                                 <option class="dropdown-item form-control" name="sloc" value="1013">1013</option>
                                                 <option class="dropdown-item form-control" name="sloc" value="1014">1014</option>
                                                 <option class="dropdown-item form-control" name="sloc" value="1015">1015</option>
-                                                <option class="dropdown-item form-control" name="sloc" value="1016">1016</option>
+                                                <option class="dropdown-item form-control" name="sloc" value="1017">1017</option>
+                                                <option class="dropdown-item form-control" name="sloc" value="1021">1021</option>
+                                                <option class="dropdown-item form-control" name="sloc" value="1031">1031</option>
                                             </select>
                                         </div>
                                         <div class="col-7 mb-3">
@@ -63,7 +66,6 @@
                                             <label for="nama_part">nama_part <sup>*</sup></label>
                                             <select class="form-control fw-bold" name="nama_part" id="nama_part" required>
                                                 <option class="dropdown-item form-control" >--Pilih--</option>
-                                                <option class="dropdown-item form-control" name="nama_part" value="COVER LK1ZG">COVER LK1ZG</option>
                                             </select>
                                         </div>
                                         <div class="col-8 mb-3">
@@ -72,18 +74,19 @@
                                         </div>
                                         <div class="col-4  mb-3">
                                             <label for="satuan">SATUAN <sup>*</sup></label>
-                                            <input type="text" class="form-control fw-bold" name="satuan" id="satuan" aria-describedby="satuanHelp" required readonly value="PCS">
+                                            <input type="text" class="form-control fw-bold" name="satuan" id="satuan" aria-describedby="satuanHelp" required readonly>
                                         </div>
                                         <div class="col-12 mb-3">
                                             <label for="area">AREA <sup>*</sup></label>
                                             <select class="form-control fw-bold" name="area" id="area" required>
                                                 <option class="dropdown-item form-control" >--Pilih--</option>
-                                                <option class="dropdown-item form-control" name="area" value="MELTING">MELTING</option>
-                                                <option class="dropdown-item form-control" name="area" value="GRAVITY">GRAVITY</option>
-                                                <option class="dropdown-item form-control" name="area" value="CASTING">CASTING</option>
-                                                <option class="dropdown-item form-control" name="area" value="MACHINING">MACHINING</option>
-                                                <option class="dropdown-item form-control" name="area" value="PAINTING">PAINTING</option>
-                                                <option class="dropdown-item form-control" name="area" value="FININSHING">FININSHING</option>
+                                                <option class="dropdown-item form-control" name="area" value="ME">MELTING</option>
+                                                <option class="dropdown-item form-control" name="area" value="GR">GRAVITY</option>
+                                                <option class="dropdown-item form-control" name="area" value="CA">CASTING</option>
+                                                <option class="dropdown-item form-control" name="area" value="MA">MACHINING</option>
+                                                <option class="dropdown-item form-control" name="area" value="PA">PAINTING</option>
+                                                <option class="dropdown-item form-control" name="area" value="FI">FININSHING</option>
+                                                <option class="dropdown-item form-control" name="area" value="ASSY">ASSY</option>
                                             </select>
                                         </div>
                                         <div class="col-12 mb-3">
@@ -129,6 +132,12 @@
             @default
         @endswitch
     <script>
+        $(document).ready(function() {
+            $("#nama_part").select2({
+                // dropdownParent: $("#staticBackdrop")
+            });
+        });
+
         function addtag_sto(event){
             event.preventDefault(); // agar form tidak di eksekusi
             var tag_sto = $('#tag_sto').val();
@@ -145,67 +154,58 @@
         $("#sloc").change(function(){
             var sloc = $(this).children("option:selected").val();
             console.log(sloc)
-                // $.ajax({
-                //     method: "GET",
-                //     dataType: "json",
-                //     url: "{{ url('/GI/API/line') }}" +"/"+ line,
-                //     success: function(data) {
-                //         var wrapper = document.getElementById("partandqty");
-                //         var myHTML = '';
-                //         for (var i = 0; i < data.length; i++) {
-                //             console.log(data[i].material)
-                //             myHTML +=
-                //                 '<div class="col-8 mt-2"><input type="text" name="material_description[]" value="' + data[i].material_description + '" id=material_description" class="form-control-plaintext" readonly></div></div>' +
-                //                 '<div class="col-4 mt-2"><input type="number" name="qty[]" id="qty" class="form-control text-center" placeholder="Qty" min="0" value="0" required></div>' +
-                //                 '<input type="hidden" name="line[]" value="' + line + '">';
-                //         wrapper.innerHTML = myHTML
-                //         }
-                //     }
-                // });
-        });
-
-        $("#area").change(function(){
-            var area = $(this).children("option:selected").val();
-            console.log(area)
-                // $.ajax({
-                //     method: "GET",
-                //     dataType: "json",
-                //     url: "{{ url('/GI/API/line') }}" +"/"+ line,
-                //     success: function(data) {
-                //         var wrapper = document.getElementById("partandqty");
-                //         var myHTML = '';
-                //         for (var i = 0; i < data.length; i++) {
-                //             console.log(data[i].material)
-                //             myHTML +=
-                //                 '<div class="col-8 mt-2"><input type="text" name="material_description[]" value="' + data[i].material_description + '" id=material_description" class="form-control-plaintext" readonly></div></div>' +
-                //                 '<div class="col-4 mt-2"><input type="number" name="qty[]" id="qty" class="form-control text-center" placeholder="Qty" min="0" value="0" required></div>' +
-                //                 '<input type="hidden" name="line[]" value="' + line + '">';
-                //         wrapper.innerHTML = myHTML
-                //         }
-                //     }
-                // });
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/sto/api/sloc') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    sloc: sloc,
+                },
+                success: function (data) {
+                    var myHTML = '';
+                    data.forEach(element => {
+                        var slice = element.material.slice(-2);
+                        console.log(slice);
+                        myHTML +=
+                        '<option class="dropdown-item form-control" name="nama_part" value="'+element.nama_part+' - '+slice+'">'+element.nama_part+' - '+slice+'</option>'
+                        $("#nama_part").html(myHTML);
+                    });
+                },
+            });
         });
 
         $("#nama_part").change(function(){
             var nama_part = $(this).children("option:selected").val();
             console.log(nama_part)
-                // $.ajax({
-                //     method: "GET",
-                //     dataType: "json",
-                //     url: "{{ url('/GI/API/line') }}" +"/"+ line,
-                //     success: function(data) {
-                //         var wrapper = document.getElementById("partandqty");
-                //         var myHTML = '';
-                //         for (var i = 0; i < data.length; i++) {
-                //             console.log(data[i].material)
-                //             myHTML +=
-                //                 '<div class="col-8 mt-2"><input type="text" name="material_description[]" value="' + data[i].material_description + '" id=material_description" class="form-control-plaintext" readonly></div></div>' +
-                //                 '<div class="col-4 mt-2"><input type="number" name="qty[]" id="qty" class="form-control text-center" placeholder="Qty" min="0" value="0" required></div>' +
-                //                 '<input type="hidden" name="line[]" value="' + line + '">';
-                //         wrapper.innerHTML = myHTML
-                //         }
-                //     }
-                // });
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/sto/api/nama-part') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    nama_part: nama_part,
+                },
+                success: function (data) {
+                },
+            });
         });
+        // $("#area").change(function(){
+        //     var area = $(this).children("option:selected").val();
+        //     console.log(area)
+        //     $.ajax({
+        //         method: "POST",
+        //         dataType: "json",
+        //         url: "{{ url('/sto/api/area') }}",
+        //         data: {
+        //             _token: "{{ csrf_token() }}",
+        //             area: area,
+        //         },
+        //         success: function (data) {
+        //         },
+        //     });
+        // });
+
+
     </script>
 @endsection

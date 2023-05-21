@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DB_Masterpartsto;
 use App\Models\DB_Mpsto;
 use App\Models\DB_Partsto;
 use Illuminate\Http\Request;
@@ -129,5 +130,24 @@ class STOController extends Controller
     public function Counter_Update(Request $request)
     {
         dd($request);
+    }
+
+    public function api_from(Request $request, $from)
+    {
+        switch ($from) {
+            case 'sloc':
+                $data = DB_Masterpartsto::where('sloc', $request->sloc)->get();
+                break;
+            // case 'area':
+            //     $data = DB_Masterpartsto::where('kode_part', 'like', '%'.$request->area)->get();
+            //     break;
+            case 'nama-part':
+                $data = DB_Masterpartsto::where('nama_part', $request->nama_part)->get();
+                break;
+            default:
+                $data ="";
+                break;
+        }
+        return $data;
     }
 }
