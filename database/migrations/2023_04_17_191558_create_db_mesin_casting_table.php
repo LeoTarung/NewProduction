@@ -17,12 +17,19 @@ class CreateDbMesinCastingTable extends Migration
             // $table->id();
             $table->integer('mc')->primary();
             $table->integer('line')->default('1');
-            $table->string('material');
+
+            // $table->string('material');
+
+            $table->unsignedBigInteger('material_id')->nullable();  // => nanti ini bakal gabung ke db_namapart ( satu part bisa banyak mesin casting )
+            $table->foreign('material_id')->references('id')->on('db_material')->onDelete('cascade');
+
             $table->integer('aktual_molten')->default('0');
             $table->integer('min_level_molten')->default('0');
             $table->integer('max_level_molten')->default('0');
+
             $table->unsignedBigInteger('db_namapart_id')->nullable();  // => nanti ini bakal gabung ke db_namapart ( satu part bisa banyak mesin casting )
             $table->foreign('db_namapart_id')->references('id')->on('db_namapart')->onDelete('cascade');
+
             $table->string('nomor_dies')->nullable();
             $table->integer('cycle_time')->default('0');
             $table->integer('total_produksi')->default('0');

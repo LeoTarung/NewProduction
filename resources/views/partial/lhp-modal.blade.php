@@ -1,4 +1,12 @@
 @switch(Route::current()->getName())
+    @case('lhpmelting.ScanBundleIngot')
+        <form enctype="multipart/form-data" onsubmit="addlotingot(event)">
+            <div class="input-group mb-2 float-lg-end" style="height: 8.5vh;">
+                <input type="text" name="lotingot" id="lotingot" class="form-control" placeholder="Scan Lot QR" autofocus required>
+                <button type="submit" id="submit" class="btn btn-secondary text-light btn-outline-secondary"><i class="fa-solid fa-magnifying-glass fa-lg"></i></button>
+            </div>
+        </form>
+    @break
     @case('lhpmelting.preparation')
         <form action="{{ url('/lhp-modal/pre-melting/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
             @csrf
@@ -57,25 +65,8 @@
             @csrf
                 <div class="row">
                     @foreach ($data as $kereta)
-                        @if ($kereta->material == 'AC2B')
-                        <?php $warna = 'bg-orange' ?>
-                        @elseif($kereta->material == 'AC4B')
-                        <?php $warna = 'bg-ungu' ?>
-                        @elseif($kereta->material == 'AC4CH')
-                        <?php $warna = 'text-dark' ?>
-                        @elseif($kereta->material == 'AC2BF')
-                        <?php $warna = 'bg-merahBata' ?>
-                        @elseif($kereta->material == 'ADC12')
-                        <?php $warna = 'bg-silver text-dark' ?>
-                        @elseif($kereta->material == 'HD-2')
-                        <?php $warna = 'bg-warning' ?>
-                        @elseif($kereta->material == 'HD-4')
-                        <?php $warna = 'bg-primary' ?>
-                        @elseif($kereta->material == 'YH3R')
-                        <?php $warna = 'bg-success' ?>
-                        @endif
                         <div class="col-2 m-2">
-                            <button type="Submit" class="btn btn-lg {{ $warna }} fw-bold fs-3" id="Ssubmit" style="width:100%; height:100%;" name="berat_kereta" value="{{ $kereta->berat }}">{{ $kereta->berat }}</button>
+                            <button type="Submit" class="btn btn-lg {{ $kereta->DB_Material->warna }} fw-bold fs-3" id="Ssubmit" style="width:100%; height:100%;" name="berat_kereta" value="{{ $kereta->berat }}">{{ $kereta->berat }}</button>
                         </div>
                     @endforeach
                 </div>

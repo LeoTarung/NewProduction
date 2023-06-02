@@ -75,7 +75,6 @@
         });
 
         function inputSupply(nomc){
-            console.log("INI BISA " + nomc)
             $.get('/lhp/modal-meltingsupply/'+ {{ $data->id }}, {}, function (data, status) {
                 $("#staticBackdropLabel").html('Suppy MC-'+ nomc); //Untuk kasih judul di modal
                 $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
@@ -84,6 +83,28 @@
                         '<input type="hidden" name="mesin_casting" value="' + nomc + '">' +
                         '<input type="hidden" name="id_lhp" value="' + {{ $data->id }} + '">'
                 );
+
+                @switch($data->forklift)
+                    @case('FORKLIFT-3')
+                    function isitimbangan(){
+                        $.ajax({
+                            method: "GET",
+                            dataType: "json",
+                            url: "{{ url('/api/timbangan/1') }}",
+                            success: function (data) {
+                                $("#berat").val(data.berat);
+                            },
+                            error: function(status) {
+                                $("#berat").val("ON LOADING...");
+                            }
+                        });
+                        setTimeout(isitimbangan, 1000);
+                    }
+                    isitimbangan()
+                    @break
+                    @default
+                            // $("#berat").val(100);
+                @endswitch
             });
         }
     </script>

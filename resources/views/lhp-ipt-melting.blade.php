@@ -29,7 +29,7 @@
                             <?php $warna = 'text-dark' ?>
                             @elseif($data->material == 'AC2BF')
                             <?php $warna = 'bg-merahBata' ?>
-                            @elseif($data->material == 'ADC12')
+                            @elseif($data->material == 'ADC 12')
                             <?php $warna = 'bg-silver text-dark' ?>
                             @elseif($data->material == 'HD-2')
                             <?php $warna = 'bg-warning' ?>
@@ -96,7 +96,7 @@
                     <div class="col-12 mt-3">
                         <div class="card-group">
                             <div class="card text-center card-ingot">
-                                <h5 class="card-header fs-2 fw-bold {{ $warna }}">INGOT</h5>
+                                <h5 class="card-header fs-2 fw-bold {{ $warna }}" onclick="InputLot()">INGOT</h5>
                                 <div class="card-body card-ingot">
                                     @if ($data->persen_ingot >= 30.0)
                                     <p class="fw-bold font-blinking">{{ $data->persen_ingot }}%</p>
@@ -161,7 +161,45 @@
             });
     }
 
+    function InputLot(){
+        $.get('/lhp-modal/bundleingot/', {}, function (data, status) {
+                $("#staticBackdropLabel").html('Scan Lot Ingot'); //Untuk kasih judul di modal
+                $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+                $("#page").html(data); //menampilkan view create di dalam id page
+            });
+    }
 
+    function addlotingot(event){
+        event.preventDefault(); // agar form tidak di eksekusi
+        var lotingot = $('#lotingot').val(); // UBPURE-ADC1200001 | ADC 12 | 1376 | HARI AGUS PURWANTO | 31011699 | PT. PINJAYA ABADI METAL | 514.5 | TERGANTUNG VENDOR | 1001 | Nusametal | 2023-04-28 04:20:13
+        const array = lotingot.split(" | "); // memecah string berdasarkan spasi
+        var dateString = array[10];
+        var date = new Date(dateString);
+        var year = date.getFullYear();
+        var month = (date.getMonth() + 1).toString().padStart(2, '0');
+        var day = date.getDate().toString().padStart(2, '0');
+        var hours = date.getHours().toString().padStart(2, '0');
+        var minutes = date.getMinutes().toString().padStart(2, '0');
+        var formattedDate = year + '-' + month + '-' + day + 'T' + hours + ':' + minutes;
+
+        $.get('/modal/addLotIngot', {}, function (data, status) {
+            $("#staticBackdropLabel").html("Use Bundle Ingot"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $('#nama_vendor').val(array[5]);
+            $('#material').val(ConvertSAPINGOT(array[0]));
+            $('#penyimpanan_bundle').val(array[8]);
+            $('#berat_bundle').val(array[6]);
+            $("#tambahaninputan").html(
+                        '<input type="hidden" name="kode_sap" value="' + array[0] + '">'+
+                        '<input type="hidden" name="nrp_penimbang" value="' + array[2] + '">'+
+                        '<input type="hidden" name="nama_penimbang" value="' + array[3] + '">'+
+                        '<input type="hidden" name="id_vendor" value="' + array[4] + '">'+
+                        '<input type="datetime-local" class="d-none" name="kedatangan"  value="' + formattedDate + '">' +
+                        '<input type="hidden" name="bisnis_unit" value="' + array[9] + '">'
+            );
+        });
+    }
 
 </script>
 <script>
@@ -172,7 +210,7 @@
     let lokasi = "Kiri" + "{{ $area }}";
     socket.on('connection');
     socket.on(lokasi, (data) => {
-        console.log(data)
+        // console.log(data)
             if(data.length == 0){
             document.getElementById("stok_molten").innerHTML = "HUB DIGITAL";
             } else {

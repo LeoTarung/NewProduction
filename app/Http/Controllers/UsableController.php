@@ -53,9 +53,31 @@ class UsableController extends Controller
         return $hour;
     }
 
-    //TESTING
-    function lemparan($data)
+    function ConvertMaterialToID($material)
     {
-        dd($data);
+        if($material == "AC2B"){
+            $data = 1;
+        }else if($material == "AC2BF"){
+            $data = 2;
+        }else if($material == "AC4B"){
+            $data = 3;
+        }else if($material == "AC4CH"){
+            $data = 4;
+        }else if($material == "ADC 12"){
+            $data = 5;
+        }else if($material == "ADC 12 NK"){
+            $data = 6;
+        }else if($material == "HD-2"){
+            $data = 7;
+        }else if($material == "HD-4"){
+            $data = 8;
+        }else if($material == "YH3R"){
+            $data = 9;
+        }else if($material == "BM HD-2"){
+            $data = 10;
+        }else{
+            $data = 0;
+        }
+        return $data;
     }
 }

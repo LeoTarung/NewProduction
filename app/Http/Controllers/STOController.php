@@ -150,4 +150,9 @@ class STOController extends Controller
         }
         return $data;
     }
+
+    public function print_tag($id)
+    {
+        return view('partial.PrintOnImin');
+    }
 }

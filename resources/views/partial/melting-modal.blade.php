@@ -10,43 +10,22 @@
                 <table id="Table_Forklift" class="table table-striped-columns table-hover table-bordered nowrap display" style="overflow-x: scroll">
                     <thead>
                         <tr>
-                            {{-- <th>NO</th> --}}
                             <th>FORKLIFT</th>
                             <th>MATERIAL</th>
-                            <th>MATERIAL COLOR</th>
                             <th>STATUS</th>
                             <th nowrap="nowrap" class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $item)
-                             @if ($item->material == 'AC2B')
-                            <?php $warna = 'bg-orange' ?>
-                            @elseif($item->material == 'AC4B')
-                            <?php $warna = 'bg-ungu' ?>
-                            @elseif($item->material == 'AC4CH')
-                            <?php $warna = 'text-dark' ?>
-                            @elseif($item->material == 'AC2BF')
-                            <?php $warna = 'bg-merahBata' ?>
-                            @elseif($item->material == 'ADC12')
-                            <?php $warna = 'bg-silver' ?>
-                            @elseif($item->material == 'HD-2')
-                            <?php $warna = 'text-warning' ?>
-                            @elseif($item->material == 'HD-4')
-                            <?php $warna = 'text-primary' ?>
-                            @elseif($item->material == 'YH3R')
-                            <?php $warna = 'text-success' ?>
-                            @endif
                             @if ($item->kode_status == 0)
-                            <?php $status = 'RUNNING' ?>
+                                <?php $status = 'RUNNING' ?>
                             @else
-                            <?php $status = 'LAYOFF' ?>
+                                <?php $status = 'LAYOFF' ?>
                             @endif
                             <tr>
-                                {{-- <td>{{ $loop->iteration }}</td> --}}
                                 <td>{{ $item->forklift }}</td>
-                                <td>{{ $item->material }}</td>
-                                <td class="text-center"><i class="fa-solid fa-square fa-2x {{ $warna }}"></i></td>
+                                <td class="text-center"><i class="badge {{  $item->DB_Material->warna }} fs-6">{{ $item->DB_Material->initial }}</i></td>
                                 <td>{{ $status }}</td>
                                 <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editForklift('{{ $item->id }}')"></a></td>
                             </tr>
@@ -55,7 +34,7 @@
                 </table>
                 <script>
                     $(document).ready(function () {
-                    $("#Table_Forklift").DataTable();
+                        $("#Table_Forklift").DataTable();
                     });
                 </script>
             </div>
@@ -73,22 +52,16 @@
                     <div class="col-6 mb-3">
                         <label for="material" class="">MATERIAL <sup>*</sup></label>
                         <select class="form-select fw-bold" id="material" name="material" required>
-                            <option value="" selected disabled>Open this select menu</option>
-                            <option value="AC2B">AC2B</option>
-                            <option value="AC4B">AC4B</option>
-                            <option value="AC4CH">AC4CH</option>
-                            <option value="AC2BF">AC2BF</option>
-                            <option value="ADC12">ADC12</option>
-                            <option value="HD-2">HD-2</option>
-                            <option value="HD-4">HD-4</option>
-                            <option value="YH3R">YH3R</option>
-
+                            <option value="">Open this select menu</option>
+                            @foreach (App\Models\DB_Material::all(); as $item)
+                                <option value="{{ $item->id }}">{{ $item->initial }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-6 mb-3">
                         <label for="kode_status" class="">STATUS <sup>*</sup></label>
                         <select class="form-select fw-bold" id="kode_status" name="kode_status" required>
-                            <option selected disabled>Open this select menu</option>
+                            <option value="">Open this select menu</option>
                             <option value="0">RUNNING</option>
                             <option value="1">LAYOFF</option>
                         </select>
@@ -120,7 +93,7 @@
                         @foreach ($data as $item)
                         <tr>
                             <td>{{ $item->mc }}</td>
-                            <td>{{ $item->material }}</td>
+                            <td class="text-center"><i class="badge {{  $item->DB_Material->warna }} fs-6">{{ $item->DB_Material->initial }}</i></td>
                             <td>{{ $item->aktual_molten }}</td>
                             <td>{{ $item->min_level_molten }}</td>
                             <td>{{ $item->max_level_molten }}</td>
@@ -173,7 +146,7 @@
                     </div>
                 </div>
             </form>
-    @break
+        @break
 
         {{-- SETUP FURNACE --}}
     @case('Melting.ModalAddFurnace')
@@ -188,16 +161,10 @@
                     <div class="col-6 mb-3">
                         <label for="material" class="">MATERIAL <sup>*</sup></label>
                         <select class="form-select fw-bold" id="material" name="material" required>
-                            <option value="" selected disabled>Open this select menu</option>
-                            <option value="AC2B">AC2B</option>
-                            <option value="AC4B">AC4B</option>
-                            <option value="AC4CH">AC4CH</option>
-                            <option value="AC2BF">AC2BF</option>
-                            <option value="ADC12">ADC12</option>
-                            <option value="HD-2">HD-2</option>
-                            <option value="HD-4">HD-4</option>
-                            <option value="YH3R">YH3R</option>
-
+                            <option value="">Open this select menu</option>
+                            @foreach (App\Models\DB_Material::all(); as $item)
+                                <option value="{{ $item->id }}">{{ $item->initial }}</option>
+                            @endforeach
                         </select>
                     </div>
                     <div class="col-6 mb-3">
@@ -230,30 +197,12 @@
                             <th>NO</th>
                             <th>FURNACE</th>
                             <th>MATERIAL</th>
-                            <th>COLOR</th>
                             <th>STATUS</th>
                             <th nowrap="nowrap" class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $furnace)
-                            @if ($furnace->material == 'AC2B')
-                            <?php $warna = 'bg-orange' ?>
-                            @elseif($furnace->material == 'AC4B')
-                            <?php $warna = 'bg-ungu' ?>
-                            @elseif($furnace->material == 'AC4CH')
-                            <?php $warna = 'text-dark' ?>
-                            @elseif($furnace->material == 'AC2BF')
-                            <?php $warna = 'bg-merahBata' ?>
-                            @elseif($furnace->material == 'ADC12')
-                            <?php $warna = 'bg-silver' ?>
-                            @elseif($furnace->material == 'HD-2')
-                            <?php $warna = 'text-warning' ?>
-                            @elseif($furnace->material == 'HD-4')
-                            <?php $warna = 'text-primary' ?>
-                            @elseif($furnace->material == 'YH3R')
-                            <?php $warna = 'text-success' ?>
-                            @endif
                             @if ($furnace->kode_status == 0)
                             <?php $status = 'RUNNING' ?>
                             @else
@@ -262,8 +211,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $furnace->furnace }}</td>
-                            <td>{{ $furnace->material }}</td>
-                            <td class="text-center"><i class="fa-solid fa-square fa-2x {{ $warna }}"></i></td>
+                            <td class="text-center"><i class="badge {{  $furnace->DB_Material->warna }} fs-6">{{ $furnace->DB_Material->initial }}</i></td>
                             <td>{{ $status }}</td>
                             <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editFurnace('{{ $furnace->id }}')"></a></td>
                         </tr>
@@ -287,15 +235,10 @@
                         <div class="col-12 mb-3">
                             <label for="material" class="">MATERIAL <sup>*</sup></label>
                             <select class="form-select fw-bold" id="material" name="material" required>
-                                <option value="" selected disabled>Open this select menu</option>
-                                <option value="AC2B">AC2B</option>
-                                <option value="AC4B">AC4B</option>
-                                <option value="AC4CH">AC4CH</option>
-                                <option value="AC2BF">AC2BF</option>
-                                <option value="ADC12">ADC12</option>
-                                <option value="HD-2">HD-2</option>
-                                <option value="HD-4">HD-4</option>
-                                <option value="YH3R">YH3R</option>
+                                <option value="">Open this select menu</option>
+                                @foreach (App\Models\DB_Material::all(); as $item)
+                                    <option value="{{ $item->id }}">{{ $item->initial }}</option>
+                                @endforeach
                             </select>
                         </div>
                         <div class="col-12 mb-3">
@@ -332,34 +275,15 @@
                             <th>MATERIAL</th>
                             <th>NO KERETA</th>
                             <th>WEIGHT (KG)</th>
-                            <th>COLOR</th>
                             <th nowrap="nowrap" class="text-center">AKSI</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($data as $kereta)
-                            @if ($kereta->material == 'AC2B')
-                            <?php $warna = 'bg-orange' ?>
-                            @elseif($kereta->material == 'AC4B')
-                            <?php $warna = 'bg-ungu' ?>
-                            @elseif($kereta->material == 'AC4CH')
-                            <?php $warna = 'text-dark' ?>
-                            @elseif($kereta->material == 'AC2BF')
-                            <?php $warna = 'bg-merahBata' ?>
-                            @elseif($kereta->material == 'ADC12')
-                            <?php $warna = 'bg-silver' ?>
-                            @elseif($kereta->material == 'HD-2')
-                            <?php $warna = 'text-warning' ?>
-                            @elseif($kereta->material == 'HD-4')
-                            <?php $warna = 'text-primary' ?>
-                            @elseif($kereta->material == 'YH3R')
-                            <?php $warna = 'text-success' ?>
-                            @endif
                         <tr>
-                            <td>{{ $kereta->material }}</td>
+                            <td class="text-center"><i class="badge {{  $kereta->DB_Material->warna }} fs-6">{{ $kereta->DB_Material->initial }}</i></td>
                             <td>{{ $kereta->no_kereta }}</td>
                             <td>{{ $kereta->berat }}</td>
-                            <td class="text-center"><i class="fa-solid fa-square fa-2x {{ $warna }}"></i></td>
                             <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="editkereta('{{ $kereta->id }}')"></a></td>
                         </tr>
                         @endforeach
@@ -566,7 +490,7 @@
                         </div>
                         <div class="col-12 mb-3">
                             <label for="name">Lot Produksi Bundle <sup>*</sup></label>
-                            <input type="date" class="form-control" name="lot_ingot" id="lot_ingot" required>
+                            <input type="date" class="form-control" name="lot_ingot" id="lot_ingot" >
                         </div>
                         <p class="text-center"> <span class=" text-danger fw-bold">!!! PERINGATAN !!!</span> <br> Harap Pastikan Semua Kolom Terisi Dan Sesuai</p>
                     </div>

@@ -10,6 +10,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\CastingController;
 use App\Http\Controllers\MeltingController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\WarehouseController;
 
 
 // TESTING FS
@@ -34,11 +35,12 @@ Route::get('/', function () {
 
 Route::get('/dashboard', function () {
     $title = "DASHBOARD";
-    $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
+    // $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
+    $data = DB_Mesincasting::where('mc', 2)->first();
     // dd($data->DB_Namapart->nama_part);
-    $config = Storage::disk('diskZ')->put('testing2.txt', 'Gatau, Testing aja');  //untuk save file beranama testing1.txt dengan isi
-    $content = Storage::disk('diskZ')->files(); //Untuk cek ada nama file apa aja didalem direktori Z
-    $content1 = Storage::disk('diskZ')->get('testing1.txt'); // Untuk Lihat isi dari file testing1.txt
+    // $config = Storage::disk('diskZ')->put('testing2.txt', 'Gatau, Testing aja');  //untuk save file beranama testing1.txt dengan isi
+    // $content = Storage::disk('diskZ')->files(); //Untuk cek ada nama file apa aja didalem direktori Z
+    // $content1 = Storage::disk('diskZ')->get('testing1.txt'); // Untuk Lihat isi dari file testing1.txt
     // dd($config);
     return view('prod-template', compact('title', 'data'));
 });
@@ -151,6 +153,7 @@ Route::name('lhpmelting.')->group(function () {
     Route::post('/lhp-modal/melting/save', [MeltingController::class, 'lhp_save']);
     Route::get('/lhp-modal/resume-melting/{id}', [MeltingController::class, 'resume_lhp'])->name('resume');
 
+    Route::get('/lhp-modal/bundleingot/', [MeltingController::class, 'lhp_preparation'])->name('ScanBundleIngot');
     Route::get('/lhp/meltingsupply', [MeltingController::class, 'lhp_supply_index'])->name('Supplyindex');
     Route::post('/lhp/meltingsupply/check', [MeltingController::class, 'lhp_supply_check']);
     Route::get('/lhp-modal/meltingsupply', [MeltingController::class, 'lhp_preparation'])->name('SupplyPreparation');
@@ -163,8 +166,16 @@ Route::name('lhpmelting.')->group(function () {
 });
 
 //==========[FOR CASTING]==========\\
-Route::name('casting.')->group(function () {
+Route::name('Casting.')->group(function () {
     Route::get('/prod/casting', [CastingController::class, 'index']);
+
+    Route::get('/modal/setupmachine', [CastingController::class, 'OpenModal'])->name('SetupMachine');
+    Route::get('/modal/henkatencasting', [CastingController::class, 'OpenModal'])->name('SetupHenkaten');
+    Route::get('/modal/addmachine', [CastingController::class, 'OpenModal'])->name('AddSetupMachine');
+
+    Route::post('/modal/addmachine/save', [CastingController::class, 'addmachine_save']);
+    Route::post('/modal/addmachine/update', [CastingController::class, 'updatemachine_save']);
+    Route::post('/prod/api/machinecasting', [CastingController::class, 'Api_idCasting']);
 });
 
 //==========[FOR SHIPPING]==========\\
@@ -181,6 +192,16 @@ Route::name('Shipping.')->group(function () {
     Route::post('/prod/shipping/scan/update', [ShippingController::class, 'scanQR_update']);
 });
 
+//==========[FOR WAREHOUSE]==========\\
+Route::name('Warehouse.')->group(function () {
+    Route::get('/prod/warehouse', [WarehouseController::class, 'index_dashboard'])->name('index');
+    Route::post('/prod/api/stockingot', [WarehouseController::class, 'api_stockingot']);
+
+    Route::get('/modal/setupstockingot', [WarehouseController::class, 'openModal'])->name('setupstockingot');
+    Route::get('/modal/editstockingot', [WarehouseController::class, 'openModal'])->name('editstockingot');
+    Route::post('/modal/editstockingot/update', [WarehouseController::class, 'update_stockingot']);
+    Route::get('/modal/tpingot', [WarehouseController::class, 'openModal'])->name('tpingot');
+});
 //==========[FOR CALENDER OF EVENT]==========\\
 Route::name('CalenderOfEvent.')->group(function () {
     Route::get('/calenderEvent', [CalenderOfEventController::class, 'index']);
@@ -216,7 +237,7 @@ Route::name('QR.')->group(function () {
 });
 
 
-
+//==========[FOR STO]==========\\
 Route::name('STO.')->group(function () {
     Route::get('/sto', [STOController::class, 'dashboard'])->name('index');
     Route::get('/sto/menu', [STOController::class, 'menu'])->name('Menu');
@@ -228,9 +249,12 @@ Route::name('STO.')->group(function () {
     Route::post('/sto/modal-input/save', [STOController::class, 'Counter_Save']);
     Route::post('/sto/modal-input/update', [STOController::class, 'Counter_Update']);
     Route::post('/sto/api/{from}', [STOController::class, 'api_from']);
+    Route::get('/sto/print/{id}', [STOController::class, 'print_tag']);
 });
 
 //==========[FOR TV MONITORING]==========\\
+Route::get('/tv/stokingot', [WarehouseController::class, 'TV_index']);
+Route::get('/tv/casting', [CastingController::class, 'TV_index']);
 Route::get('/tv/shipping', [ShippingController::class, 'TV_index']);
 Route::get('/tv/calenderEvent', [CalenderOfEventController::class, 'TV_index']);
 Route::get('/tv/BadNewsFirst', [BadNewsFirstController::class, 'TV_index']);

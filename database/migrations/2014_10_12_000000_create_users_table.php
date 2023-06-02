@@ -25,6 +25,7 @@ class CreateUsersTable extends Migration
             $table->string('email');
             $table->string('password');
             $table->string('status')->nullable()->default("ENABLED");
+            $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->rememberToken();
             $table->timestamps();

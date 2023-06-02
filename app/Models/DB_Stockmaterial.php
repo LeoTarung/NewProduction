@@ -5,16 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class DB_MesinCasting extends Model
+class DB_Stockmaterial extends Model
 {
     use HasFactory;
-    protected $table = "db_mesincasting";
+    protected $table = "db_stockmaterial";
     protected $guarded = [];
-
-    public function DB_Namapart()
-    {
-        return $this->belongsTo(DB_Namapart::class, 'db_namapart_id', 'id');
-    }
 
     public function DB_Material()
     {

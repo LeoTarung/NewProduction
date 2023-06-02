@@ -12,6 +12,8 @@ use App\Models\DB_HenkatenMelting;
 use App\Models\DB_TransaksiIngot;
 use App\Models\DB_MesinCasting;
 use App\Models\DB_ForkliftMelting;
+use App\Models\DB_FromTimbanganIngot;
+use App\Models\DB_Stockmaterial;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
@@ -73,7 +75,7 @@ class MeltingController extends Controller
     //==============================['Dashboard Melting furnace']==============================//
     public function ForkliftModal()
     {
-        $data = DB_ForkliftMelting::all();
+        $data = DB_ForkliftMelting::with('DB_Material')->latest()->get();
         return view('partial.melting-modal',compact('data'));
     }
 
@@ -85,7 +87,6 @@ class MeltingController extends Controller
 
     public function addForklift_save(Request $request)
     {
-        // dd($request);
         $validator = Validator::make($request->all(), [
             'forklift' => 'required',
             'material' => 'required',
@@ -98,12 +99,15 @@ class MeltingController extends Controller
 
         $insert = DB_ForkliftMelting::create([
             'forklift' => $request->forklift,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'kode_status' => $request->kode_status,
         ]);
+
         if ($insert) {
             return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
         }
+
+        return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
     }
     public function addForklift_update(Request $request)
     {
@@ -120,12 +124,13 @@ class MeltingController extends Controller
 
         $insert = DB_ForkliftMelting::find($request->id)->update([
             'forklift' => $request->forklift,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'kode_status' => $request->kode_status,
         ]);
         if ($insert) {
             return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
         }
+        return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
     }
 
     //==============================['Dashboard Melting furnace']==============================//
@@ -133,7 +138,7 @@ class MeltingController extends Controller
     {
         $title = $furnace;
         if ($request->ajax()) {
-            $data = DB_LhpMelting::where('mesin', '=', $furnace)->orderBy('id', 'DESC')->get();
+            $data = DB_LhpMelting::where('mesin', '=', $furnace)->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatLhp(' . $data->id . ')"></a>';
@@ -149,7 +154,7 @@ class MeltingController extends Controller
     public function furnace_henkaten(Request $request, $furnace)
     {
         if ($request->ajax()) {
-            $data = DB_HenkatenMelting::where('furnace', '=', $furnace)->orderBy('id', 'DESC')->get();
+            $data = DB_HenkatenMelting::where('furnace', '=', $furnace)->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="DetailsHenkaten(' . $data->id . ')"></a>';
@@ -262,7 +267,7 @@ class MeltingController extends Controller
     //==============================['Henkaten']==============================//
     public function henkatenModal()
     {
-        $data = DB_HenkatenMelting::where('status', '=', 'open')->get();
+        $data = DB_HenkatenMelting::where('status', '=', 'open')->latest()->get();
         return view('partial.melting-modal', compact('data'));
     }
 
@@ -356,7 +361,7 @@ class MeltingController extends Controller
     //==============================['Kereta']==============================//
     public function keretaModal()
     {
-        $data = DB_Kereta::all();
+        $data = DB_Kereta::with(['DB_Material'])->get();
         return view('partial.melting-modal', compact('data'));
     }
 
@@ -380,7 +385,7 @@ class MeltingController extends Controller
 
         $insert = DB_Kereta::create([
             'no_kereta' => $request->no_kereta,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'berat' => $request->berat,
         ]);
         if ($insert) {
@@ -402,7 +407,7 @@ class MeltingController extends Controller
 
         $insert = DB_Kereta::find($request->id)->update([
             'no_kereta' => $request->no_kereta,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'berat' => $request->berat,
         ]);
         if ($insert) {
@@ -413,7 +418,7 @@ class MeltingController extends Controller
     //==============================['Level Molten']==============================//
     public function LevelMolten_index()
     {
-        $data = DB_MesinCasting::all();
+        $data = DB_MesinCasting::with(['DB_Material'])->get();
         return view('partial.melting-modal', compact('data'));
     }
 
@@ -450,7 +455,7 @@ class MeltingController extends Controller
     //==============================['Furnace']==============================//
     public function modalFurnaceMelting()
     {
-        $data = DB_Furnace::all();
+        $data = DB_Furnace::with(['DB_Material'])->get();
         return view('partial.melting-modal', compact('data'));
     }
 
@@ -532,18 +537,16 @@ class MeltingController extends Controller
         return view('prod-melting-lotingot', compact('title'));
     }
 
-    public function modalLotingot_save(Request $request)
+    public function modalLotingot_save(UsableController $useable, Request $request)
     {
-        // dd($request);
         $validator = Validator::make($request->all(), [
             'nama_vendor' => 'required',
             'material' => 'required',
             'berat_bundle' => 'required',
-            'lot_ingot' => 'required',
         ]);
 
         if ($validator->fails()) {
-            return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
+            return back()->with('gagal_validasi', 'gagal_validasi');
         }
 
         $insert = DB_TransaksiIngot::create([
@@ -560,8 +563,23 @@ class MeltingController extends Controller
             'bisnis_unit' => $request->bisnis_unit,
             'digunakan' => Carbon::now(),
         ]);
+
         if ($insert) {
-            return redirect('/prod/melting')->with('berhasil_input', 'berhasil_input');
+            $material_id = $useable->ConvertMaterialToID($request->material);
+            $stok = DB_Stockmaterial::where([['material_id', '=', $material_id], ['sloc', '=', $request->penyimpanan_bundle]])->get();
+            $sisa_stock = $stok[0]->actual_stock - $request->berat_bundle;
+            $update = DB_Stockmaterial::find($stok[0]->id)->update([
+                'actual_stock' => $sisa_stock
+            ]);
+            $get_data = DB_FromTimbanganIngot::where([
+                ['material', '=', $request->material],
+                ['store_location', '=', $request->penyimpanan_bundle],
+                ['berat', '=', $request->berat_bundle],
+                ['lot_bundle', '=', $request->lot_ingot],
+            ])->whereNull('digunakan')->update([
+                'digunakan' => Carbon::now(),
+            ]);
+            return back()->with('berhasil_input', 'berhasil_input');
         }
     }
 
@@ -571,7 +589,7 @@ class MeltingController extends Controller
     {
         $shift = $useable->Shift();
         $title = "SUPPLY MELTING";
-        $data = DB_ForkliftMelting::all();
+        $data = DB_ForkliftMelting::with('DB_Material')->get();
         return view('lhp-pre-meltingsupply', compact('shift', 'title', 'data'));
     }
 
@@ -705,7 +723,7 @@ class MeltingController extends Controller
     {
         $shift = $useable->Shift();
         $title = "MELTING";
-        $furnace = DB_Furnace::all();
+        $furnace = DB_Furnace::with('DB_Material')->get();
         return view('lhp-pre-melting', compact('shift', 'title', 'furnace'));
     }
 
@@ -728,6 +746,7 @@ class MeltingController extends Controller
         $shift = $useable->Shift();
         $date = $useable->date();
         $data = DB_LhpMelting::where([['tanggal', '=', $date], ['mesin', '=', $area], ['shift', '=', $shift]])->orderBy('id', 'DESC')->first();
+        // dd($data->material);
         if($data != null ){
             return view('lhp-ipt-melting', compact('area', 'shift', 'id', 'title', 'data'));
         }else{
@@ -735,9 +754,11 @@ class MeltingController extends Controller
         }
     }
 
-    public function lhp_buttonkereta($material)
+    public function lhp_buttonkereta(UsableController $useable, $material)
     {
-        $data =  DB_Kereta::where('material', '=', $material)->get();
+        $material_data = $useable->ConvertMaterialToID($material);
+        $data =  DB_Kereta::where('material_id',  $material_data)->get();
+        // dd($data);
         return view('partial.lhp-modal', compact('data'));
     }
 

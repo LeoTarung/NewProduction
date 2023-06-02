@@ -28,6 +28,7 @@ class CreateDbNamaPartTable extends Migration
             $table->string('jenis_material')->nullable();
             $table->integer('cavity')->default('0');
             $table->integer('cycle_time')->default('0');
+            $table->integer('std_hanger')->default('0');
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });

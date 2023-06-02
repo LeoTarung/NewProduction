@@ -16,8 +16,10 @@ class CreateDbKeretaTable extends Migration
         Schema::create('db_kereta', function (Blueprint $table) {
             $table->id();
             $table->integer('no_kereta');
-            $table->string('material');
+            $table->unsignedBigInteger('material_id')->nullable();  // => nanti ini bakal gabung ke db_namapart ( satu part bisa banyak mesin casting )
+            $table->foreign('material_id')->references('id')->on('db_material')->onDelete('cascade');
             $table->integer('berat');
+            $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });

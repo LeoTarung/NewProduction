@@ -3,25 +3,8 @@
 
 <div class="row row-cols-1 row-cols-md-3 g-2 m-2">
     @foreach ($data as $item)
-        @if ($item->material == 'AC2B')
-         <?php $warna = 'bg-orange text-light' ?>
-        @elseif($item->material == 'AC4B')
-         <?php $warna = 'bg-ungu' ?>
-        @elseif($item->material == 'AC4CH')
-         <?php $warna = 'text-dark' ?>
-        @elseif($item->material == 'AC2BF')
-         <?php $warna = 'bg-merahBata' ?>
-        @elseif($item->material == 'ADC12')
-         <?php $warna = 'bg-silver text-dark' ?>
-        @elseif($item->material == 'HD-2')
-         <?php $warna = 'bg-warning' ?>
-        @elseif($item->material == 'HD-4')
-         <?php $warna = 'bg-primary text-light' ?>
-        @elseif($item->material == 'YH3R')
-         <?php $warna = 'bg-success' ?>
-        @endif
         <div class="col">
-            <a class="buttonssssss btn {{ $warna }} border-dark" onclick="Preparation('{{ $item->forklift}}','{{ $item->material }}')">
+            <a class="buttonssssss btn {{ $item->DB_Material->warna }} border-dark" onclick="Preparation('{{ $item->forklift}}','{{ $item->DB_Material->initial }}')">
                 <div class="fs-1 fw-bold " style="margin: 20%;">{{ $item->forklift }}</div>
             </a><br>
         </div>

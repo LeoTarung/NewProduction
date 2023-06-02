@@ -2,25 +2,8 @@
 @section('content')
     <div class="row row-cols-1 row-cols-md-2 g-2 m-2">
         @foreach ($furnace as $mesin)
-        @if ($mesin->material == 'AC2B')
-        <?php $warna = 'bg-orange text-light' ?>
-        @elseif($mesin->material == 'AC4B')
-        <?php $warna = 'bg-ungu' ?>
-        @elseif($mesin->material == 'AC4CH')
-        <?php $warna = 'text-dark' ?>
-        @elseif($mesin->material == 'AC2BF')
-        <?php $warna = 'bg-merahBata' ?>
-        @elseif($mesin->material == 'ADC12')
-        <?php $warna = 'bg-silver text-dark' ?>
-        @elseif($mesin->material == 'HD-2')
-        <?php $warna = 'bg-warning' ?>
-        @elseif($mesin->material == 'HD-4')
-        <?php $warna = 'bg-primary text-light' ?>
-        @elseif($mesin->material == 'YH3R')
-        <?php $warna = 'bg-success' ?>
-        @endif
         <div class="col">
-            <a class="buttonssssss btn {{ $warna }} border-dark" onclick="Preparation('{{ $mesin->furnace}}','{{ $mesin->material }}')">
+            <a class="buttonssssss btn {{ $mesin->DB_Material->warna }} border-dark" onclick="Preparation('{{ $mesin->furnace}}','{{ $mesin->DB_Material->initial }}')">
             <div class="big-font">{{ $mesin->furnace }}</div>
             </a><br>
         </div>

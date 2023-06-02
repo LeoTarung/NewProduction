@@ -16,7 +16,10 @@ class CreateDbForkliftMeltingTable extends Migration
         Schema::create('db_forkliftmelting', function (Blueprint $table) {
             $table->id();
             $table->string('forklift')->unique();
-            $table->string('material')->nullable();
+            // $table->string('material')->nullable();
+            $table->unsignedBigInteger('material_id')->nullable();  // => nanti ini bakal gabung ke db_namapart ( satu part bisa banyak mesin casting )
+            $table->foreign('material_id')->references('id')->on('db_material')->onDelete('cascade');
+
             $table->integer('henkaten_mp')->default('0');
             $table->integer('henkaten_mat')->default('0');
             $table->integer('henkaten_met')->default('0');

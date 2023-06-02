@@ -135,31 +135,41 @@ function DisabledButtomSubmit() {
 }
 
 //==============================['FUNCTION PADA PAGE SETTINGS']==============================//
-// function editmesin(id){
-//     $("#setupclose").click();
-//     $("#staticBackdropLabel1").html('EDIT MACHINE' + id); //Untuk kasih judul di modal
-//     $("#staticBackdrop1").modal('show'); //kalo ID pake "#" kalo class pake "."
-//     $.ajax({
-//             method: "GET",
-//             dataType: "json",
-//             url: "settings/mesincasting" + "/" + id,
-//             success: function(data) {
-//               console.log(data);
-
-
-//             }
-//         });
-
-    //  console.log('asad');
-    //  $.get(
-    //     "/settings/mesincasting" + "/" + id,
-    //     {},
-    //     function (data, status) {
-    //         // $("#setupclose").click();
-    //         $("#staticBackdropLabel1").html('EDIT MACHINE ' + id); //Untuk kasih judul di modal
-    //         $("#page").html(data);
-    //         $("#staticBackdrop1").modal("show");
-    //         console.log("test")
-    //     }
-    // );
-// }
+function ConvertSAPINGOT(data) {
+    switch (data) {
+        case "UBPURE-AC2B000006":
+            data = "AC2B";
+            break;
+        case "UBPURE-AC2B000007":
+            data = "AC2BF";
+            break;
+        case "UBPURE-AC4B000014":
+            data = "AC4B";
+            break;
+        case "UBPURE-AC4CH00015":
+            data = "AC4CH";
+            break;
+        case "UBPURE-ADC1200001":
+            data = "ADC 12";
+            break;
+        case "UBPURE-ADC1200NKI":
+            data = "ADC 12 NK";
+            break;
+        case "UBPURE-HD20000003":
+            data = "HD-2";
+            break;
+        case "UBPURE-HD40000004":
+            data = "HD-4";
+            break;
+        case "UBPURE-YH3R000003":
+            data = "YH3R";
+            break;
+        case "UBPURE-YMTL0BMHD2":
+            data = "BM HD-2";
+            break;
+        // more cases can be added here
+        default:
+            data = "MATERIAL BELUM TERDAFTAR";
+    }
+    return data;
+}

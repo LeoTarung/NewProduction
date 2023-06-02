@@ -426,7 +426,7 @@
                 success: function (data) {
                     $("form").attr("action", "{{ url('/modal/addFurnace/update') }}");
                     $("#furnace").val(data.furnace);
-                    $("#material").val(data.material);
+                    $("#material").val(data.material_id);
                     $("#kode_status").val(data.kode_status);
                     $("#tambahaninputan").html(
                         '<input type="hidden" name="id" value="' + data.id + '">'
@@ -461,7 +461,7 @@
                     $("form").attr("action", "{{ url('/modal/addKereta/update') }}");
                     $("#no_kereta").val(data.no_kereta);
                     $("#berat").val(data.berat);
-                    $("#material").val(data.material);
+                    $("#material").val(data.material_id);
                     $("#tambahaninputan").html(
                         '<input type="hidden" name="id" value="' + data.id + '">'
                     );
@@ -1032,7 +1032,7 @@
                 success: function (data) {
                     $("form").attr("action", "{{ url('/modal/addforklift/update') }}");
                     $("#forklift").val(data.forklift);
-                    $("#material").val(data.material);
+                    $("#material").val(data.material_id);
                     $("#kode_status").val(data.kode_status);
                     $("#tambahaninputan").html(
                         '<input type="hidden" name="id" value="' + data.id + '">'

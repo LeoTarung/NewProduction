@@ -18,13 +18,8 @@ class CreateDbMaterialTable extends Migration
             $table->string('kode_sap')->unique();
             $table->string('material')->nullable();
             $table->string('initial')->nullable();
-            $table->integer('kebutuhan_mrp')->default('0');
-            $table->integer('kebutuhan_daily')->default('0');
-            $table->integer('min_stock')->default('0');
-            $table->integer('max_stock')->default('0');
-            $table->integer('actual_stock')->default('0');
             $table->string('warna')->nullable();
-            $table->string('status')->default('Belum dicek');
+            $table->string('created_by')->nullable();
             $table->string('updated_by')->nullable();
             $table->timestamps();
         });

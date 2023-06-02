@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="notranslate">
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -21,6 +21,7 @@
     <script src="/UI/JS/amchart/LossesChart-Melting/core.js"></script>
     <script src="/UI/JS/amchart/LossesChart-Melting/charts.js"></script>
     <script src="/UI/JS/amchart/LossesChart-Melting/Animated.js"></script>
+    <script src="/UI/JS/radar.js"></script>
     <link href="/UI/CSS/select2.css" rel="stylesheet" />
     <script src="/UI/JS/select2.js"></script>
   </head>
