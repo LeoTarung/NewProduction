@@ -1,0 +1,48 @@
+
+<--- Last few GCs --->
+
+[584:0000017C46B71890] 110645622 ms: Scavenge 2013.0 (2058.3) -> 2009.8 (2060.3) MB, 4.7 / 0.0 ms  (average mu = 0.342, current mu = 0.316) task 
+[584:0000017C46B71890] 110645707 ms: Scavenge 2014.5 (2060.3) -> 2011.4 (2061.6) MB, 4.8 / 0.0 ms  (average mu = 0.342, current mu = 0.316) task 
+[584:0000017C46B71890] 110645795 ms: Scavenge 2016.2 (2061.6) -> 2013.2 (2079.6) MB, 6.2 / 0.0 ms  (average mu = 0.342, current mu = 0.316) task 
+
+
+<--- JS stacktrace --->
+
+FATAL ERROR: Ineffective mark-compacts near heap limit Allocation failed - JavaScript heap out of memory
+ 1: 00007FF6808B0AAF v8::internal::CodeObjectRegistry::~CodeObjectRegistry+124015
+ 2: 00007FF68083C866 v8::internal::wasm::WasmCode::safepoint_table_offset+64182
+ 3: 00007FF68083D8E2 v8::internal::wasm::WasmCode::safepoint_table_offset+68402
+ 4: 00007FF681171CE4 v8::Isolate::ReportExternalAllocationLimitReached+116
+ 5: 00007FF68115C2AD v8::SharedArrayBuffer::Externalize+781
+ 6: 00007FF680FFF88C v8::internal::Heap::EphemeronKeyWriteBarrierFromCode+1468
+ 7: 00007FF68100C539 v8::internal::Heap::PublishPendingAllocations+1129
+ 8: 00007FF68100950A v8::internal::Heap::PageFlagsAreConsistent+2842
+ 9: 00007FF680FFC169 v8::internal::Heap::CollectGarbage+2137
+10: 00007FF680FFF99B v8::internal::Heap::FinalizeIncrementalMarkingAtomically+267
+11: 00007FF680FF445F v8::internal::IncrementalMarking::WasActivated+415
+12: 00007FF6807CF04D node::TriggerNodeReport+53309
+13: 00007FF6807CD846 node::TriggerNodeReport+47158
+14: 00007FF68090E7CB uv_async_send+331
+15: 00007FF68090DF5C uv_loop_init+1292
+16: 00007FF68090E0FA uv_run+202
+17: 00007FF6808DD1E5 node::SpinEventLoop+325
+18: 00007FF6807F5781 v8::internal::interpreter::BytecodeArrayWriter::source_position_table_builder+51617
+19: 00007FF6808721DA node::Start+202
+20: 00007FF6806986EC RC4_options+347628
+21: 00007FF6816F82F8 v8::internal::compiler::RepresentationChanger::Uint32OverflowOperatorFor+14520
+22: 00007FFFFA977614 BaseThreadInitThunk+20
+23: 00007FFFFC3026A1 RtlUserThreadStart+33
+Error: Connection lost: The server closed the connection.
+    at Socket.<anonymous> (F:\NewProduction\node_modules\mysql2\lib\connection.js:114:31)
+    at Socket.emit (node:events:513:28)
+    at TCP.<anonymous> (node:net:301:12) {
+  fatal: true,
+  code: 'PROTOCOL_CONNECTION_LOST'
+}
+Error: Connection lost: The server closed the connection.
+    at Socket.<anonymous> (F:\NewProduction\node_modules\mysql2\lib\connection.js:114:31)
+    at Socket.emit (node:events:513:28)
+    at TCP.<anonymous> (node:net:301:12) {
+  fatal: true,
+  code: 'PROTOCOL_CONNECTION_LOST'
+}

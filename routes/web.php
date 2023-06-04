@@ -11,6 +11,7 @@ use App\Http\Controllers\CastingController;
 use App\Http\Controllers\MeltingController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WarehouseController;
+use App\Http\Controllers\QualityController;
 
 
 // TESTING FS
@@ -236,6 +237,44 @@ Route::name('QR.')->group(function () {
     Route::get('/qr/fromsubcont', [QRController::class, 'FS_index']);
 });
 
+//==========[FOR QUALITY ]==========\\
+Route::name('Quality.')->group(function () {
+    Route::get('/prod/quality', [QualityController::class, 'index_prod']);
+    Route::get('/prod/modal-quality/measurement', [QualityController::class, 'OpenModal'])->name('Addmeasurement');
+    Route::get('/prod/modal-quality/measurement/table', [QualityController::class, 'OpenModal'])->name('measurement');
+    Route::post('/prod/modal-quality/measurement/save', [QualityController::class, 'measurement_save']);
+    Route::post('/prod/modal-quality/measurement/update', [QualityController::class, 'measurement_update']);
+
+    Route::get('/prod/modal-quality/kalibrasi', [QualityController::class, 'OpenModal'])->name('AddKalibrasi');
+    Route::post('/prod/modal-quality/kalibrasi/save', [QualityController::class, 'kalibrasi_save']);
+    Route::post('/prod/modal-quality/kalibrasi/update', [QualityController::class, 'kalibrasi_update']);
+
+    Route::get('/prod/modal-quality/diesapproval', [QualityController::class, 'OpenModal'])->name('AddDiesApproval');
+    Route::post('/prod/modal-quality/diesapproval/save', [QualityController::class, 'diesapproval_save']);
+    Route::post('/prod/modal-quality/diesapproval/update', [QualityController::class, 'diesapproval_update']);
+
+    Route::get('/prod/modal-quality/spectro-hpdc', [QualityController::class, 'OpenModal'])->name('Addspectro_hpdc');
+    Route::post('/prod/modal-quality/spectro-hpdc/save', [QualityController::class, 'spectro_hpdc_save']);
+    Route::post('/prod/modal-quality/spectro-hpdc/update', [QualityController::class, 'spectro_hpdc_update']);
+
+    Route::get('/prod/modal-quality/spectro-gdc', [QualityController::class, 'OpenModal'])->name('Addspectro_gdc');
+    Route::post('/prod/modal-quality/spectro-gdc/save', [QualityController::class, 'spectro_gdc_save']);
+    Route::post('/prod/modal-quality/spectro-gdc/update', [QualityController::class, 'spectro_gdc_update']);
+
+    Route::get('/prod/modal-quality/measurement/data', [QualityController::class, 'DTservermeasurement']); //
+    Route::get('/prod/modal-quality/measurement/data/nostat', [QualityController::class, 'DTservermeasurementNOSTAT']); //
+    Route::get('/prod/modal-quality/kalibrasi/data', [QualityController::class, 'DTserverkalibrasi']);
+    Route::get('/prod/modal-quality/diesapproval/data', [QualityController::class, 'DTserverdiesapproval']);
+    Route::get('/prod/modal-quality/spectro-hpdc/data', [QualityController::class, 'DTserverspectro_hpdc']);
+    Route::get('/prod/modal-quality/spectro-gdc/data', [QualityController::class, 'DTserverspectro_gdc']);
+
+    Route::post('/prod/modal-quality/measurement/api', [QualityController::class, 'Api_measurement']); //
+    Route::post('/prod/modal-quality/kalibrasi/api', [QualityController::class, 'Api_kalibrasi']);
+    Route::post('/prod/modal-quality/diesapproval/api', [QualityController::class, 'Api_diesapproval']);
+    Route::post('/prod/modal-quality/spectro/api', [QualityController::class, 'Api_spectro']);
+
+});
+
 
 //==========[FOR STO]==========\\
 Route::name('STO.')->group(function () {
@@ -253,6 +292,9 @@ Route::name('STO.')->group(function () {
 });
 
 //==========[FOR TV MONITORING]==========\\
+Route::get('/tv/quality/spectro', [QualityController::class, 'TV_index_spectro']);
+Route::get('/tv/quality/kalibrasi', [QualityController::class, 'TV_index_kalibrasi']);
+Route::get('/tv/quality/diesapproval', [QualityController::class, 'TV_index_diesapproval']);
 Route::get('/tv/stokingot', [WarehouseController::class, 'TV_index']);
 Route::get('/tv/casting', [CastingController::class, 'TV_index']);
 Route::get('/tv/shipping', [ShippingController::class, 'TV_index']);

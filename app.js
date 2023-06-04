@@ -84,9 +84,6 @@ const tcpServer = net.createServer((socket) => {
     });
   });
 
-
-
-
 //==========[' DECLARE VARIABLE ']==========//
 var shift;
 var tanggal;
@@ -138,6 +135,35 @@ io.on("connection", (socket) => {
     });
 
     function AmbilDariDB(){
+        //==========[' SELECT QUALITY TV ']==========//
+        connection.query("SELECT * FROM db_qualitydiesapproval;", (err, res) => {
+            socket.emit("TV-DiesApproval", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitykalibrasi;", (err, res) => {
+            socket.emit("TV-AchKalibrasi", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE proses='hpdc' AND DATE(created_at) = CURDATE();", (err, res) => {
+            socket.emit("TV-Measure-HPDC", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE proses='gdc' AND DATE(created_at) = CURDATE();", (err, res) => {
+            socket.emit("TV-Measure-GDC", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE proses='machining' AND DATE(created_at) = CURDATE();", (err, res) => {
+            socket.emit("TV-Measure-MACHINING", res);
+        });
+
+        connection.query("SELECT * FROM db_spectromelting WHERE area='hpdc';", (err, res) => {
+            socket.emit("TV-Spectro-HPDC", res);
+        });
+
+        connection.query("SELECT * FROM db_spectromelting WHERE area='gdc';", (err, res) => {
+            socket.emit("TV-Spectro-GDC", res);
+        });
+
         //==========[' SELECT ALL STOCK INGOT ']==========//
             connection.query("SELECT * FROM db_stockmaterial WHERE id= 1", (err, res) => {
                 socket.emit("stockmaterial-1", res);
