@@ -140,8 +140,11 @@ io.on("connection", (socket) => {
             socket.emit("TV-DiesApproval", res);
         });
 
-        connection.query("SELECT * FROM db_qualitykalibrasi AND DATE(created_at) = CURDATE();", (err, res) => {
+        connection.query("SELECT * FROM db_qualitykalibrasi WHERE DATE(created_at) = CURDATE();", (err, res) => {
             socket.emit("TV-AchKalibrasi", res);
+        });
+        connection.query("SELECT * FROM db_qualitykalibrasi WHERE DATE(created_at) = DATE_SUB(CURDATE(), INTERVAL 1 DAY);", (err, res) => {
+            socket.emit("TV-AchKalibrasi-kemarin", res);
         });
 
         connection.query("SELECT * FROM db_qualitymeasurementpart WHERE proses='hpdc' AND DATE(created_at) = CURDATE();", (err, res) => {
