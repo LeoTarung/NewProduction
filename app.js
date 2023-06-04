@@ -136,7 +136,7 @@ io.on("connection", (socket) => {
 
     function AmbilDariDB(){
         //==========[' SELECT QUALITY TV ']==========//
-        connection.query("SELECT * FROM db_qualitydiesapproval;", (err, res) => {
+        connection.query("SELECT * FROM db_qualitydiesapproval ORDER BY status_pengukuran ASC, sample_approval ASC, document_approval ASC, status_submit_sample ASC, status_submit_pa ASC, status_submit_ipp ASC, status_submit_masspro ASC;", (err, res) => {
             socket.emit("TV-DiesApproval", res);
         });
 
