@@ -60,9 +60,9 @@
                                 '<td nowrap="nowrap">' + tanggal + '</td>' +
                                 '<td nowrap="nowrap">' + Data.nama_part + '</td>' +
                                 '<td>' + Data.no_dies  + '</td>' +
+                                '<td class="text-center">' + ConvertIcon(Data.status_pengukuran) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.sample_approval) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.document_approval) + '</td>' +
-                                '<td class="text-center">' + ConvertIcon(Data.status_pengukuran) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.status_submit_sample) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.status_submit_pa) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.status_submit_ipp) + '</td>' +

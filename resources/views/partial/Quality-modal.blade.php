@@ -55,6 +55,14 @@
                             <input type="text" class="form-control" name="no_dies" id="no_dies" aria-describedby="no_diesHelp" required>
                         </div>
                         <div class="col-12 mb-3">
+                            <label for="status_pengukuran">STATUS PENGUKURAN <sup>*</sup></label>
+                            <select class="form-select" id="status_pengukuran" name="status_pengukuran" required>
+                                <option value="">Open this select menu</option>
+                                <option value="0">OPEN</option>
+                                <option value="1">CLOSE</option>
+                            </select>
+                        </div>
+                        <div class="col-12 mb-3">
                             <label for="sample_approval">SAMPLE APPROVAL <sup>*</sup></label>
                             <select class="form-select" id="sample_approval" name="sample_approval" required>
                                 <option value="">Open this select menu</option>
@@ -65,14 +73,6 @@
                         <div class="col-12 mb-3">
                             <label for="document_approval">DOCUMENT APPROVAL <sup>*</sup></label>
                             <select class="form-select" id="document_approval" name="document_approval" required>
-                                <option value="">Open this select menu</option>
-                                <option value="0">OPEN</option>
-                                <option value="1">CLOSE</option>
-                            </select>
-                        </div>
-                        <div class="col-12 mb-3">
-                            <label for="status_pengukuran">STATUS PENGUKURAN <sup>*</sup></label>
-                            <select class="form-select" id="status_pengukuran" name="status_pengukuran" required>
                                 <option value="">Open this select menu</option>
                                 <option value="0">OPEN</option>
                                 <option value="1">CLOSE</option>

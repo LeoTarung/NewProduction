@@ -123,13 +123,13 @@
                                                 <th class="text-center" rowspan="2">TANGGAL</th>
                                                 <th class="text-center" rowspan="2">NAMA PART</th>
                                                 <th class="text-center" rowspan="2">NO DIES</th>
-                                                <th class="text-center" rowspan="2">SAMPLE APPROVAL</th>
-                                                <th class="text-center" rowspan="2">DOCUMENT APPROVAL</th>
-                                                <th class="text-center" colspan="5">STATUS</th>
+                                                <th class="text-center" colspan="7">STATUS</th>
                                                 <th class="text-center" rowspan="2">AKSI</th>
                                             </tr>
                                             <tr>
                                                 <th class="text-center">PENGUKURAN</th>
+                                                <th class="text-center">SAMPLE APPROVAL</th>
+                                                <th class="text-center">DOCUMENT APPROVAL</th>
                                                 <th class="text-center">SUBMIT SAMPLE</th>
                                                 <th class="text-center">PA</th>
                                                 <th class="text-center">IPP</th>
