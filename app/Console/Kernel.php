@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->command('sg:belajar-membuat-cron')->everyMinute();
+        // $schedule->command('sg:belajar-membuat-cron')->everyMinute();
+        $schedule->command('Panda:InsertQuality-SpectroMelting')->dailyAt('00:00');
     }
 
     /**

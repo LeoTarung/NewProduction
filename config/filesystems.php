@@ -39,9 +39,9 @@ return [
             'root' => '/',
         ],
 
-        'diskZ' => [
+        'diskG' => [
             'driver' => 'local',
-            'root' => 'Z:', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
+            'root' => 'G:', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
         ],
 
         'local' => [
