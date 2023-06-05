@@ -93,12 +93,12 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">FURNACE - MATERIAL</th>
-                                        <th class="text-center">1A</th>
-                                        <th class="text-center">1B</th>
-                                        <th class="text-center">2A</th>
-                                        <th class="text-center">2B</th>
-                                        <th class="text-center">3A</th>
-                                        <th class="text-center">3B</th>
+                                        <th class="text-center">SHIFT 1A</th>
+                                        <th class="text-center">SHIFT 1B</th>
+                                        <th class="text-center">SHIFT 2A</th>
+                                        <th class="text-center">SHIFT 2B</th>
+                                        <th class="text-center">SHIFT 3A</th>
+                                        <th class="text-center">SHIFT 3B</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_spectrometer_hpdc"></tbody>
@@ -117,9 +117,9 @@
                                 <thead>
                                     <tr>
                                         <th class="text-center">FURNACE - MATERIAL</th>
-                                        <th class="text-center">1</th>
-                                        <th class="text-center">2</th>
-                                        <th class="text-center">3</th>
+                                        <th class="text-center">SHIFT 1</th>
+                                        <th class="text-center">SHIFT 2</th>
+                                        <th class="text-center">SHIFT 3</th>
                                     </tr>
                                 </thead>
                                 <tbody id="tbody_spectrometer_gdc"></tbody>
@@ -219,7 +219,7 @@
     <script>
          function ConvertIcon(data){
                 if(data == 0){
-                    hasil = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                    hasil = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                 }else if(data == 1){
                     hasil = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                 }else{
@@ -240,8 +240,8 @@
                 myHTML +=   '<tr>' +
                                 '<td nowrap="nowrap">' + Data.shift + '</td>' +
                                 '<td nowrap="nowrap">' + Data.kategori + '</td>' +
-                                '<td nowrap="nowrap">' + Data.nama_part_dies + '</td>' +
-                                '<td nowrap="nowrap">' + Data.qty + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.nama_part_dies + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.qty + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.judgement) + '</td>' +
                             '</tr>'
             });
@@ -254,8 +254,8 @@
                 myHTML +=   '<tr>' +
                                 '<td nowrap="nowrap">' + Data.shift + '</td>' +
                                 '<td nowrap="nowrap">' + Data.kategori + '</td>' +
-                                '<td nowrap="nowrap">' + Data.nama_part_dies + '</td>' +
-                                '<td nowrap="nowrap">' + Data.qty + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.nama_part_dies + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.qty + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.judgement) + '</td>' +
                             '</tr>'
             });
@@ -269,8 +269,8 @@
                 myHTML +=   '<tr>' +
                                 '<td nowrap="nowrap">' + Data.shift + '</td>' +
                                 '<td nowrap="nowrap">' + Data.kategori + '</td>' +
-                                '<td nowrap="nowrap">' + Data.nama_part_dies + '</td>' +
-                                '<td nowrap="nowrap">' + Data.qty + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.nama_part_dies + '</td>' +
+                                '<td nowrap="nowrap" class="text-center">' + Data.qty + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.judgement) + '</td>' +
                             '</tr>'
             });

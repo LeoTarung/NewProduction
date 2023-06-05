@@ -159,11 +159,11 @@ io.on("connection", (socket) => {
             socket.emit("TV-Measure-MACHINING", res);
         });
 
-        connection.query("SELECT * FROM db_spectromelting WHERE area='hpdc';", (err, res) => {
+        connection.query("SELECT * FROM db_spectromelting WHERE area='hpdc' AND DATE(created_at) = CURDATE();", (err, res) => {
             socket.emit("TV-Spectro-HPDC", res);
         });
 
-        connection.query("SELECT * FROM db_spectromelting WHERE area='gdc';", (err, res) => {
+        connection.query("SELECT * FROM db_spectromelting WHERE area='gdc' AND DATE(created_at) = CURDATE();", (err, res) => {
             socket.emit("TV-Spectro-GDC", res);
         });
 

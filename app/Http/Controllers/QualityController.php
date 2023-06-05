@@ -29,7 +29,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('hasil', function ($row) {
                     if($row->judgement == 0){
-                        $hasil = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $hasil = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->judgement == 1){
                         $hasil = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -54,7 +54,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('sample_approval', function ($row) {
                     if($row->sample_approval == 0){
-                        $sample_approval = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $sample_approval = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->sample_approval == 1){
                         $sample_approval = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -64,7 +64,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('document_approval', function ($row) {
                     if($row->document_approval == 0){
-                        $document_approval = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $document_approval = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->document_approval == 1){
                         $document_approval = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -74,7 +74,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('status_pengukuran', function ($row) {
                     if($row->status_pengukuran == 0){
-                        $status_pengukuran = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $status_pengukuran = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->status_pengukuran == 1){
                         $status_pengukuran = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -84,7 +84,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('status_submit_sample', function ($row) {
                     if($row->status_submit_sample == 0){
-                        $status_submit_sample = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $status_submit_sample = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->status_submit_sample == 1){
                         $status_submit_sample = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -94,7 +94,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('status_submit_pa', function ($row) {
                     if($row->status_submit_pa == 0){
-                        $status_submit_pa = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $status_submit_pa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->status_submit_pa == 1){
                         $status_submit_pa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -104,7 +104,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('status_submit_ipp', function ($row) {
                     if($row->status_submit_ipp == 0){
-                        $status_submit_ipp = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $status_submit_ipp = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->status_submit_ipp == 1){
                         $status_submit_ipp = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -114,7 +114,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('status_submit_masspro', function ($row) {
                     if($row->status_submit_masspro == 0){
-                        $status_submit_masspro = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $status_submit_masspro = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->status_submit_masspro == 1){
                         $status_submit_masspro = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -143,7 +143,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('a', function ($row) {
                     if($row->a == 0){
-                        $a = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $a = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->a == 1){
                         $a = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -153,7 +153,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('aa', function ($row) {
                     if($row->aa == 0){
-                        $aa = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $aa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->aa == 1){
                         $aa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -163,7 +163,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('aaa', function ($row) {
                     if($row->aaa == 0){
-                        $aaa = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $aaa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->aaa == 1){
                         $aaa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -173,7 +173,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('b', function ($row) {
                     if($row->b == 0){
-                        $b = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $b = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->b == 1){
                         $b = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -183,7 +183,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('bb', function ($row) {
                     if($row->bb == 0){
-                        $bb = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $bb = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->bb == 1){
                         $bb = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -193,7 +193,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('bbb', function ($row) {
                     if($row->bbb == 0){
-                        $bbb = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $bbb = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->bbb == 1){
                         $bbb = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -218,7 +218,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('a', function ($row) {
                     if($row->a == 0){
-                        $a = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $a = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->a == 1){
                         $a = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -228,7 +228,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('aa', function ($row) {
                     if($row->aa == 0){
-                        $aa = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $aa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->aa == 1){
                         $aa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -238,7 +238,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('aaa', function ($row) {
                     if($row->aaa == 0){
-                        $aaa = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $aaa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->aaa == 1){
                         $aaa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -263,7 +263,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('judgement', function ($row) {
                     if($row->judgement == 0){
-                        $judgement = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $judgement = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->judgement == 1){
                         $judgement = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -287,7 +287,7 @@ class QualityController extends Controller
                 })
                 ->addColumn('judgement', function ($row) {
                     if($row->judgement == 0){
-                        $judgement = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                        $judgement = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                     }elseif($row->judgement == 1){
                         $judgement = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                     }else{
@@ -328,7 +328,7 @@ class QualityController extends Controller
     public function TV_index_kalibrasi()
     {
         $title = "QUALITY";
-        $judul = "ACHIVEMENT KALIBRASI";
+        $judul = "ACHIEVEMENT KALIBRASI";
         return view('TV-Quality-Kalibrasi',compact('title', 'judul'));
     }
     public function TV_index_diesapproval()

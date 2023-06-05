@@ -8,11 +8,11 @@
         <a class="btn btn-sm btn-warning mb-2 float-start me-2" href="{{ url('/tv/quality/spectro') }}" target="_blank"><i class="fa-solid fa-tv"></i> Monitoring Spectrometer Test</a>
     </div>
 </div>
-<div class="row">
+{{-- <div class="row">
     <div class="col">
         <a class="btn btn-info mb-2 float-start" onclick="Measurement()"><i class="fa-solid fa-cubes-stacked"></i> MEASUREMENT TICKET</a>
     </div>
-</div>
+</div> --}}
 <div class="row mt-2">
     <div class="card">
         <div class="card-body">
@@ -39,6 +39,7 @@
                         <div class="card">
                             <div class="card-header fw-bold font-monospace fs-5"><i class="fa-solid fa-paste"></i> Measurement Part
                                 <button class="btn btn-success mb-2 float-end" onclick="AddMeasurement()"><i class="fa-solid fa-plus"></i> Measurement</button>
+                                <button class="btn btn-warning mb-2 float-end me-2" onclick="Measurement()"><i class="fa-solid fa-cubes-stacked"></i> Measurement Ticket</button>
                             </div>
                             <div class="card-body">
                                 <div class="table-responsive">
@@ -57,26 +58,7 @@
                                         </thead>
                                     </table>
                                     <script>
-                                            $(function () {
-                                                var table = $('#Table_Measurement').DataTable({
-                                                    processing: true,
-                                                    serverSide: true,
-                                                    ajax: "{{ url('/prod/modal-quality/measurement/data') }}",
-                                                    columns: [
-                                                        { data: 'DT_RowIndex', name: 'DT_RowIndex' },
-                                                        {data: 'shift', name: 'shift'},
-                                                        {data: 'proses', name: 'proses'},
-                                                        {data: 'kategori', name: 'kategori'},
-                                                        {data: 'nama_part_dies', name: 'nama_part_dies'},
-                                                        {data: 'qty', name: 'qty'},
-                                                        {data: 'judgement', name: 'judgement'},
-                                                        // {data: 'action', name: 'action', orderable: false, searchable: false},
-                                                    ],
-                                                    "columnDefs": [
-                                                        { className: "text-center", "targets": [ 6 ] }
-                                                    ]
-                                                });
-                                            });
+
                                     </script>
                                 </div>
                             </div>
@@ -155,12 +137,12 @@
                                             <tr>
                                                 <th class="text-center">NO</th>
                                                 <th class="text-center">FURNACE - MATERIAL</th>
-                                                <th class="text-center">1A</th>
-                                                <th class="text-center">1B</th>
-                                                <th class="text-center">2A</th>
-                                                <th class="text-center">2B</th>
-                                                <th class="text-center">3A</th>
-                                                <th class="text-center">3B</th>
+                                                <th class="text-center">SHIFT 1A</th>
+                                                <th class="text-center">SHIFT 1B</th>
+                                                <th class="text-center">SHIFT 2A</th>
+                                                <th class="text-center">SHIFT 2B</th>
+                                                <th class="text-center">SHIFT 3A</th>
+                                                <th class="text-center">SHIFT 3B</th>
                                                 <th class="text-center">AKSI</th>
                                             </tr>
                                         </thead>
@@ -184,9 +166,9 @@
                                             <tr>
                                                 <th class="text-center">NO</th>
                                                 <th class="text-center">FURNACE - MATERIAL</th>
-                                                <th class="text-center">1</th>
-                                                <th class="text-center">2</th>
-                                                <th class="text-center">3</th>
+                                                <th class="text-center">SHIFT 1</th>
+                                                <th class="text-center">SHIFT 2</th>
+                                                <th class="text-center">SHIFT 3</th>
                                                 <th class="text-center">AKSI</th>
                                             </tr>
                                         </thead>
@@ -202,6 +184,28 @@
     </div>
 </div>
 <script>
+    $(function () {
+        var table = $('#Table_Measurement').DataTable({
+            processing: true,
+            serverSide: true,
+            ajax: "{{ url('/prod/modal-quality/measurement/data') }}",
+            columns: [
+                { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                {data: 'shift', name: 'shift'},
+                {data: 'proses', name: 'proses'},
+                {data: 'kategori', name: 'kategori'},
+                {data: 'nama_part_dies', name: 'nama_part_dies'},
+                {data: 'qty', name: 'qty'},
+                {data: 'judgement', name: 'judgement'},
+                // {data: 'action', name: 'action', orderable: false, searchable: false},
+            ],
+            "columnDefs": [
+                { className: "text-center", "targets": [ 4 ] },
+                { className: "text-center", "targets": [ 5 ] },
+                { className: "text-center", "targets": [ 6 ] },
+            ]
+        });
+    });
     $(function () {
         var table = $('#Table_AchKalibrasi').DataTable({
             processing: true,
@@ -219,7 +223,6 @@
             ]
         });
     });
-
     $(function () {
         var table = $('#Table_DiesApproval').DataTable({
             processing: true,
@@ -240,6 +243,7 @@
                 {data: 'action', name: 'action', orderable: false, searchable: false},
             ],
             "columnDefs": [
+                { className: "text-center", "targets": [ 3 ] },
                 { className: "text-center", "targets": [ 4 ] },
                 { className: "text-center", "targets": [ 5 ] },
                 { className: "text-center", "targets": [ 6 ] },
@@ -250,7 +254,6 @@
             ]
         });
     });
-
     $(function () {
         var table = $('#Table_SpectroHPDC').DataTable({
             processing: true,
@@ -274,10 +277,10 @@
                 { className: "text-center", "targets": [ 5 ] },
                 { className: "text-center", "targets": [ 6 ] },
                 { className: "text-center", "targets": [ 7 ] },
-            ]
+            ],
+            "pageLength": 4
         });
     });
-
     $(function () {
         var table = $('#Table_SpectroGDC').DataTable({
             processing: true,
@@ -295,12 +298,10 @@
                 { className: "text-center", "targets": [ 2 ] },
                 { className: "text-center", "targets": [ 3 ] },
                 { className: "text-center", "targets": [ 4 ] },
-            ]
+            ],
+            "pageLength": 22
         });
     });
-
-
-
 </script>
 <script>
     function Measurement(){

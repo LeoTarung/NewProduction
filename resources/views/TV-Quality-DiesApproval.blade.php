@@ -37,7 +37,7 @@
     <script>
         function ConvertIcon(data){
                 if(data == 0){
-                    hasil = '<a class="fa-solid fa-circle-exclamation text-warning fa-2x"></a>';
+                    hasil = 'fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                 }else if(data == 1){
                     hasil = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                 }else{
