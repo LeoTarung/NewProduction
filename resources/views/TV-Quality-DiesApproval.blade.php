@@ -37,7 +37,7 @@
     <script>
         function ConvertIcon(data){
                 if(data == 0){
-                    hasil = 'fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
+                    hasil = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
                 }else if(data == 1){
                     hasil = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
                 }else{
@@ -59,7 +59,7 @@
                 myHTML +=   '<tr>' +
                                 '<td nowrap="nowrap">' + tanggal + '</td>' +
                                 '<td nowrap="nowrap">' + Data.nama_part + '</td>' +
-                                '<td>' + Data.no_dies  + '</td>' +
+                                '<td class="text-center">' + Data.no_dies  + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.status_pengukuran) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.sample_approval) + '</td>' +
                                 '<td class="text-center">' + ConvertIcon(Data.document_approval) + '</td>' +
