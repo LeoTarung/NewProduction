@@ -34,8 +34,16 @@ Route::get('/', function () {
     return redirect('/dashboard');
 });
 
+Route::get('/comingsoon/{mesin}', function ($mesin) {
+    return view('TV-Comingsoon',compact('mesin'));
+});
+
+
+
 Route::get('/dashboard', function () {
     $title = "DASHBOARD";
+    // $content1 = Storage::disk('diskG')->get('test.txt');
+    // dd($content1);
     // $data = DB_Mesincasting::where('mc', 1)->with('DB_Namapart')->first();
     $data = DB_Mesincasting::where('mc', 2)->first();
     // dd($data->DB_Namapart->nama_part);
@@ -48,6 +56,10 @@ Route::get('/dashboard', function () {
 
 Route::get('/prod', function () {
     $title = "DASHBOARD";
+    $data = "Data yang ingin disimpan";
+    $path = "TESTING_SIAPATAU_BETUL1".".txt";
+    $config = Storage::disk('diskG')->put($path, $data);
+    dd($config);
     return view('prod-menu-prod', compact('title'));
 });
 Route::get('/lhp', function () {

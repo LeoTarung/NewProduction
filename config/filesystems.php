@@ -41,7 +41,19 @@ return [
 
         'diskG' => [
             'driver' => 'local',
-            'root' => 'G:', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
+            'root' => 'G:', //\\10.14.20.29\nm\Dev\Inbound
+            // 'root' => 'G:/', //\\10.14.20.29\nm\Dev\Inbound
+        ],
+
+        'diskY' => [
+            'driver' => 'local',
+            'root' => 'Y:/',
+        ],
+
+        'diskZ' => [
+            'driver' => 'local',
+            // 'root' => storage_path('app/diskF'),
+            'root' => 'Z:/', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
         ],
 
         'local' => [
