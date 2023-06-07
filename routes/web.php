@@ -56,12 +56,16 @@ Route::get('/dashboard', function () {
 
 Route::get('/prod', function () {
     $title = "DASHBOARD";
+    // dd(exec('whoami'));
     $data = "Data yang ingin disimpan";
-    $path = "TESTING_SIAPATAU_BETUL1".".txt";
-    $config = Storage::disk('diskG')->put($path, $data);
+    $path = "TESTING_SIAPATAU_BETUL.txt";
+    // $path = "TESTING_SIAPATAU_BETUL".".txt";
+    // dd(Storage::disk('diskG'));
+    $config = Storage::disk('diskG')->put("TESTING_SIAPATAU_BETUL.txt", "Data yang ingin disimpan");
     dd($config);
     return view('prod-menu-prod', compact('title'));
 });
+
 Route::get('/lhp', function () {
     $title = "Template";
     $mesin = "MESIN 1";

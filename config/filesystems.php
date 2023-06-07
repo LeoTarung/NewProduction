@@ -41,8 +41,10 @@ return [
 
         'diskG' => [
             'driver' => 'local',
-            'root' => 'G:', //\\10.14.20.29\nm\Dev\Inbound
-            // 'root' => 'G:/', //\\10.14.20.29\nm\Dev\Inbound
+            // 'username' => 'aop\andhika.nm03551',
+            // 'password' => '!2Poisedon4$',
+            // 'root' => '\\10.14.20.29\nm\Dev\Inbound',
+            'root' => 'G:/',
         ],
 
         'diskY' => [
@@ -52,8 +54,7 @@ return [
 
         'diskZ' => [
             'driver' => 'local',
-            // 'root' => storage_path('app/diskF'),
-            'root' => 'Z:/', //\\10.14.20.29\everyone\TRIALSAP\INBOUND
+            'root' => 'Z:/', //\\10.14.20.29\ngm\DEV\INBOUND
         ],
 
         'local' => [
