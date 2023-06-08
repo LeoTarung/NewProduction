@@ -61,7 +61,7 @@ Route::get('/prod', function () {
     $path = "TESTING_SIAPATAU_BETUL.txt";
     // $path = "TESTING_SIAPATAU_BETUL".".txt";
     // dd(Storage::disk('diskG'));
-    $config = Storage::disk('diskG')->put("TESTING_SIAPATAU_BETUL.txt", "Data yang ingin disimpan");
+    $config = Storage::disk('diskG')->put($path, $data);
     dd($config);
     return view('prod-menu-prod', compact('title'));
 });

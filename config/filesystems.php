@@ -41,9 +41,6 @@ return [
 
         'diskG' => [
             'driver' => 'local',
-            // 'username' => 'aop\andhika.nm03551',
-            // 'password' => '!2Poisedon4$',
-            // 'root' => '\\10.14.20.29\nm\Dev\Inbound',
             'root' => 'G:/',
         ],
 
@@ -54,7 +51,7 @@ return [
 
         'diskZ' => [
             'driver' => 'local',
-            'root' => 'Z:/', //\\10.14.20.29\ngm\DEV\INBOUND
+            'root' => 'Z:/',
         ],
 
         'local' => [
