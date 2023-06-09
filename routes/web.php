@@ -59,7 +59,7 @@ Route::get('/prod', function () {
     // dd(exec('whoami'));
     $data = "Data yang ingin disimpan";
     $path = "TESTING_SIAPATAU_BETUL.txt";
-    // $path = "TESTING_SIAPATAU_BETUL".".txt";
+    // $path = "TESTING_SIAPATAU_BETUL".".txt"
     // dd(Storage::disk('diskG'));
     $config = Storage::disk('diskG')->put($path, $data);
     dd($config);
