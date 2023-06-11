@@ -503,7 +503,7 @@ class MeltingController extends Controller
 
         $insert = DB_Furnace::find($request->id)->update([
             'furnace' => $request->furnace,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'kode_status' => $request->kode_status,
         ]);
         if ($insert) {
