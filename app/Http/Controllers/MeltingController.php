@@ -567,8 +567,9 @@ class MeltingController extends Controller
         ]);
 
         if ($insert) {
-            $txt = $request->kode_sap." | ".$request->berat_bundle." | KG | 1301 | ".$request->penyimpanan_bundle." | ".date('d.m.Y')." | ".$request->lot_ingot;
-            $config = Storage::disk('diskG')->put( $txt.".txt",  $txt);  //untuk save file beranama testing1.txt dengan isi
+            $isi = $request->kode_sap."|".$request->berat_bundle."|KG|1301|".$request->penyimpanan_bundle."|".date('d.m.Y')."|".$request->lot_ingot;
+            $judul = $request->kode_sap."_".$request->berat_bundle."_KG_1301_".$request->penyimpanan_bundle."_".date('d.m.Y')."_".$request->lot_ingot;
+            $config = Storage::disk('diskG')->put( $judul.".txt",  $isi);  //untuk save file beranama testing1.txt dengan isi
             $material_id = $useable->ConvertMaterialToID($request->material);
             $stok = DB_Stockmaterial::where([['material_id', '=', $material_id], ['sloc', '=', $request->penyimpanan_bundle]])->get();
             $sisa_stock = $stok[0]->actual_stock - $request->berat_bundle;
