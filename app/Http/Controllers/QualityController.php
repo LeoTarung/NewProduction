@@ -21,7 +21,7 @@ class QualityController extends Controller
     public function DTserverkalibrasi(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_QualityKalibrasi::select('id', 'nama_alat', 'no_reg', 'judgement')->latest()->get();
+            $data = DB_QualityKalibrasi::select('id', 'nama_alat', 'no_reg', 'judgement', 'created_at')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditKalibrasi(' . $data->id . ')"></a>';
@@ -50,7 +50,7 @@ class QualityController extends Controller
     public function DTserverdiesapproval(Request $request)
     {
         if ($request->ajax()){
-            $data = DB_QualityDiesApproval::select('id', 'nama_part', 'no_dies', 'sample_approval', 'document_approval', 'status_pengukuran', 'status_submit_sample', 'status_submit_pa', 'status_submit_ipp', 'status_submit_masspro','created_at')->latest()->get();
+            $data = DB_QualityDiesApproval::select('id', 'nama_part', 'no_dies', 'created_at', 'sample_approval', 'document_approval', 'status_pengukuran', 'status_submit_sample', 'status_submit_pa', 'status_submit_ipp', 'status_submit_masspro','created_at')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditDiesApproval(' . $data->id . ')"></a>';
@@ -139,7 +139,7 @@ class QualityController extends Controller
     public function DTserverspectro_hpdc(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_Spectromelting::where('area', 'hpdc')->select('id', 'furnace', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb')->latest()->get();
+            $data = DB_Spectromelting::where('area', 'hpdc')->select('id', 'created_at', 'furnace', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditSpectroHPDC(' . $data->id . ')"></a>';
@@ -218,7 +218,7 @@ class QualityController extends Controller
     public function DTserverspectro_gdc(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_Spectromelting::where('area', 'gdc')->select('id', 'furnace', 'a', 'aa', 'aaa')->latest()->get();
+            $data = DB_Spectromelting::where('area', 'gdc')->select('id', 'created_at' , 'furnace', 'a', 'aa', 'aaa')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditSpectroGDC(' . $data->id . ')"></a>';
@@ -267,7 +267,7 @@ class QualityController extends Controller
     public function DTservermeasurement(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_QualityMeasurementPart::select('id', 'shift', 'proses', 'kategori', 'nama_part_dies', 'qty', 'judgement')->latest()->get();
+            $data = DB_QualityMeasurementPart::select('id', 'shift', 'created_at', 'proses', 'kategori', 'nama_part_dies', 'qty', 'judgement')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditMeasurement(' . $data->id . ')"></a>';
@@ -295,7 +295,7 @@ class QualityController extends Controller
 
     public function DTservermeasurementNOSTAT(Request $request){
         if ($request->ajax()) {
-            $data = DB_QualityMeasurementPart::where('judgement', 0)->select('id', 'shift', 'proses', 'kategori', 'nama_part_dies', 'qty', 'judgement')->latest()->get();
+            $data = DB_QualityMeasurementPart::where('judgement', 0)->select('id', 'created_at', 'shift', 'proses', 'kategori', 'nama_part_dies', 'qty', 'judgement')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditMeasurement(' . $data->id . ')"></a>';
