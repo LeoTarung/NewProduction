@@ -37,7 +37,11 @@ class QualityController extends Controller
                     }
                     return $hasil;
                 })
-                ->rawColumns(['action', 'hasil'])
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
+                ->rawColumns(['action', 'hasil', 'tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -141,6 +145,10 @@ class QualityController extends Controller
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditSpectroHPDC(' . $data->id . ')"></a>';
                     return $btn;
                 })
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
                 ->addColumn('a', function ($row) {
                     if($row->a == 0){
                         $a = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
@@ -201,7 +209,7 @@ class QualityController extends Controller
                     }
                     return $bbb;
                 })
-                ->rawColumns(['action', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb'])
+                ->rawColumns(['action', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb','tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -246,7 +254,11 @@ class QualityController extends Controller
                     }
                     return $aaa;
                 })
-                ->rawColumns(['action', 'a', 'aa', 'aaa'])
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
+                ->rawColumns(['action', 'a', 'aa', 'aaa','tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -271,7 +283,11 @@ class QualityController extends Controller
                     }
                     return $judgement;
                 })
-                ->rawColumns(['action', 'judgement'])
+                ->addColumn('tanggal', function ($row) {
+                    $date = date("Y-m-d", strtotime($row->created_at));
+                    return $date;
+                })
+                ->rawColumns(['action', 'judgement', 'tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }

@@ -77,6 +77,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">NO</th>
+                                                <th class="text-center">TANGGAL</th>
                                                 <th class="text-center">NAMA ALAT</th>
                                                 <th class="text-center">NO REGISTRASI</th>
                                                 <th class="text-center">JUDGEMENT</th>
@@ -136,6 +137,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">NO</th>
+                                                <th class="text-center">TANGGAL</th>
                                                 <th class="text-center">FURNACE - MATERIAL</th>
                                                 <th class="text-center">SHIFT 1A</th>
                                                 <th class="text-center">SHIFT 1B</th>
@@ -165,6 +167,7 @@
                                         <thead>
                                             <tr>
                                                 <th class="text-center">NO</th>
+                                                <th class="text-center">TANGGAL</th>
                                                 <th class="text-center">FURNACE - MATERIAL</th>
                                                 <th class="text-center">SHIFT 1</th>
                                                 <th class="text-center">SHIFT 2</th>
@@ -213,6 +216,7 @@
             ajax: "{{ url('/prod/modal-quality/kalibrasi/data') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                {data: 'tanggal', name: 'tanggal'},
                 {data: 'nama_alat', name: 'nama_alat'},
                 {data: 'no_reg', name: 'no_reg'},
                 {data: 'hasil', name: 'hasil'},
@@ -261,6 +265,7 @@
             ajax: "{{ url('/prod/modal-quality/spectro-hpdc/data') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                { data: 'tanggal', name: 'tanggal' },
                 {data: 'furnace', name: 'furnace'},
                 {data: 'a', name: 'a'},
                 {data: 'b', name: 'b'},
@@ -288,6 +293,7 @@
             ajax: "{{ url('/prod/modal-quality/spectro-gdc/data') }}",
             columns: [
                 { data: 'DT_RowIndex', name: 'DT_RowIndex' },
+                {data: 'tanggal', name: 'tanggal'},
                 {data: 'furnace', name: 'furnace'},
                 {data: 'a', name: 'a'},
                 {data: 'aa', name: 'aa'},

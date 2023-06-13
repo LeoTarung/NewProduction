@@ -188,11 +188,37 @@ Route::name('Casting.')->group(function () {
 
     Route::get('/modal/setupmachine', [CastingController::class, 'OpenModal'])->name('SetupMachine');
     Route::get('/modal/henkatencasting', [CastingController::class, 'OpenModal'])->name('SetupHenkaten');
+    Route::get('/modal/rejectioncasting', [CastingController::class, 'OpenModal'])->name('RejectionCasting');
+    Route::get('/modal/downtimecasting', [CastingController::class, 'OpenModal'])->name('DowntimeCasting');
     Route::get('/modal/addmachine', [CastingController::class, 'OpenModal'])->name('AddSetupMachine');
 
     Route::post('/modal/addmachine/save', [CastingController::class, 'addmachine_save']);
     Route::post('/modal/addmachine/update', [CastingController::class, 'updatemachine_save']);
     Route::post('/prod/api/machinecasting', [CastingController::class, 'Api_idCasting']);
+});
+Route::name('lhpcasting.')->group(function () {
+    //==========[FOR MELTING - LHP]==========\\
+    Route::get('/lhp/casting', [CastingController::class, 'lhp_index'])->name('index');
+    // Route::post('/lhp/meltingRAW/api', [MeltingController::class, 'lhpRAW_api']);
+    // Route::post('/lhp/melting/api', [MeltingController::class, 'lhp_api']);
+    // Route::post('/lhp/melting/check', [MeltingController::class, 'lhp_check']);
+    // Route::get('/lhp-modal/melting', [MeltingController::class, 'lhp_preparation'])->name('preparation');
+    // Route::get('/lhp/melting/{area}/{id}', [MeltingController::class, 'lhp_input'])->name('input');
+    // Route::get('/lhp-modal/melting/kereta/{material}', [MeltingController::class, 'lhp_buttonkereta'])->name('buttonkereta');
+    // Route::post('/lhp-modal/pre-melting/save', [MeltingController::class, 'Pre_lhp_save']);
+    // Route::post('/lhp-modal/melting/save', [MeltingController::class, 'lhp_save']);
+    // Route::get('/lhp-modal/resume-melting/{id}', [MeltingController::class, 'resume_lhp'])->name('resume');
+
+    // Route::get('/lhp-modal/bundleingot/', [MeltingController::class, 'lhp_preparation'])->name('ScanBundleIngot');
+    // Route::get('/lhp/meltingsupply', [MeltingController::class, 'lhp_supply_index'])->name('Supplyindex');
+    // Route::post('/lhp/meltingsupply/check', [MeltingController::class, 'lhp_supply_check']);
+    // Route::get('/lhp-modal/meltingsupply', [MeltingController::class, 'lhp_preparation'])->name('SupplyPreparation');
+    // Route::post('/lhp-modal/pre-meltingsupply/save', [MeltingController::class, 'lhp_presupply_save']);
+    // Route::get('/lhp/meltingsupply/{forklift}/{id}', [MeltingController::class, 'lhp_supply_input'])->name('Supplyinput');
+    // Route::get('/lhp-modal/meltingsupply/cek/{forklift}/{id}', [MeltingController::class, 'lhp_supply_button_input'])->name('SupplyButton');
+    // Route::get('/lhp-modal/resume-meltingsupply/{id}', [MeltingController::class, 'lhp_supply_resume'])->name('Supplyresume');
+    // Route::get('/lhp/modal-meltingsupply/{id}', [MeltingController::class, 'lhp_modal_input'])->name('SupplyInput');
+    // Route::post('/lhp/modal-meltingsupply/save', [MeltingController::class, 'lhp_supply_save']);
 });
 
 //==========[FOR SHIPPING]==========\\

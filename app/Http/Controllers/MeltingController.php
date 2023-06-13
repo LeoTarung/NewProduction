@@ -568,7 +568,7 @@ class MeltingController extends Controller
 
         if ($insert) {
             $isi = $request->kode_sap."|".$request->berat_bundle."|KG|1301|".$request->penyimpanan_bundle."|".date('d.m.Y')."|".$request->lot_ingot;
-            $judul = $request->kode_sap."_".$request->berat_bundle."_KG_1301_".$request->penyimpanan_bundle."_".date('d.m.Y')."_".$request->lot_ingot;
+            $judul = "NM_SAP_TPRO_".date('Ymd')."_".date('His'); //NM_SAP_TPRO_YYYYMMDD_HHMMSS.txt
             $config = Storage::disk('diskG')->put( $judul.".txt",  $isi);  //untuk save file beranama testing1.txt dengan isi
             $material_id = $useable->ConvertMaterialToID($request->material);
             $stok = DB_Stockmaterial::where([['material_id', '=', $material_id], ['sloc', '=', $request->penyimpanan_bundle]])->get();

@@ -3,26 +3,26 @@
         {{-- LOGO NUSAMETAL KIRI --}}
         <li>
             @switch(Route::current()->getName())
-            @case('lhpmelting.input')
-                <a href="{{ Route('lhpmelting.index') }}" class="">
-                    <div class="rectangle-logo shadow">
-                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
-                    </div>
-                </a>
-            @break
-            @case('lhpmelting.Supplyinput')
-                <a href="{{ Route('lhpmelting.Supplyindex') }}" class="">
-                    <div class="rectangle-logo shadow">
-                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
-                    </div>
-                </a>
-            @break
-            @default
-                <a href="{{ Request::url() }}" class="">
-                    <div class="rectangle-logo shadow">
-                        <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
-                    </div>
-                </a>
+                @case('lhpmelting.input')
+                    <a href="{{ Route('lhpmelting.index') }}" class="">
+                        <div class="rectangle-logo shadow">
+                            <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                        </div>
+                    </a>
+                @break
+                @case('lhpmelting.Supplyinput')
+                    <a href="{{ Route('lhpmelting.Supplyindex') }}" class="">
+                        <div class="rectangle-logo shadow">
+                            <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                        </div>
+                    </a>
+                @break
+                @default
+                    <a href="{{ Request::url() }}" class="">
+                        <div class="rectangle-logo shadow">
+                            <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                        </div>
+                    </a>
             @endswitch
         </li>
 

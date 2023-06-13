@@ -183,5 +183,11 @@
     @case('Casting.SetupHenkaten')
             <h1>SETUP FOR HENKATEN</h1>
     @break
+    @case('Casting.RejectionCasting')
+        <h1>THIS IS REJECTION</h1>
+    @break
+    @case('Casting.DowntimeCasting')
+        <h1>THIS IS DOWNTIME</h1>
+    @break
     @default
 @endswitch

@@ -104,4 +104,12 @@ class CastingController extends Controller
         }
         return back()->with('gagal_validasi', 'gagal_validasi');
     }
+
+    //=================[LHP CASTING]=================\\
+    public function lhp_index(UsableController $useable)
+    {
+        $title = "CASTING";
+        $shift = $useable->Shift();
+        return view('lhp-pre-casting',compact('title','shift'));
+    }
 }

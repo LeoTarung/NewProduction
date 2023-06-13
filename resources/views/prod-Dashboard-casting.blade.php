@@ -9,6 +9,8 @@
 <div class="row">
     <div class="col">
         <button class="btn btn-primary mb-2 float-start me-2" onclick="ButtonSetupCasting('SetupMachineCasting')"><i class="fa-solid fa-gears"></i> Machine Casting </button>
+        <button class="btn btn-danger mb-2 float-start me-2" onclick="ButtonSetupCasting('SetupRejection')"><i class="fa-solid fa-not-equal"></i> Rejection </button>
+        <button class="btn text-light mb-2 float-start me-2 bg-orange" onclick="ButtonSetupCasting('SetupDowntime')"><i class="fa-solid fa-stopwatch"></i> Downtime </button>
         <button class="btn btn-danger mb-2 float-start me-2" onclick="ButtonSetupCasting('SetupHenkaten')"><i class="fa-solid fa-screwdriver-wrench"></i> Henkaten</button>
     </div>
 </div>
@@ -155,6 +157,12 @@
         }else if(xx == 'SetupHenkaten'){
             link = '/modal/henkatencasting';
             judul = 'Henkaten For Machine Casting';
+        }else if(xx == 'SetupRejection'){
+            link = '/modal/rejectioncasting';
+            judul = 'Rejection For Machine Casting';
+        }else if(xx == 'SetupDowntime'){
+            link = '/modal/downtimecasting';
+            judul = 'Downtime For Machine Casting';
         }else{
             console.log("Gagal, Hubungi Tim Digitalization");
         }
