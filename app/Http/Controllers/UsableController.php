@@ -39,6 +39,21 @@ class UsableController extends Controller
         return $jam_kerja;
     }
 
+    function Jam_kerja_Efektif()
+    {
+        $shift = $this->Shift();
+        if ($shift == "SHIFT-1") {
+            $jam_kerja = '06:20:00';
+        } elseif ($shift == "SHIFT-2") {
+            $jam_kerja = '07:40:00';
+        } elseif ($shift == "SHIFT-3") {
+            $jam_kerja = '06:45:00';
+        } else {
+            $jam_kerja = '00:00:00';
+        }
+        return $jam_kerja;
+    }
+
     // ============================= // MENENTUKAN TANGGAL // ================================= //
     function date()
     {

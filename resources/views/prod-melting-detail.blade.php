@@ -175,7 +175,7 @@
                 },
                 success: function (data) {
                     $("form").attr("action", "{{ url('/modal/henkatenMelting/update') }}");
-                    $("#furnace").val(data.furnace);
+                    $("#furnace").val(data.mesin);
                     if(data.jenis_henkaten == 'MAN'){
                         $("#MAN").addClass("active", "active");
                         $("#MAN").removeAttr("disabled", "disabled");

@@ -186,19 +186,32 @@ Route::name('lhpmelting.')->group(function () {
 Route::name('Casting.')->group(function () {
     Route::get('/prod/casting', [CastingController::class, 'index']);
 
+    Route::get('/modal/openmodalaja', [CastingController::class, 'OpenModal'])->name('AllSetup');
     Route::get('/modal/setupmachine', [CastingController::class, 'OpenModal'])->name('SetupMachine');
-    Route::get('/modal/henkatencasting', [CastingController::class, 'OpenModal'])->name('SetupHenkaten');
+    Route::get('/modal/henkatencasting', [CastingController::class, 'OpenModal'])->name('DataHenkaten');
+    Route::get('/modal/henkatencasting/add', [CastingController::class, 'OpenModal'])->name('SetupHenkaten');
     Route::get('/modal/rejectioncasting', [CastingController::class, 'OpenModal'])->name('RejectionCasting');
     Route::get('/modal/downtimecasting', [CastingController::class, 'OpenModal'])->name('DowntimeCasting');
     Route::get('/modal/addmachine', [CastingController::class, 'OpenModal'])->name('AddSetupMachine');
 
+    Route::post('/modal/henkatencasting/save', [CastingController::class, 'addhenkaten_save']);
+    Route::post('/modal/henkatencasting/update', [CastingController::class, 'addhenkaten_update']);
     Route::post('/modal/addmachine/save', [CastingController::class, 'addmachine_save']);
     Route::post('/modal/addmachine/update', [CastingController::class, 'updatemachine_save']);
     Route::post('/prod/api/machinecasting', [CastingController::class, 'Api_idCasting']);
+    Route::post('/prod/modal-casting/reject/save', [CastingController::class, 'addRejection']);
+    Route::post('/prod/modal-casting/downtime/save', [CastingController::class, 'addDowntime']);
+
+    Route::get('/prod/modal-casting/downtime/data', [CastingController::class, 'DT_downtime']);
+    Route::get('/prod/modal-casting/Rejection/data', [CastingController::class, 'DT_rejection']);
+
+
 });
 Route::name('lhpcasting.')->group(function () {
     //==========[FOR MELTING - LHP]==========\\
     Route::get('/lhp/casting', [CastingController::class, 'lhp_index'])->name('index');
+    Route::get('/lhp/casting/{mc}/{id_lhp}', [CastingController::class, 'lhpInput_index'])->name('input');
+    Route::post('/lhp-modal/pre-casting/save', [CastingController::class, 'preparation_save']);
     // Route::post('/lhp/meltingRAW/api', [MeltingController::class, 'lhpRAW_api']);
     // Route::post('/lhp/melting/api', [MeltingController::class, 'lhp_api']);
     // Route::post('/lhp/melting/check', [MeltingController::class, 'lhp_check']);
@@ -244,6 +257,8 @@ Route::name('Warehouse.')->group(function () {
     Route::get('/modal/editstockingot', [WarehouseController::class, 'openModal'])->name('editstockingot');
     Route::post('/modal/editstockingot/update', [WarehouseController::class, 'update_stockingot']);
     Route::get('/modal/tpingot', [WarehouseController::class, 'openModal'])->name('tpingot');
+    Route::get('/modal/formtimbangan', [WarehouseController::class, 'openModal'])->name('FromTimbangan');
+    Route::get('/modal/formtimbangan/data', [WarehouseController::class, 'DT_FromTimbangan']);
 });
 //==========[FOR CALENDER OF EVENT]==========\\
 Route::name('CalenderOfEvent.')->group(function () {

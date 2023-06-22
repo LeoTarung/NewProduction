@@ -13,10 +13,11 @@ class CreateDbHenkatenMeltingTable extends Migration
      */
     public function up()
     {
-        Schema::create('db_henkatenMelting', function (Blueprint $table) {
+        Schema::create('db_henkaten', function (Blueprint $table) {
             $table->id();
+            $table->string('area')->nullable();
             $table->string('jenis_henkaten')->nullable();
-            $table->string('furnace')->nullable();
+            $table->string('mesin')->nullable();
             $table->string('shift')->nullable();
             $table->string('deskripsi')->nullable();
             $table->string('problem')->nullable();

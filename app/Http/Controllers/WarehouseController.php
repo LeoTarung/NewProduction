@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\DB_FromTimbanganIngot;
 use App\Models\DB_Stockmaterial;
+use App\Models\DB_Material;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-
+use Yajra\DataTables\DataTables;
 class WarehouseController extends Controller
 {
     public function index_dashboard()
@@ -29,7 +31,7 @@ class WarehouseController extends Controller
         return DB_Stockmaterial::find($request->id);
     }
 
-    public function openModal(){
+    public function openModal(Request $request){
         $Route = Route::current()->getName();
         if($Route == 'Warehouse.setupstockingot'){
             $data = DB_Stockmaterial::with(['DB_Material'])->get();
@@ -37,10 +39,37 @@ class WarehouseController extends Controller
             $data = "";
         }else if($Route == 'Warehouse.tpingot'){
             $data = "";
+        }else if($Route == 'Warehouse.FromTimbangan'){
+            $data = "";
+
+        }elseif($Route == 'Warehouse.editstockingot'){
+            $data = DB_Material::all();
         }else{
             $data = "";
         }
         return view('partial.warehouse-modal',compact('data'));
+    }
+
+    public function DT_FromTimbangan(Request $request){
+            if ($request->ajax()) {
+                $data = DB_FromTimbanganIngot::orderByDesc('id')->get();
+                return DataTables::of($data)->addIndexColumn()
+                    ->addColumn('action', function ($data) {
+                        $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="lihatDataTimbang(' . $data->id . ')"></a>';
+                        return $btn;
+                    })
+                    ->addColumn('kedatangan', function ($row) {
+                        $date = date("Y-m-d", strtotime($row->kedatangan));
+                        return $date;
+                    })
+                    ->addColumn('jam', function ($row) {
+                        $jam = date("h:i:s", strtotime($row->kedatangan));
+                        return $jam;
+                    })
+                    ->rawColumns(['action'])
+                    ->addIndexColumn()
+                    ->make(true);
+            }
     }
 
     public function update_stockingot(Request $request)

@@ -17,6 +17,13 @@
                         </div>
                     </a>
                 @break
+                @case('lhpcasting.input')
+                    <a href="{{ Route('lhpcasting.index') }}" class="">
+                        <div class="rectangle-logo shadow">
+                            <img class="navbarimg" src="/UI/IMG/nusametal-nobg.png" alt="Image" />
+                        </div>
+                    </a>
+                @break
                 @default
                     <a href="{{ Request::url() }}" class="">
                         <div class="rectangle-logo shadow">

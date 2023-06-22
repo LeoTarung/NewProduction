@@ -446,7 +446,7 @@
                             <td>{{date('d F Y', strtotime($henkaten->created_at))}}</td>
                             <td>{{ $henkaten->shift }}</td>
                             <td>{{ $henkaten->jenis_henkaten }}</td>
-                            <td>{{ $henkaten->furnace }}</td>
+                            <td>{{ $henkaten->mesin }}</td>
                             <td class="text-center fw-bold fs-5 text-uppercase {{ $warna }}">{{ $henkaten->status }}</td>
                             <td class="text-center"><a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="edithenkaten('{{ $henkaten->id }}')"></a></td>
                         </tr>

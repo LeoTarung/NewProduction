@@ -55,7 +55,7 @@
         </div>
     </div> --}}
 </div>
-
+{{--
 <script>
     am5.ready(function() {
 
@@ -142,7 +142,7 @@
     loop();
 
     }); // end am5.ready()
-</script>
+</script> --}}
 
 
 
@@ -181,6 +181,75 @@
         });
     }
 
+    function AddRejection(){
+        $.get('/modal/openmodalaja', {}, function (data, status) {
+            $("#staticBackdropLabel").html("SETUP REJECTION"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                dataType: "json",
+                url: "{{ url('/api/rejection/group') }}",
+                success: function (data) {
+                    $("form").attr("action", "{{ url('/prod/modal-casting/reject/save') }}");
+                    var  myHTML = '';
+                    data.forEach(element => {
+                        if (element.casting == 1) {
+                            myHTML +=   '<div class="col-6 col-lg-3">'+
+                                        '<div class="form-check form-check-inline">'+
+                                            '<input class="form-check-input" type="checkbox" checked name="reject[]" value="'+element.id+'" id="reject_'+element.id+'"'+
+                                            '<label class="form-check-label" for="reject">'+element.jenis_reject+'</label>'+
+                                        '</div>'+
+                                    '</div>';
+                        } else{
+                            myHTML +=   '<div class="col-6 col-lg-3">'+
+                                        '<div class="form-check form-check-inline">'+
+                                            '<input class="form-check-input" type="checkbox" name="reject[]" value="'+element.id+'" id="reject_'+element.id+'"'+
+                                            '<label class="form-check-label" for="reject">'+element.jenis_reject+'</label>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                    });
+                    $("#insideCOl").html(myHTML);
+                },
+            });
+        });
+    }
+
+    function AddDowntime(){
+        $.get('/modal/openmodalaja', {}, function (data, status) {
+            $("#staticBackdropLabel").html("SETUP DOWNTIME"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                dataType: "json",
+                url: "{{ url('/api/downtime/group') }}",
+                success: function (data) {
+                    $("form").attr("action", "{{ url('/prod/modal-casting/downtime/save') }}");
+                    var  myHTML = '';
+                    data.forEach(element => {
+                        // console.log(data)
+                        if (element.casting == 1) {
+                            myHTML +=   '<div class="col-6 col-lg-4">'+
+                                        '<div class="form-check form-check-inline text-uppercase">'+
+                                            '<input class="form-check-input" type="checkbox" checked name="downtime[]" value="'+element.id+'" id="downtime_'+element.id+'"'+
+                                            '<label class="form-check-label text-uppercase" for="downtime">'+element.kategori+' - '+element.jenis_downtime+'</label>'+
+                                        '</div>'+
+                                    '</div>';
+                        } else{
+                            myHTML +=   '<div class="col-6 col-lg-4">'+
+                                        '<div class="form-check form-check-inline text-uppercase">'+
+                                            '<input class="form-check-input" type="checkbox" name="downtime[]" value="'+element.id+'" id="downtime_'+element.id+'"'+
+                                            '<label class="form-check-label text-uppercase" for="downtime">'+element.kategori+' - '+element.jenis_downtime+'</label>'+
+                                        '</div>'+
+                                    '</div>';
+                        }
+                    });
+                    $("#insideCOl").html(myHTML);
+                },
+            });
+        });
+    }
+
     function editSetupMachine(xx){
         $.get('/modal/addmachine', {}, function (data, status) {
             $("#staticBackdropLabel").html("EDIT MACHINE "+ xx); //Untuk kasih judul di modal
@@ -213,5 +282,518 @@
             });
         });
     }
+
+    function AddHenkaten(){
+        $.get('/modal/henkatencasting/add', {}, function (data, status) {
+            $("#staticBackdropLabel").html("New Henkaten"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+        });
+    }
+
+    function addhenkaten(xx){
+        if(xx == 'MAN'){
+            $("#form-tambahan").html(
+                '<input type="hidden" name="jenis_henkaten" value="' + xx + '">'+
+                '<div class="mb-3">'+
+                    '<label for="safety">Safety <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                        '<label for="safety_yes">SAFETY</label>'+
+                        '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                        '<label for="safety_no">UNSAFETY</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="kakotora">Kakotora <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="kakotora_yes" name="kakotora" value="yes" checked/>'+
+                        '<label for="kakotora_yes">YA</label>'+
+                        '<input type="radio" id="kakotora_no" name="kakotora" value="no" />'+
+                        '<label for="kakotora_no">TIDAK</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                        '<label for="job_setup_yes">SUDAH</label>'+
+                        '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                        '<label for="job_setup_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="wi_proses">WI proses & IK Check 100% <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="wi_proses_yes" name="wi_proses" value="yes" checked/>'+
+                    '<label for="wi_proses_yes">SUDAH</label>'+
+                        '<input type="radio" id="wi_proses_no" name="wi_proses" value="no" />'+
+                        '<label for="wi_proses_no">BELUM</label>'+
+                    '</div>'+
+                '</div>');
+            $("#form-tambahan1").html('');
+        }else if(xx == 'MACHINE'){
+            $("#form-tambahan").html('');
+            $("#form-tambahan1").html(
+                '<input type="hidden" name="jenis_henkaten" value="' + xx + '">'+
+                '<div class="mb-3">'+
+                    '<label for="safety">Safety <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                        '<label for="safety_yes">SAFETY</label>'+
+                        '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                        '<label for="safety_no">UNSAFETY</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="kakotora">Kakotora <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="kakotora_yes" name="kakotora" value="yes" checked/>'+
+                        '<label for="kakotora_yes">YA</label>'+
+                        '<input type="radio" id="kakotora_no" name="kakotora" value="no" />'+
+                        '<label for="kakotora_no">TIDAK</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_ns">Trial NS <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_ns_yes" name="trial_ns" value="yes" checked/>'+
+                        '<label for="trial_ns_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_ns_no" name="trial_ns" value="no" />'+
+                        '<label for="trial_ns_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="cp_cpk">CP & CPK <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="cp_cpk_yes" name="cp_cpk" value="yes" checked/>'+
+                        '<label for="cp_cpk_yes">SUDAH</label>'+
+                        '<input type="radio" id="cp_cpk_no" name="cp_cpk" value="no" />'+
+                        '<label for="cp_cpk_no">BELUM</label>'+
+                    '</div>'+
+                '</div>');
+        }else if(xx == 'MATERIAL'){
+            $("#form-tambahan").html('');
+            $("#form-tambahan1").html(
+                '<input type="hidden" name="jenis_henkaten" value="' + xx + '">'+
+                '<div class="mb-3">'+
+                    '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                        '<label for="job_setup_yes">SUDAH</label>'+
+                        '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                        '<label for="job_setup_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_ns">Trial NS <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_ns_yes" name="trial_ns" value="yes" checked/>'+
+                        '<label for="trial_ns_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_ns_no" name="trial_ns" value="no" />'+
+                        '<label for="trial_ns_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="cp_cpk">CP & CPK <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="cp_cpk_yes" name="cp_cpk" value="yes" checked/>'+
+                        '<label for="cp_cpk_yes">SUDAH</label>'+
+                        '<input type="radio" id="cp_cpk_no" name="cp_cpk" value="no" />'+
+                        '<label for="cp_cpk_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_proses">Trial Proses <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_proses_yes" name="trial_proses" value="yes" checked/>'+
+                        '<label for="trial_proses_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_proses_no" name="trial_proses" value="no" />'+
+                        '<label for="trial_proses_no">BELUM</label>'+
+                    '</div>'+
+                '</div>');
+        }else if(xx == 'METHODE'){
+            $("#form-tambahan").html('');
+            $("#form-tambahan1").html(
+                '<input type="hidden" name="jenis_henkaten" value="' + xx + '">'+
+                '<div class="mb-3">'+
+                    '<label for="safety">Safety <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                        '<label for="safety_yes">SAFETY</label>'+
+                        '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                        '<label for="safety_no">UNSAFETY</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                        '<label for="job_setup_yes">SUDAH</label>'+
+                        '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                        '<label for="job_setup_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_proses">Trial Proses <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_proses_yes" name="trial_proses" value="yes" checked/>'+
+                        '<label for="trial_proses_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_proses_no" name="trial_proses" value="no" />'+
+                        '<label for="trial_proses_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="cycle_time">Cycle Time <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="cycle_time_yes" name="cycle_time" value="yes" checked/>'+
+                        '<label for="cycle_time_yes">SESUAI</label>'+
+                        '<input type="radio" id="cycle_time_no" name="cycle_time" value="no" />'+
+                        '<label for="cycle_time_no">BELUM SESUAI</label>'+
+                    '</div>'+
+                '</div>'
+            );
+        }else{
+            $("#form-tambahan1").html(
+                '<input type="hidden" name="jenis_henkaten" value="' + xx + '">'+
+                '<div class="mb-3">'+
+                    '<label for="safety">Safety <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                        '<label for="safety_yes">SAFETY</label>'+
+                        '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                        '<label for="safety_no">UNSAFETY</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="kakotora">Kakotora <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="kakotora_yes" name="kakotora" value="yes" checked/>'+
+                        '<label for="kakotora_yes">YA</label>'+
+                        '<input type="radio" id="kakotora_no" name="kakotora" value="no" />'+
+                        '<label for="kakotora_no">TIDAK</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                        '<label for="job_setup_yes">SUDAH</label>'+
+                        '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                        '<label for="job_setup_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="wi_proses">WI proses & IK Check 100% <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="wi_proses_yes" name="wi_proses" value="yes" checked/>'+
+                    '<label for="wi_proses_yes">SUDAH</label>'+
+                        '<input type="radio" id="wi_proses_no" name="wi_proses" value="no" />'+
+                        '<label for="wi_proses_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_ns">Trial NS <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_ns_yes" name="trial_ns" value="yes" checked/>'+
+                        '<label for="trial_ns_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_ns_no" name="trial_ns" value="no" />'+
+                        '<label for="trial_ns_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="cp_cpk">CP & CPK <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="cp_cpk_yes" name="cp_cpk" value="yes" checked/>'+
+                        '<label for="cp_cpk_yes">SUDAH</label>'+
+                        '<input type="radio" id="cp_cpk_no" name="cp_cpk" value="no" />'+
+                        '<label for="cp_cpk_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="trial_proses">Trial Proses <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="trial_proses_yes" name="trial_proses" value="yes" checked/>'+
+                        '<label for="trial_proses_yes">SUDAH</label>'+
+                        '<input type="radio" id="trial_proses_no" name="trial_proses" value="no" />'+
+                        '<label for="trial_proses_no">BELUM</label>'+
+                    '</div>'+
+                '</div>'+
+                '<div class="mb-3">'+
+                    '<label for="cycle_time">Cycle Time <sup>*</sup></label>'+
+                    '<div class="switch-field">'+
+                        '<input type="radio" id="cycle_time_yes" name="cycle_time" value="yes" checked/>'+
+                        '<label for="cycle_time_yes">SESUAI</label>'+
+                        '<input type="radio" id="cycle_time_no" name="cycle_time" value="no" />'+
+                        '<label for="cycle_time_no">BELUM SESUAI</label>'+
+                    '</div>'+
+                '</div>'
+            );
+        }
+    }
+
+    function edithenkaten(xx){
+        $.get('/modal/henkatencasting/add', {}, function (data, status) {
+            $("#staticBackdropLabel").html("Edit Henkaten"); //Untuk kasih judul di modal
+            $("#staticBackdrop").modal("show"); //kalo ID pake "#" kalo class pake "."
+            $("#page").html(data); //menampilkan view create di dalam id page
+            $.ajax({
+                method: "POST",
+                dataType: "json",
+                url: "{{ url('/prod/api/henkaten') }}",
+                data: {
+                    _token: "{{ csrf_token() }}",
+                    id: xx,
+                },
+                success: function (data) {
+                    $("form").attr("action", "{{ url('/modal/henkatencasting/update') }}");
+                    $("#machine").val(data.mesin);
+                    $("#machine").trigger('change');
+                    $("#machine").attr("disabled", "disabled");
+                    if(data.jenis_henkaten == 'MAN'){
+                        $("#MAN").addClass("active", "active");
+                        $("#MAN").removeAttr("disabled", "disabled");
+                        $("#MACHINE").removeClass("active", "active");
+                        $("#MACHINE").attr("disabled", "disabled");
+                        $("#MATERIAL").removeClass("active", "active");
+                        $("#MATERIAL").attr("disabled", "disabled");
+                        $("#METHODE").removeClass("active", "active");
+                        $("#METHODE").attr("disabled", "disabled");
+                        $("#form-tambahan").html(
+                            '<input type="hidden" name="jenis_henkaten" value="' + data.jenis_henkaten + '">'+
+                            '<input type="hidden" name="id_henkaten" value="' + data.id + '">'+
+                            '<div class="mb-3">'+
+                                '<label for="safety">Safety <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                                    '<label for="safety_yes">SAFETY</label>'+
+                                    '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                                    '<label for="safety_no">UNSAFETY</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="kakotora">Kakotora <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="kakotora_yes" name="kakotora" value="yes" checked/>'+
+                                    '<label for="kakotora_yes">YA</label>'+
+                                    '<input type="radio" id="kakotora_no" name="kakotora" value="no" />'+
+                                    '<label for="kakotora_no">TIDAK</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                                    '<label for="job_setup_yes">SUDAH</label>'+
+                                    '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                                    '<label for="job_setup_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="wi_proses">WI proses & IK Check 100% <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="wi_proses_yes" name="wi_proses" value="yes" checked/>'+
+                                '<label for="wi_proses_yes">SUDAH</label>'+
+                                    '<input type="radio" id="wi_proses_no" name="wi_proses" value="no" />'+
+                                    '<label for="wi_proses_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>');
+                        $("#form-tambahan1").html('');
+                        $("#furnace").attr("disabled", "disabled");
+                        $("#deskripsi").html(data.deskripsi);
+                        $("#problem").html(data.problem);
+                        $("#countermeasure").html(data.countermeasure);
+                        $("#status_"+data.status).attr("checked", "checked");
+                        $("#plan_"+data.plan).attr("checked", "checked");
+                        $("#safety_"+data.safety).attr("checked", "checked");
+                        $("#kakotora_"+data.kakotora).attr("checked", "checked");
+                        $("#job_setup_"+data.job_setup).attr("checked", "checked");
+                        $("#wi_proses_"+data.wi_proses).attr("checked", "checked");
+                    }else if(data.jenis_henkaten == 'MACHINE'){
+                        $("#MAN").removeClass("active", "active");
+                        $("#MAN").attr("disabled", "disabled");
+                        $("#MACHINE").addClass("active", "active");
+                        $("#MACHINE").removeAttr("disabled", "disabled");
+                        $("#MATERIAL").removeClass("active", "active");
+                        $("#MATERIAL").attr("disabled", "disabled");
+                        $("#METHODE").removeClass("active", "active");
+                        $("#METHODE").attr("disabled", "disabled");
+                        $("#form-tambahan").html('');
+                        $("#form-tambahan1").html(
+                            '<input type="hidden" name="jenis_henkaten" value="' + data.jenis_henkaten + '">'+
+                            '<input type="hidden" name="id_henkaten" value="' + data.id + '">'+
+                            '<div class="mb-3">'+
+                                '<label for="safety">Safety <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                                    '<label for="safety_yes">SAFETY</label>'+
+                                    '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                                    '<label for="safety_no">UNSAFETY</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="kakotora">Kakotora <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="kakotora_yes" name="kakotora" value="yes" checked/>'+
+                                    '<label for="kakotora_yes">YA</label>'+
+                                    '<input type="radio" id="kakotora_no" name="kakotora" value="no" />'+
+                                    '<label for="kakotora_no">TIDAK</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="trial_ns">Trial NS <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="trial_ns_yes" name="trial_ns" value="yes" checked/>'+
+                                    '<label for="trial_ns_yes">SUDAH</label>'+
+                                    '<input type="radio" id="trial_ns_no" name="trial_ns" value="no" />'+
+                                    '<label for="trial_ns_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="cp_cpk">CP & CPK <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="cp_cpk_yes" name="cp_cpk" value="yes" checked/>'+
+                                    '<label for="cp_cpk_yes">SUDAH</label>'+
+                                    '<input type="radio" id="cp_cpk_no" name="cp_cpk" value="no" />'+
+                                    '<label for="cp_cpk_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'
+                        );
+                        $("#furnace").attr("disabled", "disabled");
+                        $("#deskripsi").html(data.deskripsi);
+                        $("#problem").html(data.problem);
+                        $("#countermeasure").html(data.countermeasure);
+                        $("#status_"+data.status).attr("checked", "checked");
+                        $("#plan_"+data.plan).attr("checked", "checked");
+                        $("#safety_"+data.safety).attr("checked", "checked");
+                        $("#kakotora_"+data.kakotora).attr("checked", "checked");
+                        $("#trial_ns_"+data.trial_ns).attr("checked", "checked");
+                        $("#cp_cpk_"+data.cp_cpk).attr("checked", "checked");
+                    }else if(data.jenis_henkaten == 'MATERIAL'){
+                        $("#MAN").removeClass("active", "active");
+                        $("#MAN").attr("disabled", "disabled");
+                        $("#MACHINE").removeClass("active", "active");
+                        $("#MACHINE").attr("disabled", "disabled");
+                        $("#MATERIAL").addClass("active", "active");
+                        $("#MATERIAL").removeAttr("disabled", "disabled");
+                        $("#METHODE").removeClass("active", "active");
+                        $("#METHODE").attr("disabled", "disabled");
+                        $("#form-tambahan").html('');
+                        $("#form-tambahan1").html(
+                            '<input type="hidden" name="jenis_henkaten" value="' + data.jenis_henkaten + '">'+
+                            '<input type="hidden" name="id_henkaten" value="' + data.id + '">'+
+                            '<div class="mb-3">'+
+                                '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                                    '<label for="job_setup_yes">SUDAH</label>'+
+                                    '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                                    '<label for="job_setup_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="trial_ns">Trial NS <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="trial_ns_yes" name="trial_ns" value="yes" checked/>'+
+                                    '<label for="trial_ns_yes">SUDAH</label>'+
+                                    '<input type="radio" id="trial_ns_no" name="trial_ns" value="no" />'+
+                                    '<label for="trial_ns_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="cp_cpk">CP & CPK <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="cp_cpk_yes" name="cp_cpk" value="yes" checked/>'+
+                                    '<label for="cp_cpk_yes">SUDAH</label>'+
+                                    '<input type="radio" id="cp_cpk_no" name="cp_cpk" value="no" />'+
+                                    '<label for="cp_cpk_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="trial_proses">Trial Proses <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="trial_proses_yes" name="trial_proses" value="yes" checked/>'+
+                                    '<label for="trial_proses_yes">SUDAH</label>'+
+                                    '<input type="radio" id="trial_proses_no" name="trial_proses" value="no" />'+
+                                    '<label for="trial_proses_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'
+                        );
+                        $("#furnace").attr("disabled", "disabled");
+                        $("#deskripsi").html(data.deskripsi);
+                        $("#problem").html(data.problem);
+                        $("#countermeasure").html(data.countermeasure);
+                        $("#status_"+data.status).attr("checked", "checked");
+                        $("#plan_"+data.plan).attr("checked", "checked");
+                        $("#job_setup_"+data.job_setup).attr("checked", "checked");
+                        $("#trial_ns_"+data.trial_ns).attr("checked", "checked");
+                        $("#cp_cpk_"+data.cp_cpk).attr("checked", "checked");
+                        $("#trial_proses_"+data.trial_proses).attr("checked", "checked");
+                        }else if(data.jenis_henkaten == 'METHODE'){
+                        $("#MAN").removeClass("active", "active");
+                        $("#MAN").attr("disabled", "disabled");
+                        $("#MACHINE").removeClass("active", "active");
+                        $("#MACHINE").attr("disabled", "disabled");
+                        $("#MATERIAL").removeClass("active", "active");
+                        $("#MATERIAL").attr("disabled", "disabled");
+                        $("#METHODE").addClass("active", "active");
+                        $("#METHODE").removeAttr("disabled", "disabled");
+                        $("#form-tambahan").html('');
+                        $("#form-tambahan1").html(
+                            '<input type="hidden" name="jenis_henkaten" value="' + data.jenis_henkaten + '">'+
+                            '<input type="hidden" name="id_henkaten" value="' + data.id + '">'+
+                            '<div class="mb-3">'+
+                                '<label for="safety">Safety <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="safety_yes" name="safety" value="yes" checked/>'+
+                                    '<label for="safety_yes">SAFETY</label>'+
+                                    '<input type="radio" id="safety_no" name="safety" value="no" />'+
+                                    '<label for="safety_no">UNSAFETY</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="job_setup">Job_setup <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="job_setup_yes" name="job_setup" value="yes" checked/>'+
+                                    '<label for="job_setup_yes">SUDAH</label>'+
+                                    '<input type="radio" id="job_setup_no" name="job_setup" value="no" />'+
+                                    '<label for="job_setup_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="trial_proses">Trial Proses <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="trial_proses_yes" name="trial_proses" value="yes" checked/>'+
+                                    '<label for="trial_proses_yes">SUDAH</label>'+
+                                    '<input type="radio" id="trial_proses_no" name="trial_proses" value="no" />'+
+                                    '<label for="trial_proses_no">BELUM</label>'+
+                                '</div>'+
+                            '</div>'+
+                            '<div class="mb-3">'+
+                                '<label for="cycle_time">Cycle Time <sup>*</sup></label>'+
+                                '<div class="switch-field">'+
+                                    '<input type="radio" id="cycle_time_yes" name="cycle_time" value="yes" checked/>'+
+                                    '<label for="cycle_time_yes">SESUAI</label>'+
+                                    '<input type="radio" id="cycle_time_no" name="cycle_time" value="no" />'+
+                                    '<label for="cycle_time_no">BELUM SESUAI</label>'+
+                                '</div>'+
+                            '</div>'
+                        );
+                        $("#furnace").attr("disabled", "disabled");
+                        $("#deskripsi").html(data.deskripsi);
+                        $("#problem").html(data.problem);
+                        $("#countermeasure").html(data.countermeasure);
+                        $("#status_"+data.status).attr("checked", "checked");
+                        $("#plan_"+data.plan).attr("checked", "checked");
+                        $("#safety_"+data.safety).attr("checked", "checked");
+                        $("#job_setup_"+data.job_setup).attr("checked", "checked");
+                        $("#trial_proses_"+data.trial_proses).attr("checked", "checked");
+                        $("#cycle_time_"+data.cycle_time).attr("checked", "checked");
+                    }
+                },
+            });
+        });
+    }
+
 </script>
 @endsection

@@ -8,7 +8,7 @@ use App\Models\DB_LhpMeltingSupply;
 use App\Models\DB_LhpMeltingSupplyRAW;
 use App\Models\DB_Furnace;
 use App\Models\DB_Kereta;
-use App\Models\DB_HenkatenMelting;
+use App\Models\DB_Henkaten;
 use App\Models\DB_TransaksiIngot;
 use App\Models\DB_MesinCasting;
 use App\Models\DB_ForkliftMelting;
@@ -155,7 +155,7 @@ class MeltingController extends Controller
     public function furnace_henkaten(Request $request, $furnace)
     {
         if ($request->ajax()) {
-            $data = DB_HenkatenMelting::where('furnace', '=', $furnace)->latest()->get();
+            $data = DB_Henkaten::where('area', 'melting')->where('mesin', $furnace)->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="DetailsHenkaten(' . $data->id . ')"></a>';
@@ -268,13 +268,13 @@ class MeltingController extends Controller
     //==============================['Henkaten']==============================//
     public function henkatenModal()
     {
-        $data = DB_HenkatenMelting::where('status', '=', 'open')->latest()->get();
+        $data = DB_Henkaten::where('area', 'melting')->where('status', '=', 'open')->latest()->get();
         return view('partial.melting-modal', compact('data'));
     }
 
     public function henkatenAPI(Request $request)
     {
-        $data = DB_HenkatenMelting::find($request->id);
+        $data = DB_Henkaten::find($request->id);
         return $data;
     }
 
@@ -295,9 +295,10 @@ class MeltingController extends Controller
             return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
         }
 
-        $insert = DB_HenkatenMelting::create([
+        $insert = DB_Henkaten::create([
+            'area' => 'melting',
             'jenis_henkaten' => $request->jenis_henkaten,
-            'furnace' => $request->furnace,
+            'mesin' => $request->furnace,
             'shift' => $shift,
             'deskripsi' => $request->deskripsi,
             'problem' => $request->problem,
@@ -337,7 +338,7 @@ class MeltingController extends Controller
             return redirect('/prod/melting')->with('gagal_validasi', 'gagal_validasi');
         }
 
-        $insert = DB_HenkatenMelting::where('id', '=', $request->id_henkaten)->update([
+        $insert = DB_Henkaten::where('id', '=', $request->id_henkaten)->update([
             'deskripsi' => $request->deskripsi,
             'problem' => $request->problem,
             'countermeasure' => $request->countermeasure,
@@ -481,7 +482,7 @@ class MeltingController extends Controller
 
         $insert = DB_Furnace::create([
             'furnace' => $request->furnace,
-            'material' => $request->material,
+            'material_id' => $request->material,
             'kode_status' => $request->kode_status,
         ]);
         if ($insert) {
