@@ -39,6 +39,18 @@ class CastingController extends Controller
         return view('partial.casting-modal',compact('data'));
     }
 
+    public function OpenModal_LHP(Request $request){
+        $Route = Route::current()->getName();
+        if($Route == 'lhpcasting.printQR'){
+            $data = "";
+        }else if($Route == 'lhpcasting.scanQR'){
+            $data = "";
+        }else{
+            $data = "";
+        }
+        return view('partial.casting-modal',compact('data'));
+    }
+
     public function index()
     {
         $title = "CASTING";
@@ -375,6 +387,7 @@ class CastingController extends Controller
 
     public function lhpInput_index(UsableController $useable, $mc, $id_lhp){
         $title = "CASTING";
+        $area = $mc;
         $shift = $useable->Shift();
         $date = $useable->date();
         $hour = $useable->hour();
@@ -388,7 +401,7 @@ class CastingController extends Controller
             return redirect("/lhp/casting")->with('gagal_validasi', 'gagal_validasi');
         }
         $data = DB_LhpCasting::where('id', $id_lhp)->with(['DB_MesinCasting', 'DB_Jenis_Downtime'])->get();
-        return view('lhp-ipt-casting',compact('title','shift','data'));
+        return view('lhp-ipt-casting',compact('title','shift','data','area'));
 
     }
 }

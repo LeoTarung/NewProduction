@@ -502,7 +502,26 @@ io.on("connection", (socket) => {
         // );
     }
     AmbilDariDB()
-    setInterval(AmbilDariDB, 3000);
+    var timesRun = 0;
+    var interval;
+    function startInterval() {
+    interval = setInterval(function(){
+            AmbilDariDB()
+        timesRun += 1;
+
+        if (timesRun === 10) {
+            console.log('interval stopped');
+            clearInterval(interval);
+            timesRun = 0; // Mengatur ulang nilai timesRun ke 0
+            startInterval(); // Memulai interval kembali
+        }
+
+        // Lakukan apa pun yang diperlukan di sini..
+    }, 3000);
+    }
+    // Memulai interval pertama kali
+    startInterval();
+
 });
 
 server.listen(1553, () => {

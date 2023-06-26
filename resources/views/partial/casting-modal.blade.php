@@ -1,3 +1,4 @@
+<link href="/UI/CSS/bootstrap.css" rel="stylesheet" />
 @switch(Route::current()->getName())
     @case('Casting.AllSetup')
         <form action="{{ url('/prod/modal-casting/reject/save') }}" method="POST" enctype="multipart/form-data" onsubmit="DisabledButtomSubmit()">
@@ -421,5 +422,104 @@
             });
         </script>
     @break
+    @case('lhpcasting.printQR')
+        <style>
+            #PrintContent {
+                width: 920px;
+                /* height: 1900px; */
+                height: 1905px;
+                /* padding-top: 10px; */
+                /* line-height: 35px; */
+                /* overflow: auto; */
+                /* font-family: 'Instrument Serif', serif; */
+                /* font-family: 'Snippet', sans-serif; */
+                /* font-family: "Source Sans Pro", sans-serif; */
+                background-color: #ffffff;
+                /* border: 1px solid black !important; */
+
+            }
+
+            .printArea {
+                width: 100%;
+                height: 1680px;
+                margin-bottom: 180px;
+                border: 3px solid rgb(255, 2, 2) !important;
+            }
+        </style>
+    {{-- <button id="btn">print Image</button> --}}
+        <div id="PrintContent">
+            <div class="printArea">
+                <h1>123456789011121314151617181920</h1>
+            </div>
+        </div>
+        <script>
+             var IminPrintInstance = new IminPrinter();
+            IminPrintInstance.connect().then(async (isConnect) => {
+                if (isConnect) {
+                    IminPrintInstance.initPrinter();
+                    var node = document.getElementById("PrintContent");
+                        domtoimage.toJpeg(node).then(function(dataUrl) {
+                            console.log(dataUrl);
+                            IminPrintInstance.printSingleBitmap(dataUrl);
+                            IminPrintInstance.printAndFeedPaper(10);
+                        });
+                }
+            });
+            // var IminPrintInstance = new IminPrinter();
+            // IminPrintInstance.connect().then(async (isConnect) => {
+            //     if (isConnect) {
+            //         IminPrintInstance.initPrinter();
+            //         document.querySelector("#btn").addEventListener("click", () => {
+            //             var node = document.getElementById("PrintContent");
+            //             domtoimage.toJpeg(node).then(function(dataUrl) {
+            //                 console.log(dataUrl);
+            //                 IminPrintInstance.printSingleBitmap(dataUrl);
+            //                 IminPrintInstance.printAndFeedPaper(10);
+            //             });
+            //         });
+            //     }
+            // });
+        </script>
+    @break
+    @case('lhpcasting.scanQR')
+        <div class="row">
+            <div class="col-4 bg-primary" >
+                <div class="mt-4 mx-auto" style="width: 70%;" id="reader"></div>
+            </div>
+            <div class="col-8 bg-secondary">
+
+            </div>
+        </div>
+
+        <script>
+            var html5QrcodeScanner = new Html5QrcodeScanner(
+                "reader", {
+                    fps: 10,
+                    qrbox: 250
+                });
+            html5QrcodeScanner.render(onScanSuccess);
+
+            function onScanSuccess(decodedText, decodedResult) {
+                // Handle on success condition with the decoded text or result.
+                alert(`Scan result: ${decodedText}`, decodedResult);
+                // ...
+                html5QrcodeScanner.clear();
+                // ^ this will stop the scanner (video feed) and clear the scan area.
+            }
+
+            html5QrcodeScanner.render(onScanSuccess);
+
+            function onScanSuccess(decodedText, decodedResult) {
+                // Handle on success condition with the decoded text or result.
+                alert(`Scan result: ${decodedText}`, decodedResult);
+            }
+
+            function onScanError(errorMessage) {
+                alert('ScanQR Code Is Failed, Please try again...');
+            }
+        </script>
+    @break
+    {{-- @case()
+    @break --}}
     @default
 @endswitch

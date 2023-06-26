@@ -212,6 +212,9 @@ Route::name('lhpcasting.')->group(function () {
     Route::get('/lhp/casting', [CastingController::class, 'lhp_index'])->name('index');
     Route::get('/lhp/casting/{mc}/{id_lhp}', [CastingController::class, 'lhpInput_index'])->name('input');
     Route::post('/lhp-modal/pre-casting/save', [CastingController::class, 'preparation_save']);
+    Route::get('/lhp-casting/printqr', [CastingController::class, 'OpenModal_lhp'])->name('printQR');
+    Route::get('/lhp-casting/scanqrtag', [CastingController::class, 'OpenModal_lhp'])->name('scanQR');
+
     // Route::post('/lhp/meltingRAW/api', [MeltingController::class, 'lhpRAW_api']);
     // Route::post('/lhp/melting/api', [MeltingController::class, 'lhp_api']);
     // Route::post('/lhp/melting/check', [MeltingController::class, 'lhp_check']);

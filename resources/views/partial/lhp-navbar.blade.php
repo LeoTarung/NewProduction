@@ -10,6 +10,7 @@
                         </div>
                     </a>
                 @break
+
                 @case('lhpmelting.Supplyinput')
                     <a href="{{ Route('lhpmelting.Supplyindex') }}" class="">
                         <div class="rectangle-logo shadow">
@@ -17,6 +18,7 @@
                         </div>
                     </a>
                 @break
+
                 @case('lhpcasting.input')
                     <a href="{{ Route('lhpcasting.index') }}" class="">
                         <div class="rectangle-logo shadow">
@@ -24,6 +26,7 @@
                         </div>
                     </a>
                 @break
+
                 @default
                     <a href="{{ Request::url() }}" class="">
                         <div class="rectangle-logo shadow">
@@ -43,6 +46,7 @@
                         </div>
                     </a>
                 @break
+
                 @case('lhpmelting.Supplyinput')
                     <a onclick="resumeMeltingSupply('{{ $id }}', '{{ $area }}')">
                         <div class="shift border-bottom">
@@ -50,6 +54,7 @@
                         </div>
                     </a>
                 @break
+
                 @default
                     <a>
                         <div class="shift border-bottom">
@@ -72,7 +77,7 @@
         <li>
             @switch(Route::current()->getName())
                 @case('lhpmelting.input')
-                    <a  class="navitems">
+                    <a class="navitems">
                         <div class="nrp">
                             <div class="font-white"> NRP : </div>
                         </div>
@@ -81,18 +86,63 @@
                         </div>
                     </a>
                 @break
+
                 @case('lhpmelting.Supplyinput')
-                <a  class="navitems">
-                    <div class="nrp">
-                        <div class="font-white"> NRP : </div>
-                    </div>
-                    <div class="nrp nrp-child border-bottom ">
-                        <div class="font-white fw-bold">{{ $data->nrp }}</div>
-                    </div>
-                </a>
+                    <a class="navitems">
+                        <div class="nrp">
+                            <div class="font-white"> NRP : </div>
+                        </div>
+                        <div class="nrp nrp-child border-bottom ">
+                            <div class="font-white fw-bold">{{ $data->nrp }}</div>
+                        </div>
+                    </a>
                 @break
+
+                @case('lhpcasting.input')
+                    <a class="navitems">
+                        <div class="nrp">
+                            <div class="font-white"> NRP : </div>
+                        </div>
+                        <div class="nrp nrp-child border-bottom ">
+                            @if ($data[0]->nrp2 == null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }}</div>
+                            @elseif (
+                                $data[0]->nrp2 != null &&
+                                    $data[0]->nrp3 == null &&
+                                    $data[0]->nrp4 == null &&
+                                    $data[0]->nrp5 == null &&
+                                    $data[0]->nrp6 == null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }}</div>
+                            @elseif($data[0]->nrp3 != null && $data[0]->nrp4 == null && $data[0]->nrp5 == null && $data[0]->nrp6 == null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }} |
+                                    {{ $data[0]->nrp3 }}
+                                </div>
+                            @elseif($data[0]->nrp4 != null && $data[0]->nrp5 == null && $data[0]->nrp6 == null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }} |
+                                    {{ $data[0]->nrp3 }} | {{ $data[0]->nrp4 }}
+                                </div>
+                            @elseif($data[0]->nrp5 != null && $data[0]->nrp6 == null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }} |
+                                    {{ $data[0]->nrp3 }} | {{ $data[0]->nrp4 }} | {{ $data[0]->nrp5 }}
+                                </div>
+                            @elseif($data[0]->nrp6 != null)
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }} |
+                                    {{ $data[0]->nrp3 }} | {{ $data[0]->nrp4 }} | {{ $data[0]->nrp5 }} |
+                                    {{ $data[0]->nrp6 }}
+                                </div>
+                            @else
+                                <div class="font-white fw-bold">{{ $data[0]->nrp1 }} | {{ $data[0]->nrp2 }} |
+                                    {{ $data[0]->nrp3 }} | {{ $data[0]->nrp4 }} | {{ $data[0]->nrp5 }} |
+                                    {{ $data[0]->nrp6 }}
+                                </div>
+                            @endif
+
+                        </div>
+                    </a>
+                @break
+
                 @default
-                    <a  class="navitems">
+                    <a class="navitems">
                         <div class="nrp">
                             <div class="font-white"> SILAHKAN </div>
                         </div>
@@ -109,21 +159,31 @@
                 @case('lhpmelting.Supplyinput')
                     <a href="{{ Route('lhpmelting.Supplyindex') }}" class="machine shadow-lg">
                         <div class="mesin">
-                                <div class="font-white"> {{ $area }} </div>
+                            <div class="font-white"> {{ $area }} </div>
                         </div>
                     </a>
                 @break
+
                 @case('lhpmelting.input')
                     <a href="{{ Route('lhpmelting.index') }}" class="machine shadow-lg">
                         <div class="mesin">
-                                <div class="font-white"> {{ $area }} </div>
+                            <div class="font-white"> {{ $area }} </div>
                         </div>
                     </a>
                 @break
+
+                @case('lhpcasting.input')
+                    <a href="{{ Route('lhpcasting.index') }}" class="machine shadow-lg">
+                        <div class="mesin">
+                            <div class="font-white">MC-{{ $area }} </div>
+                        </div>
+                    </a>
+                @break
+
                 @default
                     <a href="" class="machine shadow-lg">
                         <div class="mesin">
-                                <div class="font-white"> AREA PROSES </div>
+                            <div class="font-white"> AREA PROSES </div>
                         </div>
                     </a>
             @endswitch

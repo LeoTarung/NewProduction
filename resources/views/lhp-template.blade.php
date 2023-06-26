@@ -9,7 +9,7 @@
     <meta name="author" content="" />
     <title>LHP | {{ $title }} </title>
     {{-- //============[ CSS IN HERE ]============// --}}
-    <link  rel="stylesheet" type="text/css" href="/UI/CSS/styles.css"/>
+    <link rel="stylesheet" type="text/css" href="/UI/CSS/styles.css" />
     <link rel="stylesheet" type="text/css" href="/UI/CSS/style_lhp.css">
     <link rel="stylesheet" type="text/css" href="/UI/CSS/font.css">
     <script src="/UI/JS/fontawesomeV610.js"></script>
@@ -20,6 +20,10 @@
     <script src="/UI/JS/jquerydatatables.js"></script>
     <script src="/UI/JS/Socketio454.js"></script>
     <script src="/UI/JS/select2.js"></script>
+    <script src="/UI/JS/html5-qrcode.min.js"></script>
+    <script src="/UI/JS/unpkghtml5-qrcode.min.js" type="text/javascript"></script>
+    <script src="/UI/JS/dom-to-image.js"></script>
+    <script src="/UI/JS/imin-printer.min.js"></script>
 </head>
 
 <body>
@@ -29,16 +33,18 @@
             @include('partial/sweetallert')
             @yield('content')
 
-            <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                aria-labelledby="staticBackdropLabel" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered modal-lg">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
-                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h1 class="modal-title fs-5" id="staticBackdropLabel"></h1>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body" id="page">
+                        </div>
                     </div>
-                    <div class="modal-body" id="page">
-                    </div>
-                  </div>
                 </div>
             </div>
 
