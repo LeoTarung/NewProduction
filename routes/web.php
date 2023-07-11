@@ -17,6 +17,8 @@ use App\Http\Controllers\QualityController;
 // TESTING FS
 use App\Http\Controllers\BadNewsFirstController;
 use App\Http\Controllers\CalenderOfEventController;
+// use App\Http\Controllers\MachiningController;
+
 // TESTING FS
 
 /*
@@ -35,7 +37,7 @@ Route::get('/', function () {
 });
 
 Route::get('/comingsoon/{mesin}', function ($mesin) {
-    return view('TV-Comingsoon',compact('mesin'));
+    return view('TV-Comingsoon', compact('mesin'));
 });
 
 
@@ -83,7 +85,7 @@ Route::get('/lhp', function () {
 Route::get('/tv', function () {
     $judul = "NANTI JUDUL AKAN ADA DISINI";
     $title = "TEMPLATE";
-    return view('TV-template', compact('judul','title'));
+    return view('TV-template', compact('judul', 'title'));
 });
 
 Route::get('/tv/Rmeeting', function () {
@@ -204,8 +206,6 @@ Route::name('Casting.')->group(function () {
 
     Route::get('/prod/modal-casting/downtime/data', [CastingController::class, 'DT_downtime']);
     Route::get('/prod/modal-casting/Rejection/data', [CastingController::class, 'DT_rejection']);
-
-
 });
 Route::name('lhpcasting.')->group(function () {
     //==========[FOR MELTING - LHP]==========\\
@@ -214,6 +214,7 @@ Route::name('lhpcasting.')->group(function () {
     Route::post('/lhp-modal/pre-casting/save', [CastingController::class, 'preparation_save']);
     Route::get('/lhp-casting/printqr', [CastingController::class, 'OpenModal_lhp'])->name('printQR');
     Route::get('/lhp-casting/scanqrtag', [CastingController::class, 'OpenModal_lhp'])->name('scanQR');
+
 
     // Route::post('/lhp/meltingRAW/api', [MeltingController::class, 'lhpRAW_api']);
     // Route::post('/lhp/melting/api', [MeltingController::class, 'lhp_api']);
@@ -304,6 +305,9 @@ Route::name('Quality.')->group(function () {
     Route::get('/prod/modal-quality/measurement/table', [QualityController::class, 'OpenModal'])->name('measurement');
     Route::post('/prod/modal-quality/measurement/save', [QualityController::class, 'measurement_save']);
     Route::post('/prod/modal-quality/measurement/update', [QualityController::class, 'measurement_update']);
+    Route::post('/prod/modal-quality/measurement/update/cmm/{id}', [QualityController::class, 'PostCMM']);
+    Route::post('/prod/modal-quality/measurement/update/judgement/{id}', [QualityController::class, 'PostJudgement']);
+    Route::post('/prod/modal-quality/measurement/update/waktu_aktual', [QualityController::class, 'UpdateWaktuAktual']);
 
     Route::get('/prod/modal-quality/kalibrasi', [QualityController::class, 'OpenModal'])->name('AddKalibrasi');
     Route::post('/prod/modal-quality/kalibrasi/save', [QualityController::class, 'kalibrasi_save']);
@@ -333,6 +337,8 @@ Route::name('Quality.')->group(function () {
     Route::post('/prod/modal-quality/diesapproval/api', [QualityController::class, 'Api_diesapproval']);
     Route::post('/prod/modal-quality/spectro/api', [QualityController::class, 'Api_spectro']);
 
+    Route::get('/prod/CMM/Measurement/test', [QualityController::class, 'CMM_Measurement']);
+    Route::get('/prod/dies/approval', [QualityController::class, 'Dies_Aprroval']);
 });
 
 

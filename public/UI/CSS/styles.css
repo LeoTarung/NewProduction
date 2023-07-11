@@ -11513,6 +11513,7 @@ body {
   background-color: #f8f9fa;
   color: #212529;
 }
+
 .sb-sidenav-light .sb-sidenav-menu .sb-sidenav-menu-heading {
   color: #adb5bd;
 }
@@ -11817,4 +11818,14 @@ body {
 .gradient-color-green,
 .gradient-color-green::after {
     background: var(--gradient-color-green);
+}
+
+.select2-container{
+  z-index:100000;
+}
+.select2-close-mask{
+  z-index: 2099;
+}
+.select2-dropdown{
+  z-index: 3051;
 }

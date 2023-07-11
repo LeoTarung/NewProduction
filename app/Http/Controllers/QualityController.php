@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\DB_QualityKalibrasi;
 use App\Models\DB_Spectromelting;
 use App\Models\DB_QualityMeasurementPart;
+use App\Models\DB_MesinCasting;
 use Illuminate\Support\Facades\Validator;
 use Yajra\DataTables\DataTables;
 
@@ -15,7 +16,8 @@ class QualityController extends Controller
     public function index_prod()
     {
         $title = "QUALITY";
-        return view('prod-Dashboard-quality',compact('title'));
+
+        return view('prod-Dashboard-quality', compact('title'));
     }
 
     public function DTserverkalibrasi(Request $request)
@@ -28,11 +30,11 @@ class QualityController extends Controller
                     return $btn;
                 })
                 ->addColumn('hasil', function ($row) {
-                    if($row->judgement == 0){
+                    if ($row->judgement == 0) {
                         $hasil = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->judgement == 1){
+                    } elseif ($row->judgement == 1) {
                         $hasil = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $hasil = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $hasil;
@@ -49,79 +51,79 @@ class QualityController extends Controller
 
     public function DTserverdiesapproval(Request $request)
     {
-        if ($request->ajax()){
-            $data = DB_QualityDiesApproval::select('id', 'nama_part', 'no_dies', 'created_at', 'sample_approval', 'document_approval', 'status_pengukuran', 'status_submit_sample', 'status_submit_pa', 'status_submit_ipp', 'status_submit_masspro','created_at')->latest()->get();
+        if ($request->ajax()) {
+            $data = DB_QualityDiesApproval::select('id', 'nama_part', 'no_dies', 'created_at', 'sample_approval', 'document_approval', 'status_pengukuran', 'status_submit_sample', 'status_submit_pa', 'status_submit_ipp', 'status_submit_masspro', 'created_at')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditDiesApproval(' . $data->id . ')"></a>';
                     return $btn;
                 })
                 ->addColumn('sample_approval', function ($row) {
-                    if($row->sample_approval == 0){
+                    if ($row->sample_approval == 0) {
                         $sample_approval = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->sample_approval == 1){
+                    } elseif ($row->sample_approval == 1) {
                         $sample_approval = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $sample_approval = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $sample_approval;
                 })
                 ->addColumn('document_approval', function ($row) {
-                    if($row->document_approval == 0){
+                    if ($row->document_approval == 0) {
                         $document_approval = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->document_approval == 1){
+                    } elseif ($row->document_approval == 1) {
                         $document_approval = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $document_approval = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $document_approval;
                 })
                 ->addColumn('status_pengukuran', function ($row) {
-                    if($row->status_pengukuran == 0){
+                    if ($row->status_pengukuran == 0) {
                         $status_pengukuran = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->status_pengukuran == 1){
+                    } elseif ($row->status_pengukuran == 1) {
                         $status_pengukuran = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $status_pengukuran = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $status_pengukuran;
                 })
                 ->addColumn('status_submit_sample', function ($row) {
-                    if($row->status_submit_sample == 0){
+                    if ($row->status_submit_sample == 0) {
                         $status_submit_sample = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->status_submit_sample == 1){
+                    } elseif ($row->status_submit_sample == 1) {
                         $status_submit_sample = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $status_submit_sample = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $status_submit_sample;
                 })
                 ->addColumn('status_submit_pa', function ($row) {
-                    if($row->status_submit_pa == 0){
+                    if ($row->status_submit_pa == 0) {
                         $status_submit_pa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->status_submit_pa == 1){
+                    } elseif ($row->status_submit_pa == 1) {
                         $status_submit_pa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $status_submit_pa = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $status_submit_pa;
                 })
                 ->addColumn('status_submit_ipp', function ($row) {
-                    if($row->status_submit_ipp == 0){
+                    if ($row->status_submit_ipp == 0) {
                         $status_submit_ipp = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->status_submit_ipp == 1){
+                    } elseif ($row->status_submit_ipp == 1) {
                         $status_submit_ipp = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $status_submit_ipp = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $status_submit_ipp;
                 })
                 ->addColumn('status_submit_masspro', function ($row) {
-                    if($row->status_submit_masspro == 0){
+                    if ($row->status_submit_masspro == 0) {
                         $status_submit_masspro = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->status_submit_masspro == 1){
+                    } elseif ($row->status_submit_masspro == 1) {
                         $status_submit_masspro = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $status_submit_masspro = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $status_submit_masspro;
@@ -150,66 +152,66 @@ class QualityController extends Controller
                     return $date;
                 })
                 ->addColumn('a', function ($row) {
-                    if($row->a == 0){
+                    if ($row->a == 0) {
                         $a = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->a == 1){
+                    } elseif ($row->a == 1) {
                         $a = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $a = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $a;
                 })
                 ->addColumn('aa', function ($row) {
-                    if($row->aa == 0){
+                    if ($row->aa == 0) {
                         $aa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->aa == 1){
+                    } elseif ($row->aa == 1) {
                         $aa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $aa = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $aa;
                 })
                 ->addColumn('aaa', function ($row) {
-                    if($row->aaa == 0){
+                    if ($row->aaa == 0) {
                         $aaa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->aaa == 1){
+                    } elseif ($row->aaa == 1) {
                         $aaa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $aaa = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $aaa;
                 })
                 ->addColumn('b', function ($row) {
-                    if($row->b == 0){
+                    if ($row->b == 0) {
                         $b = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->b == 1){
+                    } elseif ($row->b == 1) {
                         $b = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $b = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $b;
                 })
                 ->addColumn('bb', function ($row) {
-                    if($row->bb == 0){
+                    if ($row->bb == 0) {
                         $bb = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->bb == 1){
+                    } elseif ($row->bb == 1) {
                         $bb = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $bb = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $bb;
                 })
                 ->addColumn('bbb', function ($row) {
-                    if($row->bbb == 0){
+                    if ($row->bbb == 0) {
                         $bbb = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->bbb == 1){
+                    } elseif ($row->bbb == 1) {
                         $bbb = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $bbb = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $bbb;
                 })
-                ->rawColumns(['action', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb','tanggal'])
+                ->rawColumns(['action', 'a', 'aa', 'aaa', 'b', 'bb', 'bbb', 'tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -218,38 +220,38 @@ class QualityController extends Controller
     public function DTserverspectro_gdc(Request $request)
     {
         if ($request->ajax()) {
-            $data = DB_Spectromelting::where('area', 'gdc')->select('id', 'created_at' , 'furnace', 'a', 'aa', 'aaa')->latest()->get();
+            $data = DB_Spectromelting::where('area', 'gdc')->select('id', 'created_at', 'furnace', 'a', 'aa', 'aaa')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
                     $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditSpectroGDC(' . $data->id . ')"></a>';
                     return $btn;
                 })
                 ->addColumn('a', function ($row) {
-                    if($row->a == 0){
+                    if ($row->a == 0) {
                         $a = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->a == 1){
+                    } elseif ($row->a == 1) {
                         $a = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $a = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $a;
                 })
                 ->addColumn('aa', function ($row) {
-                    if($row->aa == 0){
+                    if ($row->aa == 0) {
                         $aa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->aa == 1){
+                    } elseif ($row->aa == 1) {
                         $aa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $aa = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $aa;
                 })
                 ->addColumn('aaa', function ($row) {
-                    if($row->aaa == 0){
+                    if ($row->aaa == 0) {
                         $aaa = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->aaa == 1){
+                    } elseif ($row->aaa == 1) {
                         $aaa = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $aaa = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $aaa;
@@ -258,7 +260,7 @@ class QualityController extends Controller
                     $date = date("Y-m-d", strtotime($row->created_at));
                     return $date;
                 })
-                ->rawColumns(['action', 'a', 'aa', 'aaa','tanggal'])
+                ->rawColumns(['action', 'a', 'aa', 'aaa', 'tanggal'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -274,11 +276,11 @@ class QualityController extends Controller
                     return $btn;
                 })
                 ->addColumn('judgement', function ($row) {
-                    if($row->judgement == 0){
+                    if ($row->judgement == 0) {
                         $judgement = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->judgement == 1){
+                    } elseif ($row->judgement == 1) {
                         $judgement = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $judgement = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $judgement;
@@ -287,31 +289,81 @@ class QualityController extends Controller
                     $date = date("Y-m-d", strtotime($row->created_at));
                     return $date;
                 })
-                ->rawColumns(['action', 'judgement', 'tanggal'])
+                ->addColumn('mesin_cmm', function ($row) {
+                    $cmm = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
+                    return $cmm;
+                })
+                ->rawColumns(['action', 'judgement', 'tanggal', 'mesin_cmm'])
                 ->addIndexColumn()
                 ->make(true);
         }
     }
 
-    public function DTservermeasurementNOSTAT(Request $request){
+    public function DTservermeasurementNOSTAT(Request $request)
+    {
         if ($request->ajax()) {
-            $data = DB_QualityMeasurementPart::where('judgement', 0)->select('id', 'created_at', 'shift', 'proses', 'kategori', 'nama_part_dies', 'qty', 'judgement')->latest()->get();
+            $data = DB_QualityMeasurementPart::select('id', 'created_at', 'shift', 'proses', 'kategori', 'nama_part_dies', 'cmm', 'qty', 'judgement')->latest()->get();
             return DataTables::of($data)->addIndexColumn()
                 ->addColumn('action', function ($data) {
-                    $btn = '<a class="btn fa-solid fa-pen-to-square fa-lg text-warning" onclick="EditMeasurement(' . $data->id . ')"></a>';
+                    $aksiJudgement = '';
+                    $btn = "";
+                    if ($data->judgement == 0) {
+                        $btn = '<input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined3' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',1)">
+                        <label class="btn btn-outline-success" for="success-outlined3' . $data->id . '">OK</label>
+                        <input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined4' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',1)"> 
+                        <label class="btn btn-outline-success" for="success-outlined4' . $data->id . '">NG</label>';
+                    } elseif ($data->judgement == 1) {
+                        $btn =  '<input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined3' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',1)" checked>
+                        <label class="btn btn-outline-success" for="success-outlined3' . $data->id . '">OK</label>
+                        <input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined4' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',2)"> 
+                        <label class="btn btn-outline-success" for="success-outlined4' . $data->id . '">NG</label>';
+                    } elseif ($data->judgement == 2) {
+                        $btn =   '<input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined3' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',1)">
+                        <label class="btn btn-outline-success" for="success-outlined3' . $data->id . '">OK</label>
+                        <input type="radio" class="btn-check" name="judgement2' . $data->id . '" id="success-outlined4' . $data->id . '" autocomplete="off" onclick="AksiJudgement(' . $data->id . ',2)" checked> 
+                        <label class="btn btn-outline-success" for="success-outlined4' . $data->id . '">NG</label>';
+                    }
+                    // $btn = '<select id="AksiJudgement" name="judgement" class="form-control" onchange="AksiJudgement(' . $data->id . ')">
+                    // <option value="' . $aksiJudgement . '"> ' . $aksiJudgement . '</option>
+                    //  <option value="1" class="text-center" >OK </option>
+                    //  <option value="2"   class="text-center" >NG </option> </select>';
                     return $btn;
                 })
                 ->addColumn('judgement', function ($row) {
-                    if($row->judgement == 0){
+                    if ($row->judgement == 0) {
                         $judgement = '<a class="fa-solid fa-arrows-spin fa-spin text-secondary fa-2x"></a>';
-                    }elseif($row->judgement == 1){
+                    } elseif ($row->judgement == 1) {
                         $judgement = '<a class="fa-solid fa-circle-check text-success fa-2x"></a>';
-                    }else{
+                    } else {
                         $judgement = '<a class="fa-solid fa-circle-xmark text-danger fa-2x"></a>';
                     }
                     return $judgement;
                 })
-                ->rawColumns(['action', 'judgement'])
+                ->addColumn('cmm', function ($data) {
+                    if ($data->cmm == null) {
+                        // $cmm = '<select id="mesinCMM" name="mesin_cmm" class="form-select" onchange="mesinCMM(' . $data->id . ')">
+                        //   <option value="">Pilih Mesin</option>
+                        //   <option value="ZEISS" >ZEISS</option>
+                        //   <option value="MUTITIYO">MUTITIYO</option>
+                        // </select>';
+                        $cmm = '<input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined' . $data->id . '" autocomplete="off" onclick=mesinCMM(' . $data->id . ',"ZEISS")>
+                        <label class="btn btn-outline-success" for="success-outlined' . $data->id . '">ZEISS</label>
+                        <input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined2' . $data->id . '" autocomplete="off" onclick=mesinCMM(' . $data->id . ',"MITUTOYO")> <label class="btn btn-outline-success" for="success-outlined2' . $data->id . '">MITUTOYO</label>';
+                    } else {
+                        //    
+                        if ($data->cmm == 'ZEISS') {
+                            $cmm = '<input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined' . $data->id . '" autocomplete="off" onclick=mesinCMM(' . $data->id . ',"ZEISS") checked>
+                        <label class="btn btn-outline-success" for="success-outlined' . $data->id . '">ZEISS</label>
+                        <input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined2' . $data->id . '" autocomplete="off"onclick=mesinCMM(' . $data->id . ',"MITUTOYO")> <label class="btn btn-outline-success" for="success-outlined2' . $data->id . '">MITUTOYO</label>';
+                        } else {
+                            $cmm = '<input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined' . $data->id . '" autocomplete="off" onclick=mesinCMM(' . $data->id . ',"ZEISS")>
+                            <label class="btn btn-outline-success" for="success-outlined' . $data->id . '">ZEISS</label>
+                            <input type="radio" class="btn-check" name="mesin_cmm' . $data->id . '" id="success-outlined2' . $data->id . '" autocomplete="off" onclick=mesinCMM(' . $data->id . ',"MITUTOYO") checked> <label class="btn btn-outline-success" for="success-outlined2' . $data->id . '" >MITUTOYO</label>';
+                        }
+                    }
+                    return $cmm;
+                })
+                ->rawColumns(['action', 'judgement', 'cmm'])
                 ->addIndexColumn()
                 ->make(true);
         }
@@ -332,32 +384,34 @@ class QualityController extends Controller
         return DB_Spectromelting::find($request->id);
     }
 
-    public function Api_measurement(Request $request){
+    public function Api_measurement(Request $request)
+    {
         return DB_QualityMeasurementPart::find($request->id);
     }
 
     public function OpenModal()
     {
-        return view('partial.Quality-modal');
+        $mesinCasting = DB_MesinCasting::all();
+        return view('partial.Quality-modal', compact('mesinCasting'));
     }
 
     public function TV_index_kalibrasi()
     {
         $title = "QUALITY";
         $judul = "ACHIEVEMENT KALIBRASI";
-        return view('TV-Quality-Kalibrasi',compact('title', 'judul'));
+        return view('TV-Quality-Kalibrasi', compact('title', 'judul'));
     }
     public function TV_index_diesapproval()
     {
         $title = "QUALITY";
         $judul = "DIES APPROVAL";
-        return view('TV-Quality-DiesApproval',compact('title', 'judul'));
+        return view('TV-Quality-DiesApproval', compact('title', 'judul'));
     }
     public function TV_index_spectro()
     {
         $title = "QUALITY";
         $judul = "SPECTRO AND MEASURE";
-        return view('TV-Quality-SpectroAndMeasure',compact('title', 'judul'));
+        return view('TV-Quality-SpectroAndMeasure', compact('title', 'judul'));
     }
 
     public function kalibrasi_save(Request $request)
@@ -589,17 +643,23 @@ class QualityController extends Controller
         $shift = $useable->Shift();
         $validator = Validator::make($request->all(), [
             'proses' => 'required',
+            'mesin' => 'required',
+            'jig' => 'required',
             'kategori' => 'required',
             'nama_part_dies' => 'required',
             'qty' => 'required',
         ]);
-
+        // dd($validator);
         if ($validator->fails()) {
             return redirect('/prod/quality')->with('gagal_validasi', 'gagal_validasi');
         }
+
+
         $insert = DB_QualityMeasurementPart::create([
             'proses' => $request->proses,
             'kategori' => $request->kategori,
+            'mesin' => $request->mesin,
+            'jig' => $request->jig,
             'nama_part_dies' => $request->nama_part_dies,
             'qty' => $request->qty,
             'shift' => $shift,
@@ -636,5 +696,44 @@ class QualityController extends Controller
         }
     }
 
+    public function CMM_Measurement()
+    {
+        $title = "CMM MEASUREMENT TEST";
+        $data =  DB_QualityMeasurementPart::all();
+        return view('prod-cmm-measurement-quality', compact('title', 'data'));
+    }
 
+    public function PostCMM(Request $request, $id)
+    {
+
+        $data =  DB_QualityMeasurementPart::where('id', $id)->first();
+        // dd($data);
+        $data->update([
+            'cmm' => $request->value
+        ]);
+        // return redirect()->back();
+    }
+
+    public function PostJudgement(Request $request, $id)
+    {
+        $data =  DB_QualityMeasurementPart::where('id', $id)->first();
+        $data->update([
+            'judgement' => $request->value
+        ]);
+    }
+
+    public function  UpdateWaktuAktual(Request $request)
+    {
+        $data =  DB_QualityMeasurementPart::where('id', $request->id)->first();
+        $data->update([
+            'waktu_aktual' => $request->value,
+            'status' => $request->status
+        ]);
+    }
+
+    public function Dies_Aprroval()
+    {
+        $title = "DIES APPROVAL";
+        return view('prod-diesApproval-quality', compact('title'));
+    }
 }

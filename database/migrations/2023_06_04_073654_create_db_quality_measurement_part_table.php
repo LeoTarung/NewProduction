@@ -17,6 +17,12 @@ class CreateDbQualityMeasurementPartTable extends Migration
             $table->id();
             $table->string('shift')->nullable();
             $table->string('proses')->nullable();
+            $table->string('mesin')->nullable();
+            $table->string('jig')->nullable();
+            $table->string('cmm')->nullable();
+            $table->time('waktu_standar')->nullable();
+            $table->time('waktu_aktual')->nullable();
+            $table->boolean('status')->default(0);
             $table->string('kategori')->nullable();
             $table->string('nama_part_dies')->nullable();
             $table->integer('qty')->default(0);

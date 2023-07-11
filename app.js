@@ -167,6 +167,39 @@ io.on("connection", (socket) => {
             socket.emit("TV-Spectro-GDC", res);
         });
 
+
+        //==========[' SELECT QUALITY CMM MEASUREMENT ']==========//
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE();", (err, res) => {
+        //    console.log(shift);
+           
+            socket.emit("CMM_Measurement", res);
+        });
+        connection.query("SELECT * FROM db_qualitymeasurementpart  WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND cmm IS NULL AND  status= 0 AND judgement= 0;", (err, res) => {
+            socket.emit("CMM_waiting", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart  WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND cmm='ZEISS' AND  status= 1;", (err, res) => {
+            socket.emit("CMM_Zeiss_running", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND cmm='MITUTOYO' AND  status= 1;", (err, res) => {
+            socket.emit("CMM_Mitutoyo_running", res);
+        });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND cmm='ZEISS' AND  status= 0 AND judgement= 0;", (err, res) => {
+            // console.log(shift);
+            socket.emit("CMM_schedule_zeiss", res);
+         });
+
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND cmm='MITUTOYO' AND  status= 0 AND judgement= 0;", (err, res) => {
+            // console.log(shift);
+            socket.emit("CMM_schedule_mitutoyo", res);
+         });
+         
+        connection.query("SELECT * FROM db_qualitymeasurementpart WHERE kategori <> 'patrol - perhari' AND shift='" + shift + "' AND DATE(created_at) = CURDATE() AND  status= 0 AND judgement> 0;", (err, res) => {
+            // console.log(shift);
+            socket.emit("CMM_completed", res);
+         });
         //==========[' SELECT ALL STOCK INGOT ']==========//
             connection.query("SELECT * FROM db_stockmaterial WHERE id= 1", (err, res) => {
                 socket.emit("stockmaterial-1", res);
@@ -527,6 +560,6 @@ io.on("connection", (socket) => {
 server.listen(1553, () => {
     console.log("listening on *:1553");
 });
-tcpServer.listen(1552, () => {
-    console.log("listening on *:1552");
-});
+// tcpServer.listen(1552, () => {
+    // console.log("listening on *:1552");
+// });

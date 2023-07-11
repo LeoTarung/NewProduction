@@ -5,6 +5,7 @@ use App\Models\DB_Jenis_Downtime;
 use App\Models\DB_Timbangan;
 use App\Models\DB_LhpMelting;
 use App\Models\DB_MesinCasting;
+use App\Models\DB_NamaPart;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -50,5 +51,10 @@ Route::get('/rejection/group', function () {
 });
 Route::get('/downtime/group', function () {
     $berhasil = DB_Jenis_Downtime::all();
+    return $berhasil;
+});
+
+Route::get('/part/', function () {
+    $berhasil = DB_NamaPart::all();
     return $berhasil;
 });
